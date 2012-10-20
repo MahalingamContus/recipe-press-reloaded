@@ -82,7 +82,6 @@ $rpFilters['link'] = '<input type="checkbox" class="checkbox" name="recipe_detai
                               <div class="recipe-details recipe-details-link">
                                    <label for="recipe_details_form_link_ingredient"><?php _e('Link ingredients?', 'recipe-press'); ?></label>
                <?php echo apply_filters('rp_details_form_link_ingredient', $rpFilters['link']); ?>
-               <?php $this->help(__('Check this box if you want your ingredients without page or URL links to link to a list of recipes with that ingredient.', 'recipe-press')); ?>
           </div>
      </div>
 </div>

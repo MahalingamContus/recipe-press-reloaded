@@ -73,10 +73,7 @@ class RecipePressReloaded extends RPR_Core {
           add_action('template_redirect', array(&$this, 'template_redirect'));
           add_action('parse_request', array(&$this, 'catch_recipe_form'));
           add_action('pre_get_posts', array(&$this, 'pre_get_posts'));
-          add_action('wp_ajax_ingredient_lookup', array(&$this, 'ingredient_lookup'));
-//          add_action('wp_ajax_nopriv_ingredient_lookup', array(&$this, 'ingredient_lookup'));
-          add_action('wp_ajax_recipe_press_view_all_tax', array(&$this, 'view_all_taxonomy'));
-//          add_action('wp_ajax_nopriv_recipe_press_view_all_tax', array(&$this, 'view_all_taxonomy'));
+          
 
           /* Optional filters */
           if ( $this->options['add-to-author-list'] ) {
@@ -237,86 +234,9 @@ class RecipePressReloaded extends RPR_Core {
           return $query;
      }
 
-     /**
-      * AJAX handler for view all taxonomies
-      */
-     function view_all_taxonomy() {
-          global $this_instance;
-          $instance = get_option('widget_recipe_press_taxonomy_widget');
+     
 
-          $defaults = array(
-               'orderby' => $this->options['widget-orderby'],
-               'order' => $this->options['widget-order'],
-               'style' => $this->options['widget-style'],
-               'thumbnail_size' => 'recipe-press-thumb',
-               'hide-empty' => $this->options['widget-hide-empty'],
-               'exclude' => NULL,
-               'include' => NULL,
-               'taxonomy' => 'recipe-category',
-               'title' => '',
-               'items' => $this->options['widget-items'],
-               'show-count' => false,
-               'before-count' => ' ( ',
-               'after-count' => ' ) ',
-               'show-view-all' => false,
-               'view-all-text' => '&darr;' . __('View All', 'recipe-press'),
-               'submit_link' => false,
-               'list-class' => 'recipe-press-taxonomy-widget',
-               'item-class' => 'recipe-press-taxonomy-item',
-               'child-class' => 'recipe-press-child-item',
-               'target' => 'none',
-          );
-
-          $this_instance = $instance = wp_parse_args($instance['5'], $defaults);
-
-          $taxArgs = array(
-               'orderby' => $instance['orderby'],
-               'order' => $instance['order'],
-               'style' => $instance['style'],
-               'show_count' => $instance['show-count'],
-               'hide_empty' => $instance['hide-empty'],
-               'use_desc_for_title' => 1,
-               'child_of' => 0,
-               'exclude' => $instance['exclude'],
-               'include' => get_published_categories($_REQUEST['tax']),
-               'hierarchical' => ($instance['taxonomy'] == 'recipe-ingredient') ? false : $this->options['taxonomies'][$instance['taxonomy']]['hierarchical'],
-               'title_li' => '',
-               'show_option_none' => __('No categories'),
-               'number' => NULL,
-               'echo' => 1,
-               'depth' => 0,
-               'current_category' => 0,
-               'pad_counts' => false,
-               'taxonomy' => $_REQUEST['tax'],
-               'walker' => new Walker_RPR_Taxonomy
-          );
-
-          wp_list_categories($taxArgs);
-          echo '<div class="cleared" style="clear:both"></div>';
-
-          die();
-     }
-
-     /**
-      * AJAX Handler for the ingredient lookup form.
-      */
-     function ingredient_lookup() {
-
-          $args = array(
-               'name__like' => $_REQUEST['q'],
-               'number' => 20,
-               'ordeby' => 'name',
-               'order' => 'asc'
-          );
-
-          $terms = get_terms('recipe-ingredient', $args);
-
-          foreach ( $terms as $term ) {
-               echo $term->name . '<span class="ingredient-id"> : ' . $term->term_id . "</span>\n";
-          }
-
-          die();
-     }
+    
 
 }
 

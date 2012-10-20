@@ -20,65 +20,43 @@ class RPR_Init extends RPR_Core {
      /**
       * Initialize the plugin
       */
-     function RPR_Init() {
-          global $wpdb;
-          parent::RPR_Core();
+	function RPR_Init() {
+		global $wpdb;
+        parent::RPR_Core();
 
-               if ( $this->options['use-categories'] ) {
-                    add_action('init', array($this, 'setup_categories'));
-               }
-               if ( $this->options['use-cuisines'] ) {  
-                    add_action('init', array($this, 'setup_cuisines'));
-               }
+		if ( $this->options['use-categories'] ) {
+			add_action('init', array($this, 'setup_categories'));
+        }
+		if ( $this->options['use-cuisines'] ) {  
+			add_action('init', array($this, 'setup_cuisines'));
+		}
+		if ( $this->options['use-courses'] ) {
+			add_action('init', array(&$this, 'setup_courses'));
+		}
+		if ( $this->options['use-seasons'] ) {
+			add_action('init', array(&$this, 'setup_seasons'));
+		}
                
-               add_action('init', array(&$this, 'setup_ingredients'));
-               if ( $this->options['use-courses'] ) {
-               		add_action('init', array(&$this, 'setup_courses'));
-               }
-               if ( $this->options['use-seasons'] ) {
-               		add_action('init', array(&$this, 'setup_seasons'));
-               }
-               
-               add_action('init', array(&$this, 'setup_sizes'));
-               add_action('init', array(&$this, 'setup_serving_sizes'));
-               
-               add_action('init', array(&$this, 'create_post_type'));
+		add_action('init', array(&$this, 'setup_ingredients'));
+		add_action('init', array(&$this, 'setup_sizes'));
+		add_action('init', array(&$this, 'setup_serving_sizes'));
 
-               /* WordPress Filters */
-               add_filter('index_template', array($this, 'index_template'), 10, 1);
-               add_filter('home_template', array($this, 'index_template'), 10, 1);
-               add_filter('archive_template', array($this, 'archive_template'), 10, 1);
+		add_action('init', array(&$this, 'create_post_type'));
 
-               /* Use built in categories and tags. */
-               if ( $this->options['use-post-categories'] ) {
-                    register_taxonomy_for_object_type('post_categories', 'recipe');
-               }
+		/* WordPress Filters */
+		add_filter('index_template', array($this, 'index_template'), 10, 1);
+		add_filter('home_template', array($this, 'index_template'), 10, 1);
+		add_filter('archive_template', array($this, 'archive_template'), 10, 1);
 
-               if ( $this->options['use-post-tags'] ) {
-                    register_taxonomy_for_object_type('post_tag', 'recipe');
-               }
-              /* if ( version_compare($wp_version, '3.1', '>=') and !$this->options['use-plugin-permalinks'] ) {
-               $args['rewrite'] = true;
-               $args['has_archive'] = $this->options['index-slug'];
-          } else {
-               $args['rewrite'] = false;
-               $args['has_archive'] = false;
+		/* Use built in categories and tags. */
+		if ( $this->options['use-post-categories'] ) {
+			register_taxonomy_for_object_type('post_categories', 'recipe');
+		}
 
-               // Flush the rewrite rules 
-               global $wp_rewrite;
-               $this->recipe_rewrite_rules(array('identifier' => $this->options['identifier'], 'structure' => $this->options['permalink'], 'type' => 'recipe'));
-
-               if ( isset($this->options['use-form']) and $this->options['use-form'] ) {
-                    $this->recipe_rewrite_rules(array('identifier' => $this->options['form-identifier'], 'structure' => $this->options['form-permalink'], 'type' => 'form'));
-               }
-
-               $wp_rewrite->flush_rules();
-
-               // Add filters to handle custom pages 
-               add_filter('post_type_link', array($this, 'post_link'), 10, 3);
-          }*/
-          
-     }
+		if ( $this->options['use-post-tags'] ) {
+			register_taxonomy_for_object_type('post_tag', 'recipe');
+		}
+	}
 
      /**
       * Initialize the shortcodes.

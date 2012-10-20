@@ -17,7 +17,7 @@ if ( preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']) ) {
 class RPR_Core {
 
      var $menuName = 'recipe-press-reloaded';
-     var $pluginName = 'RecipePressReloaded';
+     var $pluginName = 'RecipePress reloaded';
      var $version = '0.1';
      var $optionsName = 'rpr-options';
      var $options = array();
@@ -53,7 +53,7 @@ class RPR_Core {
       * Load plugin settings.
       */
      function loadSettings() {
-          $this->rpr_options_defaults = array(
+          $rpr_options_defaults = array(
   			'index_slug' => 'recipes',
   			'use_plugin_permalinks' => true,
   			'singular_name' => 'recipe',
@@ -124,7 +124,7 @@ class RPR_Core {
                	'minute_text' => __(' min', 'recipe-press'),
                	'time_display_type' => 'double',
 			);
-		  $this->rpr_options = wp_parse_args(get_option('rpr_options'), $this->rpr_options_defaults);
+		  $this->rpr_options = wp_parse_args(get_option('rpr_options'), $rpr_options_defaults);
 		
           $options = get_option($this->optionsName);
 
@@ -252,8 +252,8 @@ class RPR_Core {
           );
 
           $this->options = wp_parse_args($options, $defaults);
-
-          /* Handle renaming of built-in taxonomies */
+/*
+          // Handle renaming of built-in taxonomies
           if ( isset($this->options['taxonomies']['recipe-categories']) ) {
                $this->options['taxonomies']['recipe-category'] = $this->options['taxonomies']['recipe-categories'];
                unset($this->options['taxonomies']['recipe-categories']);
@@ -263,12 +263,12 @@ class RPR_Core {
                $this->options['taxonomies']['recipe-cuisine'] = $this->options['taxonomies']['recipe-cuisines'];
                unset($this->options['taxonomies']['recipe-cuisines']);
           }
-
+*/
           if ( $this->options['use-thumbnails'] ) {
                add_theme_support('post-thumbnails');
           }
 
-          $this->formFieldNames = array(
+/*          $this->formFieldNames = array(
                'title' => __('Recipe Name', 'recipe-press'),
                'image' => __('Recipe Image', 'recipe-press'),
                'notes' => __('Recipe Notes', 'recipe-press'),
@@ -284,7 +284,7 @@ class RPR_Core {
                'submitter' => __('Name', 'recipe-press'),
                'submitter_email' => __('Email', 'recipe-press'),
           );
-
+*/
           /* Eliminate individual taxonomies */
     /*      if ( $this->options['use-categories'] ) {
                $this->options['use-taxonomies'] = true;
@@ -321,11 +321,11 @@ class RPR_Core {
                $this->options['taxonomies'] = array();
           }
 */
-          if ( isset($this->options['new-recipe-status']) and $this->options['new-recipe-status'] == 'active' ) {
+    /*      if ( isset($this->options['new-recipe-status']) and $this->options['new-recipe-status'] == 'active' ) {
                $this->options['new-recipe-status'] = 'publish';
           }
 
-          return $this->options;
+          return $this->options;*/
      }
 
      /**
@@ -461,114 +461,9 @@ class RPR_Core {
           return $content;
      }
      
-     /**
-      * Save the meta boxes for a recipe.
-      *
-      * @global <object> $postoptions
-      * @param <integer> $post_id
-      * @return <integer>
-      */
-     function save_recipe($post_id) {
-          global $post;
+    
 
-          if ( is_object($post) and $post->post_type == 'revision' ) {
-               return;
-          }
-
-          do_action('rp_before_save');
-
-          /* Save details */
-          if ( isset($_POST['recipe_details']) and isset($_POST['details_noncename']) and wp_verify_nonce($_POST['details_noncename'], 'recipe_press_details') ) {
-               $details = $_POST['recipe_details'];
-               $details['recipe_ready_time'] = $this->readyTime();
-               $details['recipe_ready_time_raw'] = $this->readyTime(NULL, NULL, false);
-
-
-               foreach ( $details as $key => $value ) {
-                    $key = '_' . $key . '_value';
-                    if ( get_post_meta($post_id, $key) == "" ) {
-                         add_post_meta($post_id, $key, $value, true);
-                    } elseif ( $value != get_post_meta($post_id, $key . '_value', true) ) {
-                         update_post_meta($post_id, $key, $value);
-                    } elseif ( $value == "" ) {
-                         delete_post_meta($post_id, $key, get_post_meta($post_id, $key, true));
-                    }
-               }
-          }
-
-          /* Turn off featured if not checked */
-          if ( !isset($_POST['recipe_details']['recipe_featured']) ) {
-               update_post_meta($post_id, '_recipe_featured_value', 0);
-          }
-
-          /* Turn off ingredient link if not checked */
-          if ( !isset($_POST['recipe_details']['recipe_link_ingredients']) ) {
-               update_post_meta($post_id, '_recipe_link_ingredients_value', 0);
-          }
-
-
-          if ( isset($_POST['ingredients']) and isset($_POST['ingredients_noncename']) and wp_verify_nonce($_POST['ingredients_noncename'], 'recipe_press_ingredients') ) {
-               $this->save_ingredients($post_id, $_POST['ingredients']);
-          }
-
-          do_action('rp_after_save');
-
-          return $post_id;
-     }
-
-     /**
-      * Save the ingredients.
-      *
-      * @global object $post
-      * @param string $post_id
-      * @param array $ingredients
-      */
-     function save_ingredients($post_id, $ingredients) {
-          global $post;
-          $detailkey = '_recipe_ingredient_value';
-          $postIngredients = array();
-          delete_post_meta($post_id, $detailkey);
-          $ictr = 0;
-
-          foreach ( $ingredients as $id => $ingredient ) {
-               $ingredient['order'] = $ictr;
-
-               if ( (isset($ingredient['item']) and $ingredient['item'] != -1 and $ingredient['item'] != '' and $ingredient['item'] != '0')
-                       or (isset($ingredient['new-ingredient']) and $ingredient['new-ingredient'] != '') ) {
-
-                    if ( isset($ingredient['size']) and $ingredient['size'] == 'divider' ) {
-                         $ingredient['item'] = $ingredient['new-ingredient'];
-                    } else {
-                         /* Save ingredient taxonomy information */
-                         if ( isset($ingredient['item']) ) {
-                              $term = get_term_by('id', $ingredient['item'], 'recipe-ingredient');
-                         } else {
-                              $term = array();
-                         }
-
-                         if ( is_object($term) and !isset($term->errors) ) {
-                              array_push($postIngredients, (int) $term->term_id);
-                         } elseif ( isset($ingredient['new-ingredient']) and $ingredient['new-ingredient'] != '' ) {
-                              $term = wp_insert_term($ingredient['new-ingredient'], 'recipe-ingredient');
-                              if ( isset($term->errors) ) {
-                                   $ingredient['item'] = $term->error_data['term_exists'];
-                              } else {
-                                   $ingredient['item'] = $term['term_id'];
-                              }
-
-                              $term = get_term_by('id', $ingredient['item'], 'recipe-ingredient');
-                              array_push($postIngredients, $term->slug);
-                         }
-                    }
-                    unset($ingredient['new-ingredient']);
-
-                    add_post_meta($post_id, $detailkey, $ingredient, false);
-               }
-               ++$ictr;
-          }
-
-          wp_set_object_terms($post_id, $postIngredients, 'recipe-ingredient', false);
-     }
+    
 
      /**
       * Retrieve a template file from either the theme or the plugin directory.
@@ -707,32 +602,6 @@ class RPR_Core {
           } else {
                return $total;
           }
-     }
-
-     /**
-      * Create a help icon on the administration pages.
-      *
-      * @param <string> $text
-      */
-     function help($text) {
-          echo '<img src="' . $this->pluginURL . 'images/icons/help.jpg" align="absmiddle" onmouseover="return overlib(\'' . $text . '\');" onmouseout="return nd();" />';
-     }
-
-     /**
-      * Displayes any data sent in textareas.
-      *
-      * @param <type> $input
-      */
-     function debug($input) {
-          $contents = func_get_args();
-
-          foreach ( $contents as $content ) {
-               print '<textarea style="width:49%; height:250px; float: left;">';
-               print_r($content);
-               print '</textarea>';
-          }
-
-          echo '<div style="clear: both"></div>';
      }
 
 }

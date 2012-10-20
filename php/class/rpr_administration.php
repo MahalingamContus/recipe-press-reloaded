@@ -33,6 +33,10 @@ class RPR_Admin extends RPR_Core {
           add_action('update_option_' . $this->optionsName, array(&$this, 'update_option'), 10, 2);
           add_action('right_now_content_table_end', array(&$this, 'right_now_content_table_end'));
           add_action('manage_pages_custom_column', array(&$this, 'manage_pages_custom_column'));
+          add_action('wp_ajax_ingredient_lookup', array(&$this, 'ingredient_lookup'));
+//          add_action('wp_ajax_nopriv_ingredient_lookup', array(&$this, 'ingredient_lookup'));
+          add_action('wp_ajax_recipe_press_view_all_tax', array(&$this, 'view_all_taxonomy'));
+//          add_action('wp_ajax_nopriv_recipe_press_view_all_tax', array(&$this, 'view_all_taxonomy'));
 
           /* Administration Filters */
           add_filter('plugin_action_links', array(&$this, 'plugin_action_links'), 10, 2);
@@ -716,5 +720,195 @@ class RPR_Admin extends RPR_Core {
 	function example_deinstall() {
 		delete_option('rpr_options');
 	}
+	
+	 /**
+      * AJAX Handler for the ingredient lookup form.
+      */
+     function ingredient_lookup() {
+
+          $args = array(
+               'name__like' => $_REQUEST['q'],
+               'number' => 20,
+               'ordeby' => 'name',
+               'order' => 'asc'
+          );
+
+          $terms = get_terms('recipe-ingredient', $args);
+
+          foreach ( $terms as $term ) {
+               echo $term->name . '<span class="ingredient-id"> : ' . $term->term_id . "</span>\n";
+          }
+
+          die();
+     }
+     
+     /**
+      * AJAX handler for view all taxonomies
+      */
+     function view_all_taxonomy() {
+          global $this_instance;
+          $instance = get_option('widget_recipe_press_taxonomy_widget');
+
+          $defaults = array(
+               'orderby' => $this->options['widget-orderby'],
+               'order' => $this->options['widget-order'],
+               'style' => $this->options['widget-style'],
+               'thumbnail_size' => 'recipe-press-thumb',
+               'hide-empty' => $this->options['widget-hide-empty'],
+               'exclude' => NULL,
+               'include' => NULL,
+               'taxonomy' => 'recipe-category',
+               'title' => '',
+               'items' => $this->options['widget-items'],
+               'show-count' => false,
+               'before-count' => ' ( ',
+               'after-count' => ' ) ',
+               'show-view-all' => false,
+               'view-all-text' => '&darr;' . __('View All', 'recipe-press'),
+               'submit_link' => false,
+               'list-class' => 'recipe-press-taxonomy-widget',
+               'item-class' => 'recipe-press-taxonomy-item',
+               'child-class' => 'recipe-press-child-item',
+               'target' => 'none',
+          );
+
+          $this_instance = $instance = wp_parse_args($instance['5'], $defaults);
+
+          $taxArgs = array(
+               'orderby' => $instance['orderby'],
+               'order' => $instance['order'],
+               'style' => $instance['style'],
+               'show_count' => $instance['show-count'],
+               'hide_empty' => $instance['hide-empty'],
+               'use_desc_for_title' => 1,
+               'child_of' => 0,
+               'exclude' => $instance['exclude'],
+               'include' => get_published_categories($_REQUEST['tax']),
+               'hierarchical' => ($instance['taxonomy'] == 'recipe-ingredient') ? false : $this->options['taxonomies'][$instance['taxonomy']]['hierarchical'],
+               'title_li' => '',
+               'show_option_none' => __('No categories'),
+               'number' => NULL,
+               'echo' => 1,
+               'depth' => 0,
+               'current_category' => 0,
+               'pad_counts' => false,
+               'taxonomy' => $_REQUEST['tax'],
+               'walker' => new Walker_RPR_Taxonomy
+          );
+
+          wp_list_categories($taxArgs);
+          echo '<div class="cleared" style="clear:both"></div>';
+
+          die();
+     }
+     
+      /**
+      * Save the meta boxes for a recipe.
+      *
+      * @global <object> $postoptions
+      * @param <integer> $post_id
+      * @return <integer>
+      */
+     function save_recipe($post_id) {
+          global $post;
+
+          if ( is_object($post) and $post->post_type == 'revision' ) {
+               return;
+          }
+
+          do_action('rp_before_save');
+
+          /* Save details */
+          if ( isset($_POST['recipe_details']) and isset($_POST['details_noncename']) and wp_verify_nonce($_POST['details_noncename'], 'recipe_press_details') ) {
+               $details = $_POST['recipe_details'];
+               $details['recipe_ready_time'] = $this->readyTime();
+               $details['recipe_ready_time_raw'] = $this->readyTime(NULL, NULL, false);
+
+
+               foreach ( $details as $key => $value ) {
+                    $key = '_' . $key . '_value';
+                    if ( get_post_meta($post_id, $key) == "" ) {
+                         add_post_meta($post_id, $key, $value, true);
+                    } elseif ( $value != get_post_meta($post_id, $key . '_value', true) ) {
+                         update_post_meta($post_id, $key, $value);
+                    } elseif ( $value == "" ) {
+                         delete_post_meta($post_id, $key, get_post_meta($post_id, $key, true));
+                    }
+               }
+          }
+
+          /* Turn off featured if not checked */
+          if ( !isset($_POST['recipe_details']['recipe_featured']) ) {
+               update_post_meta($post_id, '_recipe_featured_value', 0);
+          }
+
+          /* Turn off ingredient link if not checked */
+          if ( !isset($_POST['recipe_details']['recipe_link_ingredients']) ) {
+               update_post_meta($post_id, '_recipe_link_ingredients_value', 0);
+          }
+
+
+          if ( isset($_POST['ingredients']) and isset($_POST['ingredients_noncename']) and wp_verify_nonce($_POST['ingredients_noncename'], 'recipe_press_ingredients') ) {
+               $this->save_ingredients($post_id, $_POST['ingredients']);
+          }
+
+          do_action('rp_after_save');
+
+          return $post_id;
+     }
+     
+      /**
+      * Save the ingredients.
+      *
+      * @global object $post
+      * @param string $post_id
+      * @param array $ingredients
+      */
+     function save_ingredients($post_id, $ingredients) {
+          global $post;
+          $detailkey = '_recipe_ingredient_value';
+          $postIngredients = array();
+          delete_post_meta($post_id, $detailkey);
+          $ictr = 0;
+
+          foreach ( $ingredients as $id => $ingredient ) {
+               $ingredient['order'] = $ictr;
+
+               if ( (isset($ingredient['item']) and $ingredient['item'] != -1 and $ingredient['item'] != '' and $ingredient['item'] != '0')
+                       or (isset($ingredient['new-ingredient']) and $ingredient['new-ingredient'] != '') ) {
+
+                    if ( isset($ingredient['size']) and $ingredient['size'] == 'divider' ) {
+                         $ingredient['item'] = $ingredient['new-ingredient'];
+                    } else {
+                         /* Save ingredient taxonomy information */
+                         if ( isset($ingredient['item']) ) {
+                              $term = get_term_by('id', $ingredient['item'], 'recipe-ingredient');
+                         } else {
+                              $term = array();
+                         }
+
+                         if ( is_object($term) and !isset($term->errors) ) {
+                              array_push($postIngredients, (int) $term->term_id);
+                         } elseif ( isset($ingredient['new-ingredient']) and $ingredient['new-ingredient'] != '' ) {
+                              $term = wp_insert_term($ingredient['new-ingredient'], 'recipe-ingredient');
+                              if ( isset($term->errors) ) {
+                                   $ingredient['item'] = $term->error_data['term_exists'];
+                              } else {
+                                   $ingredient['item'] = $term['term_id'];
+                              }
+
+                              $term = get_term_by('id', $ingredient['item'], 'recipe-ingredient');
+                              array_push($postIngredients, $term->slug);
+                         }
+                    }
+                    unset($ingredient['new-ingredient']);
+
+                    add_post_meta($post_id, $detailkey, $ingredient, false);
+               }
+               ++$ictr;
+          }
+
+          wp_set_object_terms($post_id, $postIngredients, 'recipe-ingredient', false);
+     }
 
 }
