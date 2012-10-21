@@ -187,10 +187,8 @@ class RecipePressReloaded extends RPR_Core {
       * Set up the styles and scripts for the plugin.
       */
      function wp_loaded() {
-          wp_register_style('recipePressIncludedCSS', $this->pluginURL . 'css/recipe-press.css');
-          wp_register_style('recipePressCSS', $this->get_template('recipe-press', '.css', 'url'));
-          wp_register_script('recipe-press-js', $this->pluginURL . 'js/recipe-press.js');
-          wp_register_script('recipe-press-form-js', $this->pluginURL . 'js/recipe-press-form.js');
+          wp_register_style('rpr_included_CSS', $this->pluginURL . 'css/rpr-styles.css');
+          wp_register_style('rpr_CSS', $this->get_template('recipe-press', '.css', 'url'));
      }
 
      /**
@@ -199,8 +197,8 @@ class RecipePressReloaded extends RPR_Core {
      function wp_print_styles() {
 
           if ( $this->options['custom-css'] ) {
-               wp_enqueue_style('recipePressIncludedCSS');
-               wp_enqueue_style('recipePressCSS');
+               wp_enqueue_style('rpr_included_CSS');
+               wp_enqueue_style('rpr_CSS');
           }
      }
 
@@ -208,16 +206,9 @@ class RecipePressReloaded extends RPR_Core {
       * Print the javascript needed for the form.
       */
      function wp_print_scripts() {
-          wp_localize_script('recipe-press-js', 'RPAJAX', array(
-               'ajaxurl' => admin_url('admin-ajax.php'),
-               //'remove_from_box' => sprintf(__('Are you sure you want to remove this recipe from %1$s?', 'recipe-press'), $this->options['recipe-box-title'])
-                  )
-          );
           wp_enqueue_script('jquery');
           wp_enqueue_script('jquery-ui-sortable');
           wp_enqueue_script('suggest');
-          wp_enqueue_script('recipe-press-js');
-          wp_enqueue_script('recipe-press-form-js');
      }
 
      /**
