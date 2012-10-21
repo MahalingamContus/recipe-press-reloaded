@@ -33,8 +33,8 @@ do_action('rpr_form_before_ingredients');
 		<tbody id="rpr_ingredients_body">
 			<tr id="rpr_ingredient_null" style="display:none">
 				<th class="rpr-header rpr-header-sort" id="rpr_drag_icon">
-               		<img alt="<?php _e('Drag Ingredient', 'recipe-press'); ?>" src="<?php echo $this->pluginURL . 'images/icons/drag-icon.png'; ?>" style="cursor:pointer" />
-                    <img alt="<?php _e('Delete Ingredient', 'recipe-press'); ?>" src="<?php echo $this->pluginURL . 'images/icons/delete.gif'; ?>" style="cursor:pointer" onclick="rpr_delete_row('rpr_ingredient_NULL');" />
+               		<img alt="<?php _e('Drag Ingredient', 'recipe-press'); ?>" src="<?php echo RPR_URL . 'images/icons/drag-icon.png'; ?>" style="cursor:pointer" />
+                    <img alt="<?php _e('Delete Ingredient', 'recipe-press'); ?>" src="<?php echo RPR_URL . 'images/icons/delete.gif'; ?>" style="cursor:pointer" onclick="rpr_delete_row('rpr_ingredient_NULL');" />
 				</th>
 				<td id="rpr_size_column">
 					<?php wp_dropdown_categories(array('hierarchical' => false, 'taxonomy' => 'recipe-size', 'hide_empty' => false, 'name' => 'ingredientsCOPY[NULL][size]', 'orderby' => 'name', 'echo' => true, 'show_option_none' => __('No Size', 'recipe-press'))); ?>
@@ -62,8 +62,8 @@ do_action('rpr_form_before_ingredients');
 				<?php foreach ( $ingredients as $id => $ingredient ) : ?>
 				<tr id="rpr_ingredient_<?php echo $ingredientID; ?>" class="rpr_size_type_<?php echo $ingredient['size']; ?>" valign="top">
 					<th class="rpr-header rpr-header-sort">
-						<img alt="<?php _e('Drag Ingredient', 'recipe-press'); ?>" src="<?php echo $this->pluginURL . 'images/icons/drag-icon.png'; ?>" style="cursor:pointer" />
-						<img alt="<?php _e('Delete Ingredient', 'recipe-press'); ?>" src="<?php echo $this->pluginURL . 'images/icons/delete.gif'; ?>" style="cursor:pointer" onclick="rpr_delete_row('rpr_ingredient_<?php echo $ingredientID; ?>');" />
+						<img alt="<?php _e('Drag Ingredient', 'recipe-press'); ?>" src="<?php echo RPR_URL . 'images/icons/drag-icon.png'; ?>" style="cursor:pointer" />
+						<img alt="<?php _e('Delete Ingredient', 'recipe-press'); ?>" src="<?php echo RPR_URL . 'images/icons/delete.gif'; ?>" style="cursor:pointer" onclick="rpr_delete_row('rpr_ingredient_<?php echo $ingredientID; ?>');" />
 					</th>
 					<td>
 						<?php if ( $ingredient['size'] != 'divider' and $ingredient['size'] ):

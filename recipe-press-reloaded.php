@@ -30,11 +30,15 @@
 
  */
  
- /*Set plugin location constants:*/
- if ( !defined('RPR_URL') )
+/*Set plugin location constants:*/
+if ( !defined('RPR_URL') )
 	define( 'RPR_URL', plugin_dir_url( __FILE__ ) );
 if ( !defined('RPR_PATH') )
 	define( 'RPR_PATH', plugin_dir_path( __FILE__ ) );
+if ( !defined('RPR_TEMPLATES_PATH') )
+	define( 'RPR_TEMPLATES_PATH', RPR_PATH."/templates");
+	if ( !defined('RPR_TEMPLATES_URL') )
+	define( 'RPR_TEMPLATES_URL', RPR_URL."/templates");
 if ( !defined('RPR_BASENAME') )
 	define( 'RPR_BASENAME', plugin_basename( __FILE__ ) );
 
@@ -88,7 +92,7 @@ class RecipePressReloaded extends RPR_Core {
 
           /* Add Custom Theme Directory */
           if ( function_exists('register_theme_directory') ) {
-               register_theme_directory($this->pluginPath . 'themes');
+               register_theme_directory(RPR_PATH . 'themes');
           }
 
           if ( is_admin ( ) ) {
@@ -187,7 +191,7 @@ class RecipePressReloaded extends RPR_Core {
       * Set up the styles and scripts for the plugin.
       */
      function wp_loaded() {
-          wp_register_style('rpr_included_CSS', $this->pluginURL . 'css/rpr-styles.css');
+          wp_register_style('rpr_included_CSS', RPR_URL . 'css/rpr-styles.css');
           wp_register_style('rpr_CSS', $this->get_template('recipe-press', '.css', 'url'));
      }
 
@@ -237,9 +241,9 @@ if(class_exists("RecipePressReloaded")):
 	$RECIPEPRESSOBJ = new RecipePressReloaded;
 	
 	/* Add Widgets */
-	include_once($RECIPEPRESSOBJ->pluginPath . 'widgets/list-widget.php');
-	include_once($RECIPEPRESSOBJ->pluginPath . 'widgets/category-widget.php');
-	include_once($RECIPEPRESSOBJ->pluginPath . 'widgets/taxonomy-widget.php');
+	include_once(RPR_PATH . 'widgets/list-widget.php');
+	include_once(RPR_PATH . 'widgets/category-widget.php');
+	include_once(RPR_PATH . 'widgets/taxonomy-widget.php');
 	
 	/* Activation Hook */
 	register_activation_hook(__FILE__, 'recipe_press_activation');

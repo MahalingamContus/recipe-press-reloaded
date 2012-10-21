@@ -37,10 +37,10 @@ class RPR_Core {
           $this->pluginName = __('RecipePress', 'recipe-press');
 
           /* Plugin Folders */
-          $this->pluginPath = WP_PLUGIN_DIR . '/' . basename(dirname(dirname(dirname(__FILE__)))) . '/';
-          $this->pluginURL = WP_PLUGIN_URL . '/' . basename(dirname(dirname(dirname(__FILE__)))) . '/';
-          $this->templatesPath = WP_PLUGIN_DIR . '/' . basename(dirname(dirname(dirname(__FILE__)))) . '/templates/';
-          $this->templatesURL = WP_PLUGIN_URL . '/' . basename(dirname(dirname(dirname(__FILE__)))) . '/templates/';
+          //RPR_PATH = WP_PLUGIN_DIR . '/' . basename(dirname(dirname(dirname(__FILE__)))) . '/';
+          //RPR_URL = WP_PLUGIN_URL . '/' . basename(dirname(dirname(dirname(__FILE__)))) . '/';
+          //RPR_TEMPLATES_PATH = WP_PLUGIN_DIR . '/' . basename(dirname(dirname(dirname(__FILE__)))) . '/templates/';
+          //RPR_TEMPLATES_URL = WP_PLUGIN_URL . '/' . basename(dirname(dirname(dirname(__FILE__)))) . '/templates/';
           $this->loadSettings();
 
           /* Add custom images sizes for RecipePress */
@@ -223,7 +223,7 @@ class RPR_Core {
                'recipe-box-view-title' => __('View My Box', 'recipe-press'),
                
                /* Non-Configurable Settings */
-               'menu-icon' => $this->pluginURL . 'images/icons/small_logo.png',
+               'menu-icon' => RPR_URL . 'images/icons/small_logo.png',
                /* Size Settings  - DEPRICATED FOR TAXONOMY USE */
                'standard' => array(
                     'ingredient-sizes' => array('bag', 'big', 'bottle', 'box', 'bunch', 'can', 'carton', 'container', 'count', 'cup', 'clove', 'dash', 'dozen', 'drop', 'envelope', 'fluid ounce', 'gallon', 'gram', 'head', 'jar', 'large', 'pound', 'leaf', 'link', 'liter', 'loaf', 'medium', 'ounce', 'package', 'packet', 'piece', 'pinch', 'pint', 'quart', 'scoop', 'sheet', 'slice', 'small', 'sprig', 'stalk', 'stick', 'strip', 'tablespoon', 'teaspoon', 'whole'),
@@ -491,9 +491,9 @@ class RPR_Core {
                     $file = get_stylesheet_directory() . $folder . $template . $ext;
                }
           } elseif ( $type == 'url' ) {
-               $file = $this->templatesURL . $template . $ext;
+               $file = RPR_TEMPLATES_URL . $template . $ext;
           } else {
-               $file = $this->templatesPath . $template . $ext;
+               $file = RPR_TEMPLATES_PATH . $template . $ext;
           }
 
           return $file;

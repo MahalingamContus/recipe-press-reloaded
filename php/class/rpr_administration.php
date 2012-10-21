@@ -189,10 +189,10 @@ class RPR_Admin extends RPR_Core {
           add_settings_section('rpr_display', __("Display Settings", "recipe-press"), array(&$this, 'rpr_section_display_callback_function'), 'display');
           
           //Register Style and Scripts for the backend view
-          wp_register_style('rpr_admin_CSS', $this->pluginURL . 'css/rpr-admin.css');
-          //wp_register_script('recipePressAdminJS', $this->pluginURL . 'js/recipe-press-admin.js');
-          //wp_register_script('recipePressOverlibJS', $this->pluginURL . 'js/overlib/overlib.js');
-          wp_register_script('rpr_admin_JS', $this->pluginURL . 'js/rpr-admin.js');
+          wp_register_style('rpr_admin_CSS', RPR_URL . 'css/rpr-admin.css');
+          //wp_register_script('recipePressAdminJS', RPR_URL . 'js/recipe-press-admin.js');
+          //wp_register_script('recipePressOverlibJS', RPR_URL . 'js/overlib/overlib.js');
+          wp_register_script('rpr_admin_JS', RPR_URL . 'js/rpr-admin.js');
      }
      
      /**
@@ -226,7 +226,7 @@ class RPR_Admin extends RPR_Core {
       * Settings management panel.
       */
      function settings() {
-          include($this->pluginPath . 'php/inc/settings.php');
+          include(RPR_PATH . 'php/inc/settings.php');
      }
 
      function admin_print_styles() {

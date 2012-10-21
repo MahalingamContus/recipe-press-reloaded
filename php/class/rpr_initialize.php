@@ -691,7 +691,7 @@ class RPR_Init extends RPR_Core {
      function ingredients_box() {
           /* Use nonce for verification */
           echo '<input type="hidden" name="ingredients_noncename" id="ingredients_noncename" value="' . wp_create_nonce('recipe_press_ingredients') . '" />';
-          include($this->pluginPath . 'php/form/ingredient-form.php');
+          include(RPR_PATH . 'php/form/ingredient-form.php');
      }
 
      /**
@@ -703,7 +703,7 @@ class RPR_Init extends RPR_Core {
           global $post;
           /* Use nonce for verification */
           echo '<input type="hidden" name="details_noncename" id="details_noncename" value="' . wp_create_nonce('recipe_press_details') . '" />';
-          include ($this->pluginPath . 'php/form/details-form.php');
+          include (RPR_PATH . 'php/form/details-form.php');
      }
 
      
