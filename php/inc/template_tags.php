@@ -21,7 +21,7 @@ if ( !function_exists('use_recipe_taxonomy') ) {
 
      function use_recipe_taxonomy($tax = 'recipe-category') {
           global $RECIPEPRESSOBJ;
-          return apply_filters('recipe_press_use_taxonomy', isset($RECIPEPRESSOBJ->options['taxonomies'][$tax]['active']) && $RECIPEPRESSOBJ->options['use-taxonomies']);
+          return apply_filters('recipe_press_use_taxonomy', isset($RECIPEPRESSOBJ->rpr_options['taxonomies'][$tax]['active']) && $RECIPEPRESSOBJ->rpr_options['use_taxonomies']);
      }
 
 }
@@ -30,7 +30,7 @@ if ( !function_exists('use_recipe_categories') ) {
 
      function use_recipe_categories() {
           global $RECIPEPRESSOBJ;
-          return apply_filters('recipe_press_use_categories', $RECIPEPRESSOBJ->options['use-categories'] && !$RECIPEPRESSOBJ->options['use-post-categories']);
+          return apply_filters('recipe_press_use_categories', $RECIPEPRESSOBJ->rpr_options['use_categories'] && !$RECIPEPRESSOBJ->rpr_options['use_post_categories']);
      }
 
 }
@@ -39,7 +39,7 @@ if ( !function_exists('use_recipe_cuisines') ) {
 
      function use_recipe_cuisines() {
           global $RECIPEPRESSOBJ;
-          return apply_filters('recipe_press_use_cuisines', $RECIPEPRESSOBJ->options['use-cuisines']);
+          return apply_filters('recipe_press_use_cuisines', $RECIPEPRESSOBJ->rpr_options['use_cuisines']);
      }
 
 }
@@ -48,7 +48,7 @@ if ( !function_exists('use_recipe_seasons') ) {
 
      function use_recipe_seasons() {
           global $RECIPEPRESSOBJ;
-          return apply_filters('recipe_press_use_seasons', $RECIPEPRESSOBJ->options['use-seasons']);
+          return apply_filters('recipe_press_use_seasons', $RECIPEPRESSOBJ->rpr_options['use_seasons']);
      }
 
 }
@@ -57,7 +57,7 @@ if ( !function_exists('use_recipe_courses') ) {
 
      function use_recipe_courses() {
           global $RECIPEPRESSOBJ;
-          return apply_filters('recipe_press_use_courses', $RECIPEPRESSOBJ->options['use-courses']);
+          return apply_filters('recipe_press_use_courses', $RECIPEPRESSOBJ->rpr_options['use_courses']);
      }
 
 }
@@ -66,7 +66,7 @@ if ( !function_exists('use_recipe_times') ) {
 
      function use_recipe_times() {
           global $RECIPEPRESSOBJ;
-          return apply_filters('recipe_press_use_times', $RECIPEPRESSOBJ->options['use-times']);
+          return apply_filters('recipe_press_use_times', $RECIPEPRESSOBJ->rpr_options['use_times']);
      }
 
 }
@@ -75,7 +75,7 @@ if ( !function_exists('use_recipe_servings') ) {
 
      function use_recipe_servings() {
           global $RECIPEPRESSOBJ;
-          return apply_filters('recipe_press_use_servings', $RECIPEPRESSOBJ->options['use-servings']);
+          return apply_filters('recipe_press_use_servings', $RECIPEPRESSOBJ->rpr_options['use_servings']);
      }
 
 }
@@ -84,7 +84,7 @@ if ( !function_exists('use_recipe_comments') ) {
 
      function use_recipe_comments() {
           global $RECIPEPRESSOBJ;
-          return apply_filters('recipe_press_use_comments', $RECIPEPRESSOBJ->options['use-comments']);
+          return apply_filters('recipe_press_use_comments', $RECIPEPRESSOBJ->rpr_options['use_comments']);
      }
 
 }
@@ -116,10 +116,10 @@ if ( !function_exists('get_recipe_time') ) {
           /* Prep the arguments */
           $defaults = array(
                'time' => 'prep',
-               'type' => $RECIPEPRESSOBJ->options['time-display-type'],
+               'type' => $RECIPEPRESSOBJ->rpr_options['time_display_type'],
                'title' => __('Prep Time', 'recipe-press'),
                'prefix' => ' : ',
-               'suffix' => $RECIPEPRESSOBJ->options['minute-text'],
+               'suffix' => $RECIPEPRESSOBJ->rpr_options['minute_text'],
                'tag' => 'li',
                'class' => 'recipe-prep'
           );
@@ -502,7 +502,7 @@ if ( !function_exists('get_the_recipe_introduction') ) {
           }
 
           $defaults = array(
-               'length' => $RECIPEPRESSOBJ->options['default-excerpt-length'],
+               'length' => $RECIPEPRESSOBJ->rpr_options['default_excerpt_length'],
                'suffix' => '...'
           );
 
@@ -552,7 +552,7 @@ if ( !function_exists('get_the_recipe_taxonomy') ) {
           }
 
           $defaults = array(
-               'prefix' => $RECIPEPRESSOBJ->options['taxonomies'][$tax]['plural'] . ': ',
+               'prefix' => $RECIPEPRESSOBJ->rpr_options['taxonomies'][$tax]['plural'] . ': ',
                'divider' => ', ',
                'before-category' => '',
                'after-category' => '',
@@ -664,7 +664,7 @@ if ( !function_exists('get_recipe_controls') ) {
           $post_id = ( NULL === $post_id ) ? get_the_ID() : $post_id;
 
           $defaults = array(
-               'print' => true, /* change to this when the print options tab is active - $RECIPEPRESSOBJ->options['use-print'], */
+               'print' => true, /* change to this when the print options tab is active - $RECIPEPRESSOBJ->rpr_options['use-print'], */
               // 'recipe-box' => $RECIPEPRESSOBJ->options['use-recipe-box'],
                'print-link-image' => false,
                'add-link-image' => false,
@@ -722,7 +722,7 @@ if ( !function_exists('get_recipe_print_link') ) {
                'class' => 'recipe-print-link',
                'target' => '_top',
                'popup' => true,
-               'template' => '1',//$RECIPEPRESSOBJ->options['default-print-template'],
+               'template' => '1',//$RECIPEPRESSOBJ->rpr_options['default-print-template'],
                'print-link-image' => false,
           );
 

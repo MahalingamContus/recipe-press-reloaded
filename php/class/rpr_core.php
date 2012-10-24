@@ -45,9 +45,11 @@ class RPR_Core {
 
 //Image-sizes are the job of the template!
           /* Add custom images sizes for RecipePress */
-          //foreach ( $this->options['image-sizes'] as $image => $size ) {
-          //     add_image_size('recipe-press-' . $image, $size['width'], $size['height'], $size['crop']);
-          //}
+
+          foreach ( $this->rpr_options['image_sizes'] as $image => $size ) {
+
+               add_image_size('rpr-' . $image, $size['width'], $size['height'], $size['crop']);
+          }
      }
 
      /**
@@ -81,7 +83,7 @@ class RPR_Core {
 					'slug' => 'recipe-category',
 					'singular_name' => 'recipe category',
 					'plural_name' => 'recipe categories',
-					'hierarchical' => false,
+					'hierarchical' => true,
 					'active' => true,
 					'default' => false,
 					'allow_multiple' => true,
@@ -126,6 +128,11 @@ class RPR_Core {
                	'hour_text' => __(' hour', 'recipe-press'),
                	'minute_text' => __(' min', 'recipe-press'),
                	'time_display_type' => 'double',
+               	//Image sizes (as a fallback if not provided by theme)
+               	'image_sizes' => array(
+               		'image' => array('name' => 'RPR Image', 'width' => 250, 'height' => 250, 'crop' => isset($this->rpr_options['image_sizes']['image']['crop']) ? $this->rpr_options['image_sizes']['image']['crop'] : true, 'builtin' => true),
+                    'thumb' => array('name' => 'RPR Thumbnail', 'width' => 50, 'height' => 50, 'crop' => isset($this->rpr_options['image_sizes']['thumb']['crop']) ? $this->rpr_options['image_sizes']['thumb']['crop'] : true, 'builtin' => true),
+               		),
                	// Non-Configurable Settings 
                'menu_icon' => RPR_URL . 'images/icons/small_logo.png',
                //To think about
@@ -133,8 +140,9 @@ class RPR_Core {
                'ingredients_per_page' => 10,
                'ingredient_page' => 0,
 			);
+		  $this->rpr_options_defaults = $rpr_options_defaults;
 		  $this->rpr_options = wp_parse_args(get_option('rpr_options'), $rpr_options_defaults);
-		
+			//var_dump($this->rpr_options);
           /*$options = get_option($this->optionsName);
 
           $defaults = array(

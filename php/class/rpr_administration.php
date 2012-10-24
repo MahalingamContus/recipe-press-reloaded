@@ -307,7 +307,7 @@ class RPR_Admin extends RPR_Core {
      	foreach($this->rpr_options['taxonomies'] as $key=>$tax):
           	add_settings_section('rpr_taxonomies_'.$key, sprintf(__("Taxonomy %s", "recipe-press"), $key), array(&$this, 'rpr_section_taxonomies_tax_callback_function'), 'taxonomies_'.$key, array('key'=>$key));
           	
-          	add_settings_field('rpr_taxonomies_'.$key.'_slug', __("Taxonomy slug", "recipe-press"), array(&$this, 'rpr_options_input'), 'taxonomies_'.$key, 'rpr_taxonomies_'.$key, array( 'id'=>'taxonomies_'.$key.'_slug', 'name' => '[taxonomies][' . $key . '][slug]', 'value' => $this->rpr_options['taxonomies'][$key]['slug'],  'desc'=>__('The URL slug for listing all terms of this taxonomy.', 'recipe-press'), 'link'=>"&nbsp;<a href=\"".get_option('home')."/".$this->rpr_options['taxonomies'][$key]['slug']."\">".__('View on Site', 'recipe-press')."</a>"));
+          	add_settings_field('rpr_taxonomies_'.$key.'_slug', __("Taxonomy slug", "recipe-press"), array(&$this, 'rpr_options_input'), 'taxonomies_'.$key, 'rpr_taxonomies_'.$key, array( 'id'=>'rpr_options_taxonomies_'.$key.'_slug', 'name' => '[taxonomies][' . $key . '][slug]', 'value' => $this->rpr_options['taxonomies'][$key]['slug'],  'desc'=>__('The URL slug for listing all terms of this taxonomy.', 'recipe-press'), 'link'=>"&nbsp;<a href=\"".get_option('home')."/".$this->rpr_options['taxonomies'][$key]['slug']."\">".__('View on Site', 'recipe-press')."</a>"));
           	add_settings_field('rpr_taxonomies_'.$key.'_singular_name', __("Singular name", "recipe-press"), array(&$this, 'rpr_options_input'), 'taxonomies_'.$key, 'rpr_taxonomies_'.$key, array( 'id'=>'taxonomies_'.$key.'_singular_name', 'name' => '[taxonomies][' . $key . '][singular_name]', 'value' => $this->rpr_options['taxonomies'][$key]['singular_name'],  'desc'=>__('The name for a single term.', 'recipe-press')));
           	add_settings_field('rpr_taxonomies_'.$key.'_plural_name', __("Plural name", "recipe-press"), array(&$this, 'rpr_options_input'), 'taxonomies_'.$key, 'rpr_taxonomies_'.$key, array( 'id'=>'taxonomies_'.$key.'_plural_name', 'name' => '[taxonomies][' . $key . '][plural_name]', 'value' => $this->rpr_options['taxonomies'][$key]['plural_name'],  'desc'=>__('The name for multiple term.', 'recipe-press')));
           	add_settings_field('rpr_taxonomies_'.$key.'_page', __("Display page", "recipe-press"), array(&$this, 'rpr_options_dropdown_pages'), 'taxonomies_'.$key, 'rpr_taxonomies_'.$key, array( 'key'=>$key, 'selected' => $this->rpr_options['taxonomies'][$key]['page'],  'desc'=>sprintf(__('The page where this taxonomy will be listed. You must place the short code <strong>[%1$s]</strong> on this page to display the recipes. This will be the page that users will be directed to if the template file "%2$s" does not exist in your theme.', 'recipe-press'), 'recipe-tax tax=' . $key, 'taxonomy-recipe.php')));
@@ -315,7 +315,7 @@ class RPR_Admin extends RPR_Core {
           	add_settings_field('rpr_taxonomies_'.$key.'_default', __("Default value", "recipe-press"), array(&$this, 'rpr_options_dropdown_categories'), 'taxonomies_'.$key, 'rpr_taxonomies_'.$key, array( 'key'=>$key, 'id' => 'default',  'selected' => $this->rpr_options['taxonomies'][$key]['default'], 'desc'=>__('Default value for this taxononomy.', 'recipe-press'))); 
           	add_settings_field('rpr_taxonomies_'.$key.'_hierarchical', __("Hierarchical", "recipe-press"), array(&$this, 'rpr_options_checkbox'), 'taxonomies_'.$key, 'rpr_taxonomies_'.$key, array( 'id'=>'taxonomies_'.$key.'_hierarchical',  'name' => '[taxonomies][' . $key . '][hierarchical]', 'checked' => $this->rpr_options['taxonomies'][$key]['hierarchical'],  'desc'=>__('Check this if you want to enable nested terms for this the taxonomy', 'recipe-press')));
           	add_settings_field('rpr_taxonomies_'.$key.'_allow_multiple', __("Allow multiple", "recipe-press"), array(&$this, 'rpr_options_checkbox'), 'taxonomies_'.$key, 'rpr_taxonomies_'.$key, array( 'id'=>'taxonomies_'.$key.'_allow_multiple',  'name' => '[taxonomies][' . $key . '][allow_multiple]', 'checked' => $this->rpr_options['taxonomies'][$key]['allow_multiple'],  'desc'=>__('Check this if you want to alloow more than one term assigned to recipe', 'recipe-press')));
-          	add_settings_field('rpr_taxonomies_'.$key.'_active', __("Active", "recipe-press"), array(&$this, 'rpr_options_checkbox'), 'taxonomies-'.$key, 'rpr_taxonomies_'.$key, array( 'id'=>'taxonomies_'.$key.'_active', 'name' => '[taxonomies][' . $key . '][active]', 'checked' => $this->rpr_options['taxonomies'][$key]['active'],  'desc'=>__('Check this if you want this taxonomy to be active', 'recipe-press')));
+          	add_settings_field('rpr_taxonomies_'.$key.'_active', __("Active", "recipe-press"), array(&$this, 'rpr_options_checkbox'), 'taxonomies_'.$key, 'rpr_taxonomies_'.$key, array( 'id'=>'taxonomies_'.$key.'_active', 'name' => '[taxonomies][' . $key . '][active]', 'checked' => $this->rpr_options['taxonomies'][$key]['active'],  'desc'=>__('Check this if you want this taxonomy to be active', 'recipe-press')));
 		endforeach;
      }
      
@@ -337,6 +337,9 @@ class RPR_Admin extends RPR_Core {
      	add_settings_field('rpr_time_display_type', __("Time display type", "recipe-press"), array(&$this, 'rpr_options_dropdown'), 'display', 'rpr_display', array( 'name' => 'rpr_options[time_display_type]', 'id' => 'time_display_type', 'selected' => $this->rpr_options['time_display_type'], 'options' => array(__("Two lines", "recipe-press")=>'double', __('One line', 'recipe-press') => 'single' ), 'desc' => 'Mode to display the time field. Double means time and unit in seperate lines' ) );
      	add_settings_field('rpr_default_hour_text', __("Hours text", "recipe-press"), array(&$this, 'rpr_options_input'), 'display', 'rpr_display', array('id' => 'hour_text', 'name' => '[hour_text]', 'value' => $this->rpr_options['hour_text'], 'desc' => __( 'Text that will be displayed in front of times greater than 60 min. Use singular only.', 'recipe-press' ) ) );
      	add_settings_field('rpr_default_minute_text', __("Minutes text", "recipe-press"), array(&$this, 'rpr_options_input'), 'display', 'rpr_display', array('id' => 'minute_text', 'name' => '[minute_text]', 'value' => $this->rpr_options['minute_text'], 'desc' => __( 'Text that will be displayed in front of times. Use singular only.', 'recipe-press' ) ) );
+     	
+     	add_settings_field('rpr_image_size_image', __("Image size", "recipe-press"), array(&$this, 'rpr_options_image_size'), 'display', 'rpr_display', array('id' => 'image_sizes_image', 'name' => '[image_sizes][image]', 'width' => $this->rpr_options['image_sizes']['image']['width'], 'height' => $this->rpr_options['image_sizes']['image']['height'], 'crop' => $this->rpr_options['image_sizes']['image']['crop'], 'desc' => __( 'Image size that will be used to display images in the single view. Might be overriden by your theme.', 'recipe-press' ) ) );
+     	add_settings_field('rpr_image_size_thumb', __("Thumbnail size", "recipe-press"), array(&$this, 'rpr_options_image_size'), 'display', 'rpr_display', array('id' => 'image_sizes_thumb', 'name' => '[image_sizes][thumb]', 'width' => $this->rpr_options['image_sizes']['thumb']['width'], 'height' => $this->rpr_options['image_sizes']['thumb']['height'], 'crop' => $this->rpr_options['image_sizes']['thumb']['crop'], 'desc' => __( 'Image size that will be used to display images in the list view. Might be overriden by your theme.', 'recipe-press' ) ) );
      }
      
      /*Creates a checkbox field
@@ -348,7 +351,7 @@ class RPR_Admin extends RPR_Core {
       */
      function rpr_options_checkbox($args){
      	if(isset($args['id']) && $args['id']!="" && isset($args['checked']) ):
-     		$outp="<input id=\"rpr_" . $args['id'] . "\" name=\"";
+     		$outp="<input id=\"rpr_options_" . $args['id'] . "\" name=\"";
      		if( isset( $args['name'] ) && $args['name'] != "" ) :
      			$outp.="rpr_options".$args['name'];
      		else:
@@ -457,6 +460,7 @@ class RPR_Admin extends RPR_Core {
 	  * - desc (optional, descriptive text)
 	  */
 	 function rpr_options_dropdown_categories($args){
+	 	var_dump( $this->rpr_options['taxonomies'][$args['key']] );
 	 	if( isset( $args['key'] ) && $args['key'] != "" && isset($args['selected']) ):
 	 	 	$outp =  wp_dropdown_categories(array(
 	 	 										'name' => 'rpr_options[taxonomies][' . $args['key'] . '][default]', 
@@ -477,26 +481,84 @@ class RPR_Admin extends RPR_Core {
 		endif;
 		echo $outp;	
 	 }
+	 
+	 /*Creates a settings set for an image size
+	  * - id (id for the field)
+	  * - name (name for the field)
+	  * - crop
+	  * - width
+	  * - height
+	  */
+	 function rpr_options_image_size($args){
+	 	if( isset( $args['id'] ) && $args['id'] != "" && isset($args['crop'])):
+	 		$outp="<input id=\"" . $args['id'] ."_width\" name=\"rpr_options" . $args['name'] . "[width]\" type=\"text\" size=\"10\" value=\"" . $args['width'] . " \" />";
+			$outp.="<input id=\"" . $args['id'] ."_height\" name=\"rpr_options" . $args['name'] . "[height]\" type=\"text\" size=\"10\" value=\"" . $args['height'] . " \" />";
+			
+			$outp.= "<select name=\"rpr_options" . $args['name'] . "[crop]\" id=\"". $args['id'] ."_crop \">\n";
+	 	 		$outp .= "<option value=\"1\" " .selected($args['crop'], '1', false) . ">" . __("crop", "recipe-press") . "</option>\n";
+	 	 		$outp .= "<option value=\"0\" " .selected($args['crop'], '0', false) . ">" . __("proportional", "recipe-press") . "</option>\n";
+	 	 	$outp.= "</select>\n";
+			
+	 	 	if ( isset($args['desc']) && $args['desc'] != ""):
+     			$outp.="<p>" . $args['desc'] . "</p>";
+     		endif;
+		else:
+			$outp="<p class=\"error\">".sprintf( __('There was an error in %1$s in function %2$s. Please file a bug!', "recipe-press"), "rpr_administration.php", "rpr_options_dropdown_pages()")."</p>";
+		endif;
+		echo $outp;	
+	 }
 
      /* validate our options*/
 	function rpr_options_validate($input) {
 		//Using a very simple valifdator which just strips any HTML:
 		// Create our array for storing the validated options  
+    	
     	$output = array();  
  
     	foreach( $input as $key => $value ):  
         	// Check to see if the current option has a value and ist not an array  
-        	if( isset( $input[$key]) && !is_array($input[$key]) ):
-            	// Strip all HTML and PHP tags and properly handle quoted strings  
-            	$output[$key] = strip_tags( stripslashes( $input[ $key ] ) );
-            //If the current value is an array check it recursively using this function
-            else: 
-            	$output[$key] = $this->rpr_options_validate( $input[$key] );
-        	endif;  
+        	if( $key == 'taxonomies'):
+        		$output[$key] = $this->rpr_options_taxonomies_validate($input[$key]);
+        	elseif($key == 'image_sizes'):
+        		$output[$key] = $this->rpr_options_image_sizes_validate($input[$key]);
+        	else:
+        		$output[$key] = $this->rpr_validate_value($input[$key], $key);
+            endif; 
     	endforeach;
+    	
+    	var_dump($output);
+    	die;
 	    // Return the array processing any additional functions filtered by this action  
     	return apply_filters( 'rpr_options_validate', $output, $input );
 	}  
+	
+	private function rpr_options_taxonomies_validate($input) {
+		foreach($this->rpr_options['taxonomies'] as $taxkey=>$value):
+			foreach($this->rpr_options['taxonomies'][$taxkey] as $key=>$value):
+				if(isset($input[$taxkey][$key])):
+					$out[$taxkey][$key] = $this->rpr_validate_value($input[$taxkey][$key], $key);
+				else:
+					$out[$taxkey][$key] = $value;
+				endif;
+			endforeach;
+		endforeach;
+		
+		return $out;
+	}
+	
+	private function rpr_options_image_sizes_validate($input) {
+		foreach($this->rpr_options['image_sizes'] as $imkey=>$image_size):
+			foreach($this->rpr_options['image_sizes'][$imkey] as $key => $value):
+				if(isset($input[$imkey][$key])):
+					$out[$imkey][$key] = $this->rpr_validate_value($input[$imkey][$key], $key);
+				else:
+					$out[$imkey][$key] = $value;
+				endif;
+			endforeach;
+		endforeach;
+		
+		return $out;
+	}
 		/*
 		$options = $this->rpr_options;
 		$defaults=$this->rpr_options_defaults;
@@ -600,20 +662,39 @@ class RPR_Admin extends RPR_Core {
 	
 	//Might be of use when writing a more sophisticated validation function, currently unused:
 	/*Validators*/
-	private function valid_slug($in) {
-		if ( preg_match('/^[a-z0-9\+\-\_]+$/i', $in) ) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+
 	
-	private function valid_checkbox($in) {
-		if ( $in ==1 ) {
-			return true;
-		} else {
-			return false;
-		}
+	private function rpr_validate_value($in, $key='') {
+		$checkboxes = array(
+    		'use_categories',
+			'use_cuisines',
+			'use_servings',
+			'use_times',
+			'use_courses',
+			'use_seasons',
+			'use_thumbnails',
+			'use_featured',
+			'use_comments',
+			'use_trackbacks',
+			'use_custom_fields',
+			'use_revisions',
+			'use_post_categories',
+			'use_post_tags',
+			'hierarchical',
+			'active',
+			'allow_multiple',
+    	);
+		// Strip all HTML and PHP tags and properly handle quoted strings  
+        $out = strip_tags( stripslashes( $in ) );
+        //if is checkbox:
+        if(in_array($key, $checkboxes)):
+			if ( $in ==1 ) {
+				$out = true;
+			} else {
+				$out = false;
+			}
+		endif;
+		return $out;
 	}
 
      
