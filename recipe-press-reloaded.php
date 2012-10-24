@@ -80,12 +80,12 @@ class RecipePressReloaded extends RPR_Core {
           
 
           /* Optional filters */
-          if ( $this->options['add-to-author-list'] ) {
+          if ( $this->rpr_options['add_to_author_list'] ) {
                add_filter('request', array(&$this, 'add_recipe_to_author_list'));
           }
 
           /* Content filtering */
-          if ( !$this->options['disable-content-filter'] ) {
+          if ( !$this->rpr_options['disable_content_filter'] ) {
                add_filter('the_content', array(&$this, 'the_content_filter'));
                add_filter('the_excerpt', array(&$this, 'the_content_filter'));
           }
@@ -127,7 +127,7 @@ class RecipePressReloaded extends RPR_Core {
                $errors = $this->create_recipe();
 
                if ( count($errors) == 0 ) {
-                    $page = get_page($this->options['form-redirect']);
+                    //$page = get_page($this->rpr_options['form-redirect']);
 
                     if ( $page->ID == $post->ID ) {
                          $url = get_option('home');
@@ -179,11 +179,11 @@ class RecipePressReloaded extends RPR_Core {
                return;
           }
 
-          $wp_query->set('orderby', $this->options['recipe-orderby']);
-          $wp_query->set('order', $this->options['recipe-order']);
+          $wp_query->set('orderby', $this->rpr_options['recipe_orderby']);
+          $wp_query->set('order', $this->rpr_options['recipe_order']);
 
-          if ( $this->options['recipe-count'] != 'default' ) {
-               $wp_query->set('posts_per_page', $this->options['recipe-count']);
+          if ( $this->rpr_options['recipe_count'] != 'default' ) {
+               $wp_query->set('posts_per_page', $this->rpr_options['recipe_count']);
           }
      }
 
@@ -200,7 +200,7 @@ class RecipePressReloaded extends RPR_Core {
       */
      function wp_print_styles() {
 
-          if ( $this->options['custom-css'] ) {
+          if ( $this->rpr_options['custom_css'] ) {
                wp_enqueue_style('rpr_included_CSS');
                wp_enqueue_style('rpr_CSS');
           }

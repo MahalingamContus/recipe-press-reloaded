@@ -30,7 +30,7 @@ class RPR_Admin extends RPR_Core {
           add_action('admin_print_styles', array(&$this, 'admin_print_styles'));
           add_action('admin_print_scripts', array(&$this, 'admin_print_scripts'));
           add_action('save_post', array(&$this, 'save_recipe'));
-          add_action('update_option_' . $this->optionsName, array(&$this, 'update_option'), 10, 2);
+//          add_action('update_option_' . $this->optionsName, array(&$this, 'update_option'), 10, 2);
           add_action('right_now_content_table_end', array(&$this, 'right_now_content_table_end'));
           add_action('manage_pages_custom_column', array(&$this, 'manage_pages_custom_column'));
           add_action('wp_ajax_ingredient_lookup', array(&$this, 'ingredient_lookup'));
@@ -111,7 +111,7 @@ class RPR_Admin extends RPR_Core {
                'intro' => __('Introduction', 'recipe-press')
           );
 
-          foreach ( $this->options['taxonomies'] as $tax => $settings ) {
+          foreach ( $this->rpr_options['taxonomies'] as $tax => $settings ) {
                $settings = $this->taxDefaults($settings);
                if ( $settings['active'] and taxonomy_exists($tax) ) {
                     $columns[$tax] = $settings['plural'];
@@ -120,13 +120,13 @@ class RPR_Admin extends RPR_Core {
 
           $columns['ingredients'] = __('Ingredients', 'recipe-press');
 
-          if ( $this->options['use-featured'] ) {
+          if ( $this->rpr_options['use_featured'] ) {
                $columns['featured'] = __('Featured', 'recipe-press');
           }
 
           $columns ['author'] = __('Author', 'recipe-press');
 
-          if ( $this->options['use-comments'] ) {
+          if ( $this->rpr_options['use_comments'] ) {
                $columns['comments'] = '<img src="' . get_option('siteurl') . '/wp-admin/images/comment-grey-bubble.png" alt="Comments">';
           }
 
@@ -171,7 +171,7 @@ class RPR_Admin extends RPR_Core {
           }
 
           /* Display taxonomies if taxonomy is active */
-          if ( isset($this->options['taxonomies'][$column]) and taxonomy_exists($column) ) {
+          if ( isset($this->rpr_ptions['taxonomies'][$column]) and taxonomy_exists($column) ) {
                echo get_the_term_list($post->ID, $column, '', ', ', '');
           }
      }
@@ -745,21 +745,22 @@ class RPR_Admin extends RPR_Core {
      /**
       * AJAX handler for view all taxonomies
       */
+      //OUTDATED!!!!
      function view_all_taxonomy() {
           global $this_instance;
           $instance = get_option('widget_recipe_press_taxonomy_widget');
 
           $defaults = array(
-               'orderby' => $this->options['widget-orderby'],
-               'order' => $this->options['widget-order'],
-               'style' => $this->options['widget-style'],
-               'thumbnail_size' => 'recipe-press-thumb',
-               'hide-empty' => $this->options['widget-hide-empty'],
+               'orderby' => $this->rpr_options['widget_orderby'],
+               'order' => $this->rpr_options['widget_order'],
+               'style' => $this->rpr_options['widge_style'],
+               'thumbnail_size' => 'recipe-press-thumb', //There no thumbnail-sizes in RPR!
+               'hide-empty' => $this->rpr_options['widget_hide_empty'],
                'exclude' => NULL,
                'include' => NULL,
                'taxonomy' => 'recipe-category',
                'title' => '',
-               'items' => $this->options['widget-items'],
+               'items' => $this->rpr_options['widget_items'],
                'show-count' => false,
                'before-count' => ' ( ',
                'after-count' => ' ) ',
@@ -784,7 +785,7 @@ class RPR_Admin extends RPR_Core {
                'child_of' => 0,
                'exclude' => $instance['exclude'],
                'include' => get_published_categories($_REQUEST['tax']),
-               'hierarchical' => ($instance['taxonomy'] == 'recipe-ingredient') ? false : $this->options['taxonomies'][$instance['taxonomy']]['hierarchical'],
+               'hierarchical' => ($instance['taxonomy'] == 'recipe-ingredient') ? false : $this->rpr_options['taxonomies'][$instance['taxonomy']]['hierarchical'],
                'title_li' => '',
                'show_option_none' => __('No categories'),
                'number' => NULL,

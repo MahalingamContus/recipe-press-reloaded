@@ -42,7 +42,7 @@ $rpFilters['link'] = '<input type="checkbox" class="checkbox" name="recipe_detai
 
 <div class="detailsbox">
      <div class="details-minor">
-          <?php if ( $this->options['use-servings'] ) : ?>
+          <?php if ( $this->rpr_options['use_servings'] ) : ?>
 
                <div class="recipe-details recipe-details-servings">
                     <label for="recipe_servings"><?php _e('Servings', 'recipe-press'); ?></label>
@@ -51,7 +51,7 @@ $rpFilters['link'] = '<input type="checkbox" class="checkbox" name="recipe_detai
           </div>
           <?php endif; ?>
 
-          <?php if ( $this->options['use-times'] ) : ?>
+          <?php if ( $this->rpr_options['use_times'] ) : ?>
                     <div class="recipe-details recipe-details-prep-time">
                          <label for="recipe_prep_time"><?php _e('Prep Time', 'recipe-press'); ?></label>:
                <?php echo apply_filters('rp_details_form_prep_time', $rpFilters['prep_time']); ?>
@@ -70,7 +70,7 @@ $rpFilters['link'] = '<input type="checkbox" class="checkbox" name="recipe_detai
 
           <?php endif; ?>
 
-          <?php if ( $this->options['use-featured'] ) : ?>
+          <?php if ( $this->rpr_options['use_featured'] ) : ?>
                               <div class="recipe-details">
                                    <label for="recipe_featured"><?PHP _e('Featured?', 'recipe-press'); ?></label>
                <?php echo apply_filters('rp_details_form_featured', $rpFilters['featured']); ?>

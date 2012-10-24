@@ -126,10 +126,10 @@ class RPR_Core {
 			);
 		  $this->rpr_options = wp_parse_args(get_option('rpr_options'), $rpr_options_defaults);
 		
-          $options = get_option($this->optionsName);
+          /*$options = get_option($this->optionsName);
 
           $defaults = array(
-               /* Recipe Options */
+               // Recipe Options 
                'use-plugin-permalinks' => false,
                'index-slug' => 'recipes',
                'identifier' => 'recipe',
@@ -153,10 +153,10 @@ class RPR_Core {
                'use-revisions' => false,
                'use-post-categories' => false,
                'use-post-tags' => false,
-               //'use-categories' => false, /* Depreciated */
-               //'use-cuisines' => false, /* Depreciated */
+               //'use-categories' => false, // Depreciated 
+               //'use-cuisines' => false, // Depreciated 
                'plural-times' => false,
-               /* Taxonomy Defaults */
+               // Taxonomy Defaults 
                //'taxonomies' => array(
                     
                     
@@ -165,12 +165,12 @@ class RPR_Core {
                'ingredient-slug' => 'recipe-ingredients',
                'ingredients-per-page' => 10,
                'ingredient-page' => 0,
-               /* Image Sizes */
+               // Image Sizes 
                'image-sizes' => array(
                     'image' => array('name' => 'RecipePress Image', 'width' => 250, 'height' => 250, 'crop' => isset($options['image-sizes']['image']['crop']) ? $options['image-sizes']['image']['crop'] : true, 'builtin' => true),
                     'thumb' => array('name' => 'RecipePress Thumbnail', 'width' => 50, 'height' => 50, 'crop' => isset($options['image-sizes']['thumb']['crop']) ? $options['image-sizes']['thumb']['crop'] : true, 'builtin' => true),
                ),
-               /* Display Settings */
+               // Display Settings 
                'menu-position' => 5,
                'default-excerpt-length' => 20,
                'recipe-count' => get_option('posts_per_page'),
@@ -182,7 +182,7 @@ class RPR_Core {
                'hour-text' => __(' hour', 'recipe-press'),
                'minute-text' => __(' min', 'recipe-press'),
                'time-display-type' => 'double',
-               /* Form Defaults */
+               // Form Defaults 
 //FRONTPAGE form should be removed!!
                'form-page' => NULL,
                'form-redirect' => NULL,
@@ -197,7 +197,7 @@ class RPR_Core {
                'submit-title' => 'Share a Recipe',
                'require-login' => false,
 
-               /* Widget Defaults */
+               // Widget Defaults 
                'widget-orderby' => 'name',
                'widget-order' => 'asc',
                'widget-style' => 'list',
@@ -211,10 +211,10 @@ class RPR_Core {
                'widget-target' => NULL,
                'widget-show-icon' => false,
                'widget-icon-size' => 25,
-               /* Printing Options */
+               // Printing Options 
                'use-recipe-print' => false,
                
-               /* Recipe Box Options */
+               // Recipe Box Options 
                'use-recipe-box' => true,
                'recipe-box-slug' => 'recipe-box',
                'recipe-box-page' => false,
@@ -222,9 +222,9 @@ class RPR_Core {
                'recipe-box-add-title' => __('Add To Box', 'recipe-press'),
                'recipe-box-view-title' => __('View My Box', 'recipe-press'),
                
-               /* Non-Configurable Settings */
+               // Non-Configurable Settings 
                'menu-icon' => RPR_URL . 'images/icons/small_logo.png',
-               /* Size Settings  - DEPRICATED FOR TAXONOMY USE */
+               // Size Settings  - DEPRICATED FOR TAXONOMY USE 
                'standard' => array(
                     'ingredient-sizes' => array('bag', 'big', 'bottle', 'box', 'bunch', 'can', 'carton', 'container', 'count', 'cup', 'clove', 'dash', 'dozen', 'drop', 'envelope', 'fluid ounce', 'gallon', 'gram', 'head', 'jar', 'large', 'pound', 'leaf', 'link', 'liter', 'loaf', 'medium', 'ounce', 'package', 'packet', 'piece', 'pinch', 'pint', 'quart', 'scoop', 'sheet', 'slice', 'small', 'sprig', 'stalk', 'stick', 'strip', 'tablespoon', 'teaspoon', 'whole'),
                     'serving-sizes' => array('cup', 'quart', 'pint', 'gallon', 'dozen', 'serving', 'piece')
@@ -233,7 +233,7 @@ class RPR_Core {
                     'ingredient-sizes' => array('drop', 'dash', 'pinch', 'teaspoon', 'desert spoon', 'tablespoon', 'fluid ounce', 'pint', 'quart', 'gallon', 'pound', 'gram', 'stone', 'ton', 'milligram', 'kilogram'),
                     'serving-sizes' => array('quart', 'pint', 'gallon', 'serving', 'piece')
                ),
-               /* Nutritional Markers */
+               // Nutritional Markers 
                'nutritional-markers' => array(
                     'txt_glycemic_load' => array('name' => 'Glycemic Load'),
                     'txt_calories' => array('name' => 'Calories'),
@@ -251,7 +251,7 @@ class RPR_Core {
                ),
           );
 
-          $this->options = wp_parse_args($options, $defaults);
+          $this->options = wp_parse_args($options, $defaults); */
 /*
           // Handle renaming of built-in taxonomies
           if ( isset($this->options['taxonomies']['recipe-categories']) ) {
@@ -264,9 +264,9 @@ class RPR_Core {
                unset($this->options['taxonomies']['recipe-cuisines']);
           }
 */
-          if ( $this->options['use-thumbnails'] ) {
+          /*if ( $this->options['use-thumbnails'] ) {
                add_theme_support('post-thumbnails');
-          }
+          }*/
 
 /*          $this->formFieldNames = array(
                'title' => __('Recipe Name', 'recipe-press'),
@@ -491,9 +491,9 @@ class RPR_Core {
                     $file = get_stylesheet_directory() . $folder . $template . $ext;
                }
           } elseif ( $type == 'url' ) {
-               $file = RPR_TEMPLATES_URL . $template . $ext;
+               $file = RPR_TEMPLATES_URL .'/'. $template . $ext;
           } else {
-               $file = RPR_TEMPLATES_PATH . $template . $ext;
+               $file = RPR_TEMPLATES_PATH .'/'. $template . $ext;
           }
 
           return $file;
@@ -514,7 +514,7 @@ class RPR_Core {
           $ingredients = get_post_meta($post->ID, '_recipe_ingredient_value');
 
           if ( count($ingredients) < 1 ) {
-               return $this->emptyIngredients($this->options['ingredients-fields']);
+               return $this->emptyIngredients($this->rpr_options['ingredients_fields']);
           } else {
                $ings = array();
 
@@ -580,25 +580,25 @@ class RPR_Core {
           if ( $total > 60 ) {
                $hours = floor($total / 60);
 
-               if ( $hours > 1 and $this->options['plural-times'] )
+               if ( $hours > 1 and $this->rpr_options['plural_times'] )
                     $hplural = 's';
                else
                     $mplural = '';
 
-               $hours = $hours . ' ' . $this->options['hour-text'] . $hplural . ', ';
+               $hours = $hours . ' ' . $this->rpr_options['hour_text'] . $hplural . ', ';
           } else {
                $hours = '';
           }
 
           $mins = $total - ( $hours * 60);
 
-          if ( $mins > 1 and $this->options['plural-times'] )
+          if ( $mins > 1 and $this->rpr_options['plural_times'] )
                $mplural = 's';
           else
                $mplural = '';
 
           if ($formatted) {
-               return $hours . $mins . ' ' . $this->options['minute-text'] . $mplural;
+               return $hours . $mins . ' ' . $this->rpr_options['minute_text'] . $mplural;
           } else {
                return $total;
           }

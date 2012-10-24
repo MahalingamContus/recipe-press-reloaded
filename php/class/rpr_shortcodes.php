@@ -63,7 +63,7 @@ class RPR_ShortCodes extends RPR_Core {
 
 		  extract( shortcode_atts( array(
 			   'template' => 'shortcode-list',
-               'posts_per_page' => $this->options['recipe-count'],
+               'posts_per_page' => $this->rpr_options['recipe_count'],
                'featured' => false,
                'orderby' => 'title',
                'order' => 'ASC',
@@ -267,22 +267,22 @@ class RPR_ShortCodes extends RPR_Core {
           if ( $taxonomy == 'recipe-ingredient' ) {
                $pagination = array(
                     'total' => count($all_terms),
-                    'pages' => ceil(count($all_terms) / $this->options['ingredients-per-page']),
+                    'pages' => ceil(count($all_terms) / $this->rpr_options['ingredients_per_page']),
                     'current-page' => max($page, 1),
                     'taxonomy' => __('Ingredients', 'recipe-press'),
-                    'url' => get_permalink($this->options['ingredient-page']),
-                    'per-page' => $this->options['ingredients-per-page']
+                    'url' => get_permalink($this->rpr_options['ingredient_page']),
+                    'per-page' => $this->rpr_options['ingredients_per_page']
                );
           } else {
-               $this->options['taxonomies'][$taxonomy] = $this->taxDefaults($this->options['taxonomies'][$taxonomy]);
+               $this->rpr_options['taxonomies'][$taxonomy] = $this->taxDefaults($this->rpr_options['taxonomies'][$taxonomy]);
 
                $pagination = array(
                     'total' => count($all_terms),
-                    'pages' => ceil(count($all_terms) / $this->options['taxonomies'][$taxonomy]['per-page']),
+                    'pages' => ceil(count($all_terms) / $this->rpr_options['taxonomies'][$taxonomy]['per-page']),
                     'current-page' => max($page, 1),
-                    'taxonomy' => $this->options['taxonomies'][$taxonomy]['plural'],
-                    'url' => get_permalink($this->options['taxonomies'][$taxonomy]['page']),
-                    'per-page' => $this->options['taxonomies'][$taxonomy]['per-page']
+                    'taxonomy' => $this->rpr_options['taxonomies'][$taxonomy]['plural'],
+                    'url' => get_permalink($this->rpr_options['taxonomies'][$taxonomy]['page']),
+                    'per-page' => $this->rpr_options['taxonomies'][$taxonomy]['per-page']
                );
           }
 

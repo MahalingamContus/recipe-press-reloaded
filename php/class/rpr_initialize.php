@@ -24,16 +24,16 @@ class RPR_Init extends RPR_Core {
 		global $wpdb;
         parent::RPR_Core();
 
-		if ( $this->options['use-categories'] ) {
+		if ( $this->rpr_options['use_categories'] ) {
 			add_action('init', array($this, 'setup_categories'));
         }
-		if ( $this->options['use-cuisines'] ) {  
+		if ( $this->rpr_options['use_cuisines'] ) {  
 			add_action('init', array($this, 'setup_cuisines'));
 		}
-		if ( $this->options['use-courses'] ) {
+		if ( $this->rpr_options['use_courses'] ) {
 			add_action('init', array(&$this, 'setup_courses'));
 		}
-		if ( $this->options['use-seasons'] ) {
+		if ( $this->rpr_options['use_seasons'] ) {
 			add_action('init', array(&$this, 'setup_seasons'));
 		}
                
@@ -49,11 +49,11 @@ class RPR_Init extends RPR_Core {
 		add_filter('archive_template', array($this, 'archive_template'), 10, 1);
 
 		/* Use built in categories and tags. */
-		if ( $this->options['use-post-categories'] ) {
+		if ( $this->rpr_options['use_post_categories'] ) {
 			register_taxonomy_for_object_type('post_categories', 'recipe');
 		}
 
-		if ( $this->options['use-post-tags'] ) {
+		if ( $this->rpr_options['use_post_tags'] ) {
 			register_taxonomy_for_object_type('post_tag', 'recipe');
 		}
 	}
@@ -87,22 +87,22 @@ class RPR_Init extends RPR_Core {
      function create_post_type() {
           global $wp_version;
 
-          $page = get_page($this->options['display-page']);
+          $page = get_page($this->rpr_options['display_page']);
           $labels = array(
-               'name' => $this->options['plural-name'],
-               'singular_name' => $this->options['singular-name'],
+               'name' => $this->rpr_options['plural_name'],
+               'singular_name' => $this->rpr_options['singular_name'],
                'add_new' => __('Add New', 'recipe-press'),
-               'add_new_item' => sprintf(__('Add New %1$s', 'recipe-press'), $this->options['singular-name']),
-               'edit_item' => sprintf(__('Edit %1$s', 'recipe-press'), $this->options['singular-name']),
+               'add_new_item' => sprintf(__('Add New %1$s', 'recipe-press'), $this->rpr_options['singular_name']),
+               'edit_item' => sprintf(__('Edit %1$s', 'recipe-press'), $this->rpr_options['singular_name']),
                'edit' => __('Edit', 'recipe-press'),
-               'new_item' => sprintf(__('New %1$s', 'recipe-press'), $this->options['singular-name']),
-               'view_item' => sprintf(__('View %1$s', 'recipe-press'), $this->options['singular-name']),
-               'search_items' => sprintf(__('Search %1$s', 'recipe-press'), $this->options['singular-name']),
-               'not_found' => sprintf(__('No %1$s found', 'recipe-press'), $this->options['plural-name']),
-               'not_found_in_trash' => sprintf(__('No %1$s found in Trash', 'recipe-press'), $this->options['plural-name']),
-               'view' => sprintf(__('View %1$s', 'recipe-press'), $this->options['singular-name']),
-               'parent_item' => sprintf(__('Parent %1$s', 'recipe-press'), $this->options['singular-name']),
-               'parent_item_colon' => sprintf(__('Parent %1$s:', 'recipe-press'), $this->options['singular-name']),
+               'new_item' => sprintf(__('New %1$s', 'recipe-press'), $this->rpr_options['singular_name']),
+               'view_item' => sprintf(__('View %1$s', 'recipe-press'), $this->rpr_options['singular_name']),
+               'search_items' => sprintf(__('Search %1$s', 'recipe-press'), $this->rpr_options['singular-_ame']),
+               'not_found' => sprintf(__('No %1$s found', 'recipe-press'), $this->rpr_options['plural_name']),
+               'not_found_in_trash' => sprintf(__('No %1$s found in Trash', 'recipe-press'), $this->rpr_options['plural_name']),
+               'view' => sprintf(__('View %1$s', 'recipe-press'), $this->rpr_options['singular_name']),
+               'parent_item' => sprintf(__('Parent %1$s', 'recipe-press'), $this->rpr_options['singular_name']),
+               'parent_item_colon' => sprintf(__('Parent %1$s:', 'recipe-press'), $this->rpr_options['singular_name']),
           );
           $args = array(
                'labels' => $labels,
@@ -112,43 +112,43 @@ class RPR_Init extends RPR_Core {
                'query_var' => true,
                'capability_type' => 'page',
                'hierarchical' => false,
-               'menu_position' => (int) $this->options['menu-position'],
-               'menu_icon' => $this->options['menu-icon'],
+               'menu_position' => (int) $this->rpr_options['menu_position'],
+               'menu_icon' => $this->rpr_options['menu_icon'],
                'supports' => array('title', 'editor', 'author', 'excerpt', 'page-attributes'),
                'register_meta_box_cb' => array(&$this, 'init_metaboxes'),
           );
 
-          if ( $this->options['use-custom-fields'] ) {
+          if ( $this->rpr_options['use_custom_fields'] ) {
                $args['supports'][] = 'custom-fields';
           }
 
-          if ( $this->options['use-thumbnails'] ) {
+          if ( $this->rpr_options['use_thumbnails'] ) {
                $args['supports'][] = 'thumbnail';
           }
 
-          if ( $this->options['use-comments'] ) {
+          if ( $this->rpr_options['use_comments'] ) {
                $args['supports'][] = 'comments';
           }
 
-          if ( $this->options['use-trackbacks'] ) {
+          if ( $this->rpr_options['use_trackbacks'] ) {
                $args['supports'][] = 'trackbacks';
           }
 
-          if ( $this->options['use-revisions'] ) {
+          if ( $this->rpr_options['use_revisions'] ) {
                $args['supports'][] = 'revisions';
           }
 
-          if ( $this->options['use-post-tags'] ) {
+          if ( $this->rpr_options['use_post_tags'] ) {
                $args['taxonomies'][] = 'post_tag';
           }
 
-          if ( $this->options['use-post-categories'] ) {
+          if ( $this->rpr_options['use_post_categories'] ) {
                $args['taxonomies'][] = 'category';
           }
 
         //  if (  !$this->options['use-plugin-permalinks'] ) {
                $args['rewrite'] = true;
-               $args['has_archive'] = $this->options['index-slug'];
+               $args['has_archive'] = $this->rpr_options['index_slug'];
          // }
           
           register_post_type('recipe', $args);
@@ -215,22 +215,22 @@ class RPR_Init extends RPR_Core {
                     if ( $taxonomy == 'recipe-ingredient' ) {
                          $pagination = array(
                               'total' => count($all_terms),
-                              'pages' => ceil(count($all_terms) / $this->options['ingredients-per-page']),
+                              'pages' => ceil(count($all_terms) / $this->rpr_options['ingredients_per_page']),
                               'current-page' => max($page, 1),
                               'taxonomy' => __('Ingredients', 'recipe-press'),
-                              'url' => get_option('home') . '/' . $this->options['ingredient-slug'],
-                              'per-page' => $this->options['ingredients-per-page']
+                              'url' => get_option('home') . '/' . $this->rpr_options['ingredient_slug'],
+                              'per-page' => $this->rpr_options['ingredients_per_page']
                          );
                     } else {
-                         $this->options['taxonomies'][$taxonomy] = $this->taxDefaults($this->options['taxonomies'][$taxonomy]);
+                         $this->rpr_options['taxonomies'][$taxonomy] = $this->taxDefaults($this->rpr_options['taxonomies'][$taxonomy]);
 
                          $pagination = array(
                               'total' => count($all_terms),
-                              'pages' => ceil(count($all_terms) / $this->options['taxonomies'][$taxonomy]['per-page']),
+                              'pages' => ceil(count($all_terms) / $this->rpr_options['taxonomies'][$taxonomy]['per-page']),
                               'current-page' => max($page, 1),
-                              'taxonomy' => $this->options['taxonomies'][$taxonomy]['plural'],
-                              'url' => get_option('home') . '/' . $this->options['taxonomies'][$taxonomy]['slug'],
-                              'per-page' => $this->options['taxonomies'][$taxonomy]['per-page']
+                              'taxonomy' => $this->rpr_options['taxonomies'][$taxonomy]['plural'],
+                              'url' => get_option('home') . '/' . $this->rpr_options['taxonomies'][$taxonomy]['slug'],
+                              'per-page' => $this->rpr_options['taxonomies'][$taxonomy]['per-page']
                          );
                     }
                     unset($atts['fields']);
@@ -250,15 +250,15 @@ class RPR_Init extends RPR_Core {
                     $taxonomy = get_query_var('recipe-taxonomy');
 
                     if ( $taxonomy == 'recipe-ingredient' ) {
-                         $pageID = $this->options['ingredient-page'];
+                         $pageID = $this->rpr_options['ingredient_page'];
                     } else {
-                         $pageID = $this->options['taxonomies'][$taxonomy]['page'];
+                         $pageID = $this->rpr_options['taxonomies'][$taxonomy]['page'];
                     }
 
                     if ( $pageID and get_page($pageID) ) {
                          wp_redirect(get_permalink($pageID));
                     } else {
-                         wp_redirect(get_option('home') . '/' . $this->options['index-slug']);
+                         wp_redirect(get_option('home') . '/' . $this->rpr_options['index_slug']);
                     }
                }
           }
@@ -304,7 +304,7 @@ class RPR_Init extends RPR_Core {
                if ( get_query_var('recipe-taxonomy') == 'recipe-ingredient' ) {
                     $title = __('Recipe Ingredients', 'recipe-press');
                } else {
-                    $title = $this->options['taxonomies'][get_query_var('recipe-taxonomy')]['plural'];
+                    $title = $this->rpr_options['taxonomies'][get_query_var('recipe-taxonomy')]['plural'];
                }
                return $title . ' | ' . get_bloginfo('name');
           }
@@ -344,7 +344,7 @@ class RPR_Init extends RPR_Core {
                $leavename ? '' : '%pagename%',
           );
 
-          $permastructure = array('identifier' => $this->options['identifier'], 'structure' => $this->options['permalink']);
+          $permastructure = array('identifier' => $this->rpr_options['identifier'], 'structure' => $this->rpr_options['permalink']);
           $identifier = $permastructure['identifier'];
           $permalink = $permastructure['structure'];
           if ( '' != $permalink && get_option('permalink_structure') && !in_array($post->post_status, array('draft', 'pending', 'auto-draft')) ) {
@@ -666,7 +666,7 @@ class RPR_Init extends RPR_Core {
           );
 
           register_taxonomy('recipe-ingredient', array('recipe'), $args);
-          $this->taxonomy_rewrite_rules('recipe-ingredient', array('slug' => $this->options['ingredient-slug']));
+          $this->taxonomy_rewrite_rules('recipe-ingredient', array('slug' => $this->rpr_options['ingredient_slug']));
 
           return true;
      }
