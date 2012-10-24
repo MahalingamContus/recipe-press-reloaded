@@ -97,7 +97,7 @@ class RPR_Init extends RPR_Core {
                'edit' => __('Edit', 'recipe-press'),
                'new_item' => sprintf(__('New %1$s', 'recipe-press'), $this->rpr_options['singular_name']),
                'view_item' => sprintf(__('View %1$s', 'recipe-press'), $this->rpr_options['singular_name']),
-               'search_items' => sprintf(__('Search %1$s', 'recipe-press'), $this->rpr_options['singular-_ame']),
+               'search_items' => sprintf(__('Search %1$s', 'recipe-press'), $this->rpr_options['singular_name']),
                'not_found' => sprintf(__('No %1$s found', 'recipe-press'), $this->rpr_options['plural_name']),
                'not_found_in_trash' => sprintf(__('No %1$s found in Trash', 'recipe-press'), $this->rpr_options['plural_name']),
                'view' => sprintf(__('View %1$s', 'recipe-press'), $this->rpr_options['singular_name']),

@@ -43,10 +43,11 @@ class RPR_Core {
           //RPR_TEMPLATES_URL = WP_PLUGIN_URL . '/' . basename(dirname(dirname(dirname(__FILE__)))) . '/templates/';
           $this->loadSettings();
 
+//Image-sizes are the job of the template!
           /* Add custom images sizes for RecipePress */
-          foreach ( $this->options['image-sizes'] as $image => $size ) {
-               add_image_size('recipe-press-' . $image, $size['width'], $size['height'], $size['crop']);
-          }
+          //foreach ( $this->options['image-sizes'] as $image => $size ) {
+          //     add_image_size('recipe-press-' . $image, $size['width'], $size['height'], $size['crop']);
+          //}
      }
 
      /**
@@ -60,6 +61,8 @@ class RPR_Core {
   			'plural_name' => 'recipes',
   			'identifier' => 'recipe',
 			'permalink_structure' => '%identifier%/%postname%',
+			'use_categories' => true,
+			'use_cuisines' => true,
 			'use_servings' => true,
 			'use_times' => true,
 			'use_courses' => true,
@@ -123,6 +126,12 @@ class RPR_Core {
                	'hour_text' => __(' hour', 'recipe-press'),
                	'minute_text' => __(' min', 'recipe-press'),
                	'time_display_type' => 'double',
+               	// Non-Configurable Settings 
+               'menu_icon' => RPR_URL . 'images/icons/small_logo.png',
+               //To think about
+               'ingredient_slug' => 'recipe-ingredients',
+               'ingredients_per_page' => 10,
+               'ingredient_page' => 0,
 			);
 		  $this->rpr_options = wp_parse_args(get_option('rpr_options'), $rpr_options_defaults);
 		
