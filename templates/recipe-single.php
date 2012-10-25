@@ -21,29 +21,30 @@ if ( preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']) ) {
     </ul>
     <div class="recipe-header">      
         <?php if ( function_exists('has_post_thumbnail') && has_post_thumbnail() ) : ?>
-            <div class="recipe-press-image align-left">
-                <?php the_post_thumbnail('recipe-press-image'); ?>
+            <div class="rpr-image align-left">
+                <?php the_post_thumbnail('rpr-image'); ?>
             </div>
         <?php endif; ?> 
         <p class="recipe-notes"><?php the_recipe_introduction(array('length' => '5000')); ?></p>
         <?php if ( use_recipe_categories() ) :?>
-            <span class="recipe-category">
+            <div class="recipe-category" >
                 <?php _e('Posted in: ', 'recipe-press');
                 the_terms(get_the_id(), 'recipe-category');?>
-            </span><br/>
+            </div>
         <?php endif; ?>
         <?php if ( use_recipe_cuisines() ): ?>
-            <span class="recipe-cuisine">
+            <div class="recipe-cuisine">
                 <?php _e('from: ', 'recipe-press');
                 the_terms(get_the_id(), 'recipe-cuisine');?>
-            </span><br/>
+            </div>
         <?php endif; ?>
         <?php if ( use_recipe_seasons() ): ?>
-            <span class="recipe-season">
+            <div class="recipe-season">
                 <?php _e('Season: ', 'recipe-press');
                 the_terms(get_the_id(), 'recipe-season');?>
-            </span><br/>
+            </div>
         <?php endif; ?>
+        <div class="recipe-course-sevings">
         <?php if ( use_recipe_courses() ): ?>
             <span class="recipe-course">
                 <?php the_terms(get_the_id(), 'recipe-course');?>
@@ -55,6 +56,7 @@ if ( preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']) ) {
                 <?php the_recipe_servings(); ?>
             </span>
         <?php endif; ?>
+        </div>
     </div><!-- .recipe-header -->
     <?php if ( use_recipe_times ( ) && get_recipe_prep_time() != ""  ) : ?>
         <div id="recipe-details-<?php the_ID(); ?>" class="recipe-section recipe-section-<?php the_id(); ?>">

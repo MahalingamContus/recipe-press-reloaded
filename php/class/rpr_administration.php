@@ -526,8 +526,6 @@ class RPR_Admin extends RPR_Core {
             endif; 
     	endforeach;
     	
-    	var_dump($output);
-    	die;
 	    // Return the array processing any additional functions filtered by this action  
     	return apply_filters( 'rpr_options_validate', $output, $input );
 	}  
@@ -683,12 +681,13 @@ class RPR_Admin extends RPR_Core {
 			'hierarchical',
 			'active',
 			'allow_multiple',
+			'crop',
     	);
 		// Strip all HTML and PHP tags and properly handle quoted strings  
         $out = strip_tags( stripslashes( $in ) );
         //if is checkbox:
         if(in_array($key, $checkboxes)):
-			if ( $in ==1 ) {
+			if ( $in == 1 or $in == '1' ) {
 				$out = true;
 			} else {
 				$out = false;

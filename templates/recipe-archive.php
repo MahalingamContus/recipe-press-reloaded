@@ -19,28 +19,29 @@ global $wp_query;
 <div id="post-<?php the_ID(); ?>" <?php post_class('recipe'); ?>>
     <?php if ( function_exists('has_post_thumbnail') && has_post_thumbnail() ) : ?>
         <div class="recipe-press-image align-left">
-            <a href="<?php the_permalink();?>"><?php the_post_thumbnail('recipe-press-image'); ?></a>
+            <a href="<?php the_permalink();?>"><?php the_post_thumbnail('rpr-image'); ?></a>
         </div>
     <?php endif; ?> 
     <p class="recipe-notes"><?php the_recipe_introduction(array('length' => '5000')); ?></p>
         <?php if ( use_recipe_categories() ) :?>
-            <span class="recipe-category">
+            <div class="recipe-category">
                 <?php _e('Posted in: ', 'recipe-press');
                 the_terms(get_the_id(), 'recipe-category');?>
-            </span><br/>
+            </div>
         <?php endif; ?>
         <?php if ( use_recipe_cuisines() ): ?>
-            <span class="recipe-cuisine">
+            <div class="recipe-cuisine">
                 <?php _e('from: ', 'recipe-press');
                 the_terms(get_the_id(), 'recipe-cuisine');?>
-            </span><br/>
+            </div>
         <?php endif; ?>
         <?php if ( use_recipe_seasons() ): ?>
-            <span class="recipe-season">
+            <div class="recipe-season">
                 <?php _e('Season: ', 'recipe-press');
                 the_terms(get_the_id(), 'recipe-season');?>
-            </span><br/>
+            </div>
         <?php endif; ?>
+        <div class="recipe-course-servings">
         <?php if ( use_recipe_courses() ): ?>
             <span class="recipe-course">
                 <?php the_terms(get_the_id(), 'recipe-course');?>
@@ -52,5 +53,6 @@ global $wp_query;
                 <?php the_recipe_servings(); ?>
             </span>
         <?php endif; ?>
+        </div>
      <div class="cleared"></div>
 </div><!-- #post-## -->
