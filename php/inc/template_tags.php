@@ -350,12 +350,12 @@ if ( !function_exists('get_recipe_ingredients') ) {
                global $post;
           }
 
+		  //$post_meta = get_post_meta($post->ID);
           $ingredients = $RECIPEPRESSOBJ->getIngredients($post);
 
           $content = '<ul class="rp_ingredients">';
 
           foreach ( $ingredients as $ingredient ) {
-
                if ( $ingredient['size'] != 'divider' ) {
                     $term = get_term_by('id', $ingredient['item'], 'recipe-ingredient');
 
@@ -366,14 +366,19 @@ if ( !function_exists('get_recipe_ingredients') ) {
                          $ingredient['name'] = $term->name;
                     }
 
+					//Link ingredients if we have a general setting for that - or a special page or link defined for the special ingredient
+					//special link has highest priority:
                     if ( isset($ingredient['page-link']) and $ingredient['page-link'] != 0 ) {
                          $link = get_page_link($ingredient['page-link']);
                          $target = "_top";
                     } elseif ( isset($ingredient['url']) and $ingredient['url'] != '' ) {
                          $link = $ingredient['url'];
                          $target = "_blank";
-                    } else {
-                         unset($link);
+                    /*} elseif ($post_meta['_recipe_link_ingredients_value'][0] == 1) {
+                    	var_dump($RECIPEPRESSOBJ->rpr_options['taxonomies']['recipe-ingredient']['page']);
+                    	$link=get_page_link($ingredient['page-link']);*/
+                    }else{
+                    	unset($link);
                     }
 
                     if ( isset($ingredient['notes']) ) {
@@ -406,13 +411,21 @@ if ( !function_exists('get_recipe_ingredients') ) {
                               $ingredient['size'] = rpr_inflector::plural($ingredient['size'], $ingredient['total']);
                          }
                     }
-
+                    
                     if ( $ingredient['size'] == 'divider' ) {
                          $content.= '</ul><h4 class="recipe-section-title">' . $ingredient['name'] . '</h4><ul class="rp_ingredients">';
                     } elseif ( isset($link) ) {
                          $content.= '<li class="rp_ingredient">' . $ingredient['quantity'] . ' ' . $ingredient['size'] . ' <a href="' . $link . '" target="' . $target . '">' . $ingredient['name'] . '</a> ' . $notes . '</li>';
-                    } elseif ( get_post_meta($post->ID, '_recipe_link_ingredients_value', true) ) {
-                         $content.= '<li class="rp_ingredient">' . $ingredient['quantity'] . ' ' . $ingredient['size'] . ' <a href="' . get_term_link($term, 'recipe-ingredient') . '">' . $ingredient['name'] . '</a>' . $notes . '</li>';
+                    } elseif ( $RECIPEPRESSOBJ->rpr_options['link_ingredients'] == true ) {
+                    //} elseif ( get_post_meta($post->ID, '_recipe_link_ingredients_value', true) ) {
+                    	//if a page is set for ingredients display use this:
+                    	if($RECIPEPRESSOBJ->rpr_options['taxonomies']['recipe-ingredient']['page'] >= 0):
+                    		$link = get_page_link($RECIPEPRESSOBJ->rpr_options['taxonomies']['recipe-ingredient']['page']);
+                    	else:
+                    	//else use the taxonomy link
+                    		$link = get_term_link($term, 'recipe-ingredient');
+                    	endif;
+                         $content.= '<li class="rp_ingredient">' . $ingredient['quantity'] . ' ' . $ingredient['size'] . ' <a href="' . $link . '">' . $ingredient['name'] . '</a>' . $notes . '</li>';
                     } else {
                          $content.= '<li class="rp_ingredient">' . $ingredient['quantity'] . ' ' . $ingredient['size'] . ' ' . $ingredient['name'] . $notes . '</li>';
                     }

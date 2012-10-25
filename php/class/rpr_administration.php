@@ -336,6 +336,8 @@ class RPR_Admin extends RPR_Core {
      	add_settings_field('rpr_custom_css', __('Use plugin CSS', 'recipe-press'), array(&$this, 'rpr_options_checkbox'), 'display', 'rpr_display', array( 'id' => 'custom_css', 'checked' => $this->rpr_options['custom_css'], 'desc' => __('Check this to use the builtin css from the plugin.', 'recipe-press' ) ) );
      	add_settings_field('rpr_disable_content_filter', __('Disable content filter', 'recipe-press'), array(&$this, 'rpr_options_checkbox'), 'display', 'rpr_display', array( 'id' => 'disable_content_filter', 'checked' => $this->rpr_options['disable_content_filter'], 'desc' => __('Check this this option to completely disable any content filtering. <strong>Warning!</strong> Only do this if you have created template files and are having an issue with template display.', 'recipe-press' ) ) );
      	
+     	add_settings_field('rpr_link_ingredients', __('Link ingredients', 'recipe-press'), array(&$this, 'rpr_options_checkbox'), 'display', 'rpr_display', array( 'id' => 'link_ingredients', 'checked' => $this->rpr_options['link_ingredients'], 'desc' => __('Check this to link ingredients to the taxonomy listing or the page set in the taxonomies tab.', 'recipe-press' ) ) );
+     	
      	add_settings_field('rpr_time_display_type', __("Time display type", "recipe-press"), array(&$this, 'rpr_options_dropdown'), 'display', 'rpr_display', array( 'name' => 'rpr_options[time_display_type]', 'id' => 'time_display_type', 'selected' => $this->rpr_options['time_display_type'], 'options' => array(__("Two lines", "recipe-press")=>'double', __('One line', 'recipe-press') => 'single' ), 'desc' => 'Mode to display the time field. Double means time and unit in seperate lines' ) );
      	add_settings_field('rpr_default_hour_text', __("Hours text", "recipe-press"), array(&$this, 'rpr_options_input'), 'display', 'rpr_display', array('id' => 'hour_text', 'name' => '[hour_text]', 'value' => $this->rpr_options['hour_text'], 'desc' => __( 'Text that will be displayed in front of times greater than 60 min. Use singular only.', 'recipe-press' ) ) );
      	add_settings_field('rpr_default_minute_text', __("Minutes text", "recipe-press"), array(&$this, 'rpr_options_input'), 'display', 'rpr_display', array('id' => 'minute_text', 'name' => '[minute_text]', 'value' => $this->rpr_options['minute_text'], 'desc' => __( 'Text that will be displayed in front of times. Use singular only.', 'recipe-press' ) ) );
@@ -684,6 +686,7 @@ class RPR_Admin extends RPR_Core {
 			'active',
 			'allow_multiple',
 			'crop',
+			'link_ingredients',
     	);
 		// Strip all HTML and PHP tags and properly handle quoted strings  
         $out = strip_tags( stripslashes( $in ) );

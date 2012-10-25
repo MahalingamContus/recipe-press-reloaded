@@ -151,6 +151,7 @@ class RPR_Core {
                	'hour_text' => __(' hour', 'recipe-press'),
                	'minute_text' => __(' min', 'recipe-press'),
                	'time_display_type' => 'single',
+               	'link_ingredients' => false,
                	//Image sizes (as a fallback if not provided by theme)
                	'image_sizes' => array(
                		'image' => array('name' => 'RPR Image', 'width' => 250, 'height' => 250, 'crop' => isset($this->rpr_options['image_sizes']['image']['crop']) ? $this->rpr_options['image_sizes']['image']['crop'] : true, 'builtin' => true),
