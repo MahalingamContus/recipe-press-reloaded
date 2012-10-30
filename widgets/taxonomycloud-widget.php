@@ -1,4 +1,8 @@
 <?php
+if ( preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']) ) {
+     die('You are not allowed to call this page directly.');
+}
+
 /*
  * Created on 30.10.2012
  *
@@ -93,7 +97,7 @@ class RPR_Widget_Taxonomy_Cloud extends WP_Widget {
 		echo "\r\n".'<p><label for="'.$field_id.'">'.__('Number auf items to display', 'recipe-press').': <input type="text" class="widefat" id="'.$field_id.'" name="'.$field_name.'" value="'.esc_attr( $instance['limit'] ).'" /><label></p>';
         $field_id = $this->get_field_id('exclude');
 		$field_name = $this->get_field_name('exclude');
-		echo "\r\n".'<p><label for="'.$field_id.'">'.__('Exclude ingredients', 'recipe-press').': </label><textarea class="widefat" id="'.$field_id.'" name="'.$field_name.'">'.esc_attr( $instance['exclude'] ).'</textarea></p>';
+		echo "\r\n".'<p><label for="'.$field_id.'">'.__('Exclude terms', 'recipe-press').': </label><textarea class="widefat" id="'.$field_id.'" name="'.$field_name.'">'.esc_attr( $instance['exclude'] ).'</textarea></p>';
 	}
 	
 	//From:  http://cfpg.me/post/WordPress%3A+Get+Tag+ID+using+only+the+Tag+Name/
