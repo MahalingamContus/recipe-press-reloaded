@@ -242,6 +242,7 @@ if(class_exists("RecipePressReloaded")):
 	
 	/* Add Widgets */
 	include_once(RPR_PATH . 'widgets/list-widget.php');
+	include_once(RPR_PATH . 'widgets/taxonomycloud-widget.php');
 	include_once(RPR_PATH . 'widgets/category-widget.php');
 	include_once(RPR_PATH . 'widgets/taxonomy-widget.php');
 	
