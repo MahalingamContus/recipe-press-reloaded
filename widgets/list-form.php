@@ -34,7 +34,7 @@ if ( preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']) ) {
           <?php _e('Display Type:', 'recipe-press'); ?>
      </label>
      <select name="<?php echo $this->get_field_name('type'); ?>" id="<?php echo $this->get_field_id('type'); ?>">
-          <option value="newest" <?php selected($instance['type'], 'newest'); ?> ><?php _e('Newest Recipes', 'recipe-press'); ?></option>
+          <option value="newest" <?php selected($instance['type'], 'newest', false); ?> ><?php _e('Newest Recipes', 'recipe-press'); ?></option>
           <option value="random" <?php selected($instance['type'], 'random'); ?> ><?php _e('Random Recipes', 'recipe-press'); ?></option>
           <!--<option value="popular" <?php selected($instance['type'], 'popular'); ?> ><?php _e('Most Popular', 'recipe-press'); ?></option>-->
           <option value="featured" <?php selected($instance['type'], 'featured'); ?> ><?php _e('Featured', 'recipe-press'); ?></option>

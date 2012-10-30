@@ -67,6 +67,15 @@ ul.recipe-details li span{
 margin-top:50px;
 clear:both;
 }
+
+/*Widget styles*/
+li.rpr-list-class img{
+	float:left;
+	margin-right:10px;
+}
+li.rpr-list-class{
+	clear:both;
+}
 /*OLD, might be outdated */
 /* Form settings */
 
