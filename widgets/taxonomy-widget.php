@@ -16,7 +16,6 @@ if ( preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']) ) {
  */
 class RPR_Taxonomy_List_Widget extends WP_Widget {
 
-     var $recipePress;
      var $options = array();
 
      /**
