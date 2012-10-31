@@ -46,7 +46,7 @@ if ( !defined('RPR_BASENAME') )
 load_plugin_textdomain( 'recipe-press-reloaded', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
 /*Set plugin version*/
-define( 'RPR_VERSION', '0.1' );
+define( 'RPR_VERSION', '0.2' );
 
 require_once('php/class/rpr_core.php');
 require_once('php/class/rpr_administration.php');
@@ -242,9 +242,9 @@ if(class_exists("RecipePressReloaded")):
 	
 	/* Add Widgets */
 	include_once(RPR_PATH . 'widgets/list-widget.php');
-	include_once(RPR_PATH . 'widgets/taxonomycloud-widget.php');
+	include_once(RPR_PATH . 'widgets/taxonomy-cloud-widget.php');
 	include_once(RPR_PATH . 'widgets/same-taxonomy-widget.php');
-	include_once(RPR_PATH . 'widgets/taxonomy-widget.php');
+	include_once(RPR_PATH . 'widgets/taxonomy-list-widget.php');
 	
 	/* Activation Hook */
 	register_activation_hook(__FILE__, 'recipe_press_activation');

@@ -59,17 +59,8 @@ class RPR_Widget_List_Recipes extends WP_Widget {
           }
 
           extract($args, EXTR_SKIP);
-          //$instance = $this->defaults($instance);
 
-/*          if ( $instance['items'] < 1 or $instance['items'] > 20 ) {
-               $instance['items'] = $this->options['widget-items'];
-          }
-
-          if ( isset($this->options['form-page']) ) {
-               $page = get_page($this->options['form-page']);
-          }
-*/
-          echo $before_widget;
+	      echo $before_widget;
 
           if ( $instance['title'] ) {
                echo $before_title . $instance['title'] . $after_title;
@@ -129,9 +120,6 @@ class RPR_Widget_List_Recipes extends WP_Widget {
                		'items' => 10,
                		'type' => 'newest',
                		'sort_order' => 'asc',
-               		/*'category' => false,
-               		'submit_link' => false,
-               		'linktarget' => $this->options['widget-target'],*/
                		'show_icon' => true,
                		'icon_size' => 50,
                		'li-class' => 'rpr-list-class',
@@ -168,7 +156,6 @@ class RPR_Widget_List_Recipes extends WP_Widget {
           
           /** @see WP_Widget::update */
 		function update($new_instance, $old_instance) {
-			//var_dump($new_instance); die;
 			// fill current state with old data to be sure we not loose anything
 			$instance = $old_instance;
 			// for example we want title always have capitalized first letter
