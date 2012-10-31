@@ -117,7 +117,7 @@ if ( !function_exists('get_recipe_time') ) {
           $defaults = array(
                'time' => 'prep',
                'type' => $RECIPEPRESSOBJ->rpr_options['time_display_type'],
-               'title' => __('Prep Time', 'recipe-press'),
+               'title' => __('Prep Time', 'recipe-press-reloaded'),
                'prefix' => ' : ',
                'suffix' => $RECIPEPRESSOBJ->rpr_options['minute_text'],
                'tag' => 'li',
@@ -166,7 +166,7 @@ if ( !function_exists('get_recipe_prep_time') ) {
           }
 
           $args['time'] = 'prep';
-          $args['title'] = __('Prep Time', 'recipe-press');
+          $args['title'] = __('Prep Time', 'recipe-press-reloaded');
           return apply_filters('recipe_pres_prep_time', get_recipe_time($args, $post));
      }
 
@@ -201,7 +201,7 @@ if ( !function_exists('get_recipe_cook_time') ) {
           }
 
           $args['time'] = 'cook';
-          $args['title'] = __('Cook Time', 'recipe-press');
+          $args['title'] = __('Cook Time', 'recipe-press-reloaded');
           $args['class'] = 'cook-time';
           return apply_filters('recipe_press_cook_time', get_recipe_time($args, $post));
      }
@@ -237,7 +237,7 @@ if ( !function_exists('get_recipe_ready_time') ) {
           }
 
           $args['time'] = 'ready';
-          $args['title'] = __('Ready Time', 'recipe-press');
+          $args['title'] = __('Ready Time', 'recipe-press-reloaded');
           $args['class'] = 'ready-time';
 
           if ( !isset($args['suffix']) ) {
@@ -592,7 +592,7 @@ if ( !function_exists('get_the_recipe_category') ) {
       */
      function get_the_recipe_category($args = array(), $post = NULL) {
           if ( !isset($args['prefix']) ) {
-               $args['prefix'] = __('Posted In: ', 'recipe-press');
+               $args['prefix'] = __('Posted In: ', 'recipe-press-reloaded');
           }
           return apply_filters('recipe_press_categories', get_the_recipe_taxonomy('recipe-category', $args, $post));
      }
@@ -730,7 +730,7 @@ if ( !function_exists('get_recipe_print_link') ) {
           $post_id = ( NULL === $post_id ) ? get_the_ID() : $post_id;
 
           $defaults = array(
-               'title' => __('Print', 'recipe-press'),
+               'title' => __('Print', 'recipe-press-reloaded'),
                'tag' => 'li',
                'class' => 'recipe-print-link',
                'target' => '_top',
@@ -822,7 +822,7 @@ if ( !function_exists('get_the_next_recipe_link') ) {
           $current_page = get_query_var('page');
 
           $defaults = array(
-               'link' => __('&larr; More Recipes', 'recipe-press'),
+               'link' => __('&larr; More Recipes', 'recipe-press-reloaded'),
           );
 
           $args = wp_parse_args($args, $defaults);
@@ -856,7 +856,7 @@ if ( !function_exists('get_the_previous_recipe_link') ) {
           $current_page = get_query_var('page');
 
           $defaults = array(
-               'link' => __('More Recipes &rarr;', 'recipe-press'),
+               'link' => __('More Recipes &rarr;', 'recipe-press-reloaded'),
           );
 
           $args = wp_parse_args($args, $defaults);

@@ -13,7 +13,7 @@ class RPR_Widget_Taxonomy_Cloud extends WP_Widget {
 	// constructor
 	function RPR_Widget_Taxonomy_Cloud() {
 		// use parent constructor to re-write standard class properties
-		parent::WP_Widget('RPR_Widget_Taxonomy_Cloud_base', __('RPR :: Taxonomy Cloud', 'recipe-press'), array('description' => __('Advanced tagcloud widget for to display any taxonomy with excludes', 'recipe-press'), 'class' => 'rpr-widget-taxonomy-cloud'));	
+		parent::WP_Widget('RPR_Widget_Taxonomy_Cloud_base', __('RPR :: Taxonomy Cloud', 'recipe-press-reloaded'), array('description' => __('Advanced tagcloud widget for to display any taxonomy with excludes', 'recipe-press-reloaded'), 'class' => 'rpr-widget-taxonomy-cloud'));	
 	}
 
 /**
@@ -83,10 +83,10 @@ class RPR_Widget_Taxonomy_Cloud extends WP_Widget {
  
 		$field_id = $this->get_field_id('title');
 		$field_name = $this->get_field_name('title');
-		echo "\r\n".'<p><label for="'.$field_id.'">'.__('Title (optional)', 'recipe-press').': <input type="text" class="widefat" id="'.$field_id.'" name="'.$field_name.'" value="'.esc_attr( $instance['title'] ).'" /><label></p>';
+		echo "\r\n".'<p><label for="'.$field_id.'">'.__('Title (optional)', 'recipe-press-reloaded').': <input type="text" class="widefat" id="'.$field_id.'" name="'.$field_name.'" value="'.esc_attr( $instance['title'] ).'" /><label></p>';
         $field_id = $this->get_field_id('taxonomy');
 		$field_name = $this->get_field_name('taxonomy');
-        echo "\r\n <p><label for=\"$field_id\">". __('Taxonomy:', 'recipe-press')." </label><select id=\"$field_id\" name=\"$field_name\" class=\"widefat\">";
+        echo "\r\n <p><label for=\"$field_id\">". __('Taxonomy:', 'recipe-press-reloaded')." </label><select id=\"$field_id\" name=\"$field_name\" class=\"widefat\">";
 		foreach(get_taxonomies() as $tax):
 			echo '<option value="'.$tax.'" ' . selected( esc_attr( $instance['taxonomy'] ) , $tax, false) . '>' . $tax. '</option>';
      	endforeach;
@@ -94,10 +94,10 @@ class RPR_Widget_Taxonomy_Cloud extends WP_Widget {
 		
 		$field_id = $this->get_field_id('limit');
 		$field_name = $this->get_field_name('limit');
-		echo "\r\n".'<p><label for="'.$field_id.'">'.__('Number auf items to display', 'recipe-press').': <input type="text" class="widefat" id="'.$field_id.'" name="'.$field_name.'" value="'.esc_attr( $instance['limit'] ).'" /><label></p>';
+		echo "\r\n".'<p><label for="'.$field_id.'">'.__('Number auf items to display', 'recipe-press-reloaded').': <input type="text" class="widefat" id="'.$field_id.'" name="'.$field_name.'" value="'.esc_attr( $instance['limit'] ).'" /><label></p>';
         $field_id = $this->get_field_id('exclude');
 		$field_name = $this->get_field_name('exclude');
-		echo "\r\n".'<p><label for="'.$field_id.'">'.__('Exclude terms', 'recipe-press').': </label><textarea class="widefat" id="'.$field_id.'" name="'.$field_name.'">'.esc_attr( $instance['exclude'] ).'</textarea></p>';
+		echo "\r\n".'<p><label for="'.$field_id.'">'.__('Exclude terms', 'recipe-press-reloaded').': </label><textarea class="widefat" id="'.$field_id.'" name="'.$field_name.'">'.esc_attr( $instance['exclude'] ).'</textarea></p>';
 	}
 	
 	//From:  http://cfpg.me/post/WordPress%3A+Get+Tag+ID+using+only+the+Tag+Name/

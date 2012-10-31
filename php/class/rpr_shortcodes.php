@@ -220,7 +220,7 @@ class RPR_ShortCodes extends RPR_Core {
 
           $atts = wp_parse_args($atts, $defaults);
           if ( !$atts['recipe'] ) {
-               return __('Sorry, no recipe found', 'recipe-press');
+               return __('Sorry, no recipe found', 'recipe-press-reloaded');
           }
 
           $post = get_post($wpdb->get_var('select `id` from `' . $wpdb->prefix . 'posts` where `post_name` = "' . $atts['recipe'] . '" and `post_status` = "publish" limit 1'));
@@ -269,7 +269,7 @@ class RPR_ShortCodes extends RPR_Core {
                     'total' => count($all_terms),
                     'pages' => ceil(count($all_terms) / $this->rpr_options['ingredients_per_page']),
                     'current-page' => max($page, 1),
-                    'taxonomy' => __('Ingredients', 'recipe-press'),
+                    'taxonomy' => __('Ingredients', 'recipe-press-reloaded'),
                     'url' => get_permalink($this->rpr_options['ingredient_page']),
                     'per-page' => $this->rpr_options['ingredients_per_page']
                );

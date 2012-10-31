@@ -139,7 +139,7 @@ class RecipePressReloaded extends RPR_Core {
                     exit();
                }
           } elseif ( isset($_POST['recipe-form-nonce']) ) {
-               wp_die(__('This form was submitted without a proper nonce. Please contact the site administrator.', 'recipe-press'));
+               wp_die(__('This form was submitted without a proper nonce. Please contact the site administrator.', 'recipe-press-reloaded'));
           }
      }
 
@@ -192,7 +192,7 @@ class RecipePressReloaded extends RPR_Core {
       */
      function wp_loaded() {
           wp_register_style('rpr_included_CSS', RPR_URL . 'css/rpr-styles.css');
-          wp_register_style('rpr_CSS', $this->get_template('recipe-press', '.css', 'url'));
+          wp_register_style('rpr_CSS', $this->get_template('recipe-press-reloaded', '.css', 'url'));
      }
 
      /**

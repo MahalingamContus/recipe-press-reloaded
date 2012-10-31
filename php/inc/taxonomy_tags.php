@@ -397,7 +397,7 @@ if ( !function_exists('previous_taxonomies_link') ) {
           global $pagination;
 
           $defaults = array(
-               'title' => sprintf(__('<span class="meta-nav">&larr;</span> Previous %1$s', 'recipe-press'), $pagination['taxonomy'])
+               'title' => sprintf(__('<span class="meta-nav">&larr;</span> Previous %1$s', 'recipe-press-reloaded'), $pagination['taxonomy'])
           );
 
           $atts = wp_parse_args($atts, $defaults);
@@ -416,7 +416,7 @@ if ( !function_exists('next_taxonomies_link') ) {
           global $pagination;
 
           $defaults = array(
-               'title' => sprintf(__('Next %1$s <span class="meta-nav">&rarr;</span>', 'recipe-press'), $pagination['taxonomy'])
+               'title' => sprintf(__('Next %1$s <span class="meta-nav">&rarr;</span>', 'recipe-press-reloaded'), $pagination['taxonomy'])
           );
 
           $atts = wp_parse_args($atts, $defaults);

@@ -28,19 +28,19 @@ if ( preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']) ) {
         <p class="recipe-notes"><?php the_recipe_introduction(array('length' => '5000')); ?></p>
         <?php if ( use_recipe_categories() ) :?>
             <div class="recipe-category" >
-                <?php _e('Posted in: ', 'recipe-press');
+                <?php _e('Posted in: ', 'recipe-press-reloaded');
                 the_terms(get_the_id(), 'recipe-category');?>
             </div>
         <?php endif; ?>
         <?php if ( use_recipe_cuisines() ): ?>
             <div class="recipe-cuisine">
-                <?php _e('from: ', 'recipe-press');
+                <?php _e('from: ', 'recipe-press-reloaded');
                 the_terms(get_the_id(), 'recipe-cuisine');?>
             </div>
         <?php endif; ?>
         <?php if ( use_recipe_seasons() ): ?>
             <div class="recipe-season">
-                <?php _e('Season: ', 'recipe-press');
+                <?php _e('Season: ', 'recipe-press-reloaded');
                 the_terms(get_the_id(), 'recipe-season');?>
             </div>
         <?php endif; ?>
@@ -52,7 +52,7 @@ if ( preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']) ) {
         <?php endif; ?>
         <?php if ( use_recipe_servings() ): ?>
             <span class="recipe-servings">
-                <?php _e("for", "recipe-press"); ?>
+                <?php _e("for", "recipe-press-reloaded"); ?>
                 <?php the_recipe_servings(); ?>
             </span>
         <?php endif; ?>
@@ -69,20 +69,20 @@ if ( preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']) ) {
     <?php endif; ?>
 
     <div class="recipe-content">
-        <h2><?php _e('Ingredients', 'recipe-press'); ?> </h2>
+        <h2><?php _e('Ingredients', 'recipe-press-reloaded'); ?> </h2>
         <?php the_recipe_ingredients(); ?>
 
-        <h2 ><?php _e('Directions', 'recipe-press'); ?></h2>
+        <h2 ><?php _e('Directions', 'recipe-press-reloaded'); ?></h2>
         <?php the_content(); ?>
 
 
-        <?php wp_link_pages(array('before' => '<div class="page-link">' . __('Pages:', 'recipe-press'), 'after' => '</div>')); ?>
+        <?php wp_link_pages(array('before' => '<div class="page-link">' . __('Pages:', 'recipe-press-reloaded'), 'after' => '</div>')); ?>
 
     </div><!-- .entry-content -->
 
         <?php do_action('after_recipe_content'); ?>
 
         <div class="entry-utility">
-          <?php edit_post_link(__('Edit', 'recipe-press'), '<span class="edit-link">', '</span>'); ?>
+          <?php edit_post_link(__('Edit', 'recipe-press-reloaded'), '<span class="edit-link">', '</span>'); ?>
      </div><!-- .entry-utility -->
 </div><!-- #post-## -->

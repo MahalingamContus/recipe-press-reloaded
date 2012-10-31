@@ -25,10 +25,10 @@ class RPR_Taxonomy_List_Widget extends WP_Widget {
           load_plugin_textdomain('recipe-press', false, dirname(dirname(plugin_basename(__FILE__))) . '/language');
 
           /* translators: The description of the Category List widget on the Appearance->Widgets page. */
-          $widget_ops = array('description' => __('List recipe taxonomies on your sidebar.', 'recipe-press'));
+          $widget_ops = array('description' => __('List recipe taxonomies on your sidebar.', 'recipe-press-reloaded'));
           $control_ops = array('width' => 400, 'height' => 350);
           /* translators: The title for the Taxonomy List widget. */
-          $this->WP_Widget('recipe_press_taxonomy_widget', __('RPR :: Taxonomy List', 'recipe-press'), $widget_ops, $control_ops);
+          $this->WP_Widget('recipe_press_taxonomy_widget', __('RPR :: Taxonomy List', 'recipe-press-reloaded'), $widget_ops, $control_ops);
 
           /* Plugin Folders */
 /*          $this->pluginPath = WP_PLUGIN_DIR . '/' . basename(dirname(dirname(__FILE__))) . '/';
@@ -138,11 +138,11 @@ class RPR_Taxonomy_List_Widget extends WP_Widget {
           
            	$field_id = $this->get_field_id('title');
 			$field_name = $this->get_field_name('title');
-		    echo "\r\n".'<p><label for="'.$field_id.'">'.__('Title (optional)', 'recipe-press').': </label><input type="text" class="widefat" id="'.$field_id.'" name="'.$field_name.'" value="'.esc_attr( $instance['title'] ).'" /></p>';
+		    echo "\r\n".'<p><label for="'.$field_id.'">'.__('Title (optional)', 'recipe-press-reloaded').': </label><input type="text" class="widefat" id="'.$field_id.'" name="'.$field_name.'" value="'.esc_attr( $instance['title'] ).'" /></p>';
 		    
 		    $field_id = $this->get_field_id('taxonomy');
 			$field_name = $this->get_field_name('taxonomy');
-		    echo "\r\n".'<p><label for="'.$field_id.'">'.__('Taxonomy to display', 'recipe-press').': </label><select id="' . $field_id . '" name="' . $field_name . '" class="widefat">';
+		    echo "\r\n".'<p><label for="'.$field_id.'">'.__('Taxonomy to display', 'recipe-press-reloaded').': </label><select id="' . $field_id . '" name="' . $field_name . '" class="widefat">';
 		    foreach(get_taxonomies() as $tax):
 				echo '<option value="'.$tax.'" ' . selected( esc_attr( $instance['taxonomy'] ) , $tax, false) . '>' . $tax. '</option>';
      		endforeach;
@@ -150,38 +150,38 @@ class RPR_Taxonomy_List_Widget extends WP_Widget {
           	
           	$field_id = $this->get_field_id('items');
         	$field_name = $this->get_field_name('items');
-        	echo "\r\n".'<p><label for="'.$field_id.'">'. __('How many items would you like to display?', 'recipe-press').' </label><input type="text" class="widefat" id="'.$field_id.'" name="'.$field_name.'" value="'.esc_attr( $instance['items'] ).'" style="width:50px;" /></p>';
+        	echo "\r\n".'<p><label for="'.$field_id.'">'. __('How many items would you like to display?', 'recipe-press-reloaded').' </label><input type="text" class="widefat" id="'.$field_id.'" name="'.$field_name.'" value="'.esc_attr( $instance['items'] ).'" style="width:50px;" /></p>';
           	
           	$field_id = $this->get_field_id('order_by');
         	$field_name = $this->get_field_name('order_by');
-        	echo "\r\n".'<p><label for="'.$field_id.'">'. __('Order items by', 'recipe-press').' </label><select id="' . $field_id . '" name="' . $field_name . '" class="widefat" style="width:100px;">';
-        	echo '<option value="name" ' . selected($instance['order_by'], 'name', false) . '>' . __('Name', 'recipe-press') .'</option>';
-          	echo '<option value="count" ' . selected($instance['order_by'], 'count', false) . '>' .  __('Count', 'recipe-press') . '</option>';
+        	echo "\r\n".'<p><label for="'.$field_id.'">'. __('Order items by', 'recipe-press-reloaded').' </label><select id="' . $field_id . '" name="' . $field_name . '" class="widefat" style="width:100px;">';
+        	echo '<option value="name" ' . selected($instance['order_by'], 'name', false) . '>' . __('Name', 'recipe-press-reloaded') .'</option>';
+          	echo '<option value="count" ' . selected($instance['order_by'], 'count', false) . '>' .  __('Count', 'recipe-press-reloaded') . '</option>';
         	echo '</select>';
         	$field_id = $this->get_field_id('order');
         	$field_name = $this->get_field_name('order');
         	echo '<label for="'.$field_id.'"></label><select id="' . $field_id . '" name="' . $field_name . '" class="widefat" style="width:60px;" >';
-        	echo '<option value="name" ' . selected($instance['order'], 'asc', false) . '>' . __('ASC', 'recipe-press') .'</option>';
-          	echo '<option value="count" ' . selected($instance['order'], 'desc', false) . '>' .  __('DESC', 'recipe-press') . '</option>';
+        	echo '<option value="name" ' . selected($instance['order'], 'asc', false) . '>' . __('ASC', 'recipe-press-reloaded') .'</option>';
+          	echo '<option value="count" ' . selected($instance['order'], 'desc', false) . '>' .  __('DESC', 'recipe-press-reloaded') . '</option>';
         	echo '</select>';
         	
         	$field_id = $this->get_field_id('show_count');
         	$field_name = $this->get_field_name('show_count');
-        	echo "\r\n".'<p><input type="checkbox" class="widefat" id="'.$field_id.'" name="'.$field_name.'" value="'.esc_attr( $instance['title'] ).'" /><label for="'.$field_id.'">'.__('Show count with', 'recipe-press') . '</label>';
+        	echo "\r\n".'<p><input type="checkbox" class="widefat" id="'.$field_id.'" name="'.$field_name.'" value="'.esc_attr( $instance['title'] ).'" /><label for="'.$field_id.'">'.__('Show count with', 'recipe-press-reloaded') . '</label>';
         	$field_id = $this->get_field_id('before_count');
         	$field_name = $this->get_field_name('before_count');
-        	echo "\r\n".'<input type="text" class="widefat" id="'.$field_id.'" name="'.$field_name.'" value="'.esc_attr( $instance['before_count'] ).'" style="width:20px;" /><label for="'.$field_id.'">' . __('before and', 'recipe-press') . '</label>';
+        	echo "\r\n".'<input type="text" class="widefat" id="'.$field_id.'" name="'.$field_name.'" value="'.esc_attr( $instance['before_count'] ).'" style="width:20px;" /><label for="'.$field_id.'">' . __('before and', 'recipe-press-reloaded') . '</label>';
         	$field_id = $this->get_field_id('after_count');
         	$field_name = $this->get_field_name('after_count');
-        	echo "\r\n".'<input type="text" class="widefat" id="'.$field_id.'" name="'.$field_name.'" value="'.esc_attr( $instance['after_count'] ).'" style="width:20px;" /><label for="'.$field_id.'">' . __('behind', 'recipe-press') . '</label></p>';
+        	echo "\r\n".'<input type="text" class="widefat" id="'.$field_id.'" name="'.$field_name.'" value="'.esc_attr( $instance['after_count'] ).'" style="width:20px;" /><label for="'.$field_id.'">' . __('behind', 'recipe-press-reloaded') . '</label></p>';
         	
         	$field_id = $this->get_field_id('hide_empty');
         	$field_name = $this->get_field_name('hide_empty');
-        	echo "\r\n".'<p><label for="'.$field_id.'">'.__('Hide empty terms?', 'recipe-press') . '</label><input type="checkbox" class="widefat" id="'.$field_id.'" name="'.$field_name.'" value="'.esc_attr( $instance['hide_empty'] ).'" /></p>';
+        	echo "\r\n".'<p><label for="'.$field_id.'">'.__('Hide empty terms?', 'recipe-press-reloaded') . '</label><input type="checkbox" class="widefat" id="'.$field_id.'" name="'.$field_name.'" value="'.esc_attr( $instance['hide_empty'] ).'" /></p>';
         	
         	$field_id = $this->get_field_id('exclude');
 			$field_name = $this->get_field_name('exclude');
-			echo "\r\n".'<p><label for="'.$field_id.'">'.__('Exclude terms', 'recipe-press').': </label><textarea class="widefat" id="'.$field_id.'" name="'.$field_name.'">'.esc_attr( $instance['exclude'] ).'</textarea></p>';
+			echo "\r\n".'<p><label for="'.$field_id.'">'.__('Exclude terms', 'recipe-press-reloaded').': </label><textarea class="widefat" id="'.$field_id.'" name="'.$field_name.'">'.esc_attr( $instance['exclude'] ).'</textarea></p>';
      }
      
      	//From:  http://cfpg.me/post/WordPress%3A+Get+Tag+ID+using+only+the+Tag+Name/

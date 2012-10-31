@@ -91,18 +91,18 @@ class RPR_Init extends RPR_Core {
           $labels = array(
                'name' => $this->rpr_options['plural_name'],
                'singular_name' => $this->rpr_options['singular_name'],
-               'add_new' => __('Add New', 'recipe-press'),
-               'add_new_item' => sprintf(__('Add New %1$s', 'recipe-press'), $this->rpr_options['singular_name']),
-               'edit_item' => sprintf(__('Edit %1$s', 'recipe-press'), $this->rpr_options['singular_name']),
-               'edit' => __('Edit', 'recipe-press'),
-               'new_item' => sprintf(__('New %1$s', 'recipe-press'), $this->rpr_options['singular_name']),
-               'view_item' => sprintf(__('View %1$s', 'recipe-press'), $this->rpr_options['singular_name']),
-               'search_items' => sprintf(__('Search %1$s', 'recipe-press'), $this->rpr_options['singular_name']),
-               'not_found' => sprintf(__('No %1$s found', 'recipe-press'), $this->rpr_options['plural_name']),
-               'not_found_in_trash' => sprintf(__('No %1$s found in Trash', 'recipe-press'), $this->rpr_options['plural_name']),
-               'view' => sprintf(__('View %1$s', 'recipe-press'), $this->rpr_options['singular_name']),
-               'parent_item' => sprintf(__('Parent %1$s', 'recipe-press'), $this->rpr_options['singular_name']),
-               'parent_item_colon' => sprintf(__('Parent %1$s:', 'recipe-press'), $this->rpr_options['singular_name']),
+               'add_new' => __('Add New', 'recipe-press-reloaded'),
+               'add_new_item' => sprintf(__('Add New %1$s', 'recipe-press-reloaded'), $this->rpr_options['singular_name']),
+               'edit_item' => sprintf(__('Edit %1$s', 'recipe-press-reloaded'), $this->rpr_options['singular_name']),
+               'edit' => __('Edit', 'recipe-press-reloaded'),
+               'new_item' => sprintf(__('New %1$s', 'recipe-press-reloaded'), $this->rpr_options['singular_name']),
+               'view_item' => sprintf(__('View %1$s', 'recipe-press-reloaded'), $this->rpr_options['singular_name']),
+               'search_items' => sprintf(__('Search %1$s', 'recipe-press-reloaded'), $this->rpr_options['singular_name']),
+               'not_found' => sprintf(__('No %1$s found', 'recipe-press-reloaded'), $this->rpr_options['plural_name']),
+               'not_found_in_trash' => sprintf(__('No %1$s found in Trash', 'recipe-press-reloaded'), $this->rpr_options['plural_name']),
+               'view' => sprintf(__('View %1$s', 'recipe-press-reloaded'), $this->rpr_options['singular_name']),
+               'parent_item' => sprintf(__('Parent %1$s', 'recipe-press-reloaded'), $this->rpr_options['singular_name']),
+               'parent_item_colon' => sprintf(__('Parent %1$s:', 'recipe-press-reloaded'), $this->rpr_options['singular_name']),
           );
           $args = array(
                'labels' => $labels,
@@ -178,7 +178,7 @@ class RPR_Init extends RPR_Core {
                          wp_redirect(get_permalink($this->options['recipe-box-page']));
                          exit();
                     } else {
-                         wp_die(__('Warning: The site administrator has not set a page to load the recipe box on.', 'recipe-press'));
+                         wp_die(__('Warning: The site administrator has not set a page to load the recipe box on.', 'recipe-press-reloaded'));
                     }
                }
           }
@@ -217,7 +217,7 @@ class RPR_Init extends RPR_Core {
                               'total' => count($all_terms),
                               'pages' => ceil(count($all_terms) / $this->rpr_options['ingredients_per_page']),
                               'current-page' => max($page, 1),
-                              'taxonomy' => __('Ingredients', 'recipe-press'),
+                              'taxonomy' => __('Ingredients', 'recipe-press-reloaded'),
                               'url' => get_option('home') . '/' . $this->rpr_options['ingredient_slug'],
                               'per-page' => $this->rpr_options['ingredients_per_page']
                          );
@@ -302,7 +302,7 @@ class RPR_Init extends RPR_Core {
                return recipe_taxonomy_page_title($title);
           } else {
                if ( get_query_var('recipe-taxonomy') == 'recipe-ingredient' ) {
-                    $title = __('Recipe Ingredients', 'recipe-press');
+                    $title = __('Recipe Ingredients', 'recipe-press-reloaded');
                } else {
                     $title = $this->rpr_options['taxonomies'][get_query_var('recipe-taxonomy')]['plural'];
                }
@@ -429,23 +429,23 @@ class RPR_Init extends RPR_Core {
 		$rewrite = array('slug' => 'recipe-course', 'with_front' => true);
         
         $labels = array(
-               'name' => __('Courses', 'recipe-press'),
-               'singular_name' => __('Course', 'recipe-press'),
-               'search_items' => __('Search Courses', 'recipe-press'),
-               'popular_items' => __('Popular Courses', 'recipe-press'),
-               'all_items' => __('All Courses', 'recipe-press'),
-               'parent_item' => __('Parent Course', 'recipe-press'),
-               'edit_item' => __('Edit Course', 'recipe-press'),
-               'update_item' => __('Update Course', 'recipe-press'),
-               'add_new_item' => __('Add Course', 'recipe-press'),
-               'new_item_name' => __('New Course', 'recipe-press'),
-               'add_or_remove_items' => __('Add or remove Courses', 'recipe-press'),
-               'choose_from_most_used' => __('Choose from the most used Courses', 'recipe-press'),
+               'name' => __('Courses', 'recipe-press-reloaded'),
+               'singular_name' => __('Course', 'recipe-press-reloaded'),
+               'search_items' => __('Search Courses', 'recipe-press-reloaded'),
+               'popular_items' => __('Popular Courses', 'recipe-press-reloaded'),
+               'all_items' => __('All Courses', 'recipe-press-reloaded'),
+               'parent_item' => __('Parent Course', 'recipe-press-reloaded'),
+               'edit_item' => __('Edit Course', 'recipe-press-reloaded'),
+               'update_item' => __('Update Course', 'recipe-press-reloaded'),
+               'add_new_item' => __('Add Course', 'recipe-press-reloaded'),
+               'new_item_name' => __('New Course', 'recipe-press-reloaded'),
+               'add_or_remove_items' => __('Add or remove Courses', 'recipe-press-reloaded'),
+               'choose_from_most_used' => __('Choose from the most used Courses', 'recipe-press-reloaded'),
           );
           $args = array(
                'hierarchical' => true,
               // 'allow_multiple'=>true,
-               'label' => __('Courses', 'recipe-press'),
+               'label' => __('Courses', 'recipe-press-reloaded'),
                'labels' => $labels,
                'public' => true,
                'show_ui' => true,
@@ -465,22 +465,22 @@ class RPR_Init extends RPR_Core {
 		$rewrite = array('slug' => 'recipe-cuisines', 'with_front' => true);
         
         $labels = array(
-               'name' => __('Cuisines', 'recipe-press'),
-               'singular_name' => __('Cuisine', 'recipe-press'),
-               'search_items' => __('Search Cuisines', 'recipe-press'),
-               'popular_items' => __('Popular Cuisines', 'recipe-press'),
-               'all_items' => __('All Cuisines', 'recipe-press'),
-               'parent_item' => __('Parent Cuisine', 'recipe-press'),
-               'edit_item' => __('Edit Cuisine', 'recipe-press'),
-               'update_item' => __('Update Cuisine', 'recipe-press'),
-               'add_new_item' => __('Add Cuisine', 'recipe-press'),
-               'new_item_name' => __('New Cuisine', 'recipe-press'),
-               'add_or_remove_items' => __('Add or remove Cuisines', 'recipe-press'),
-               'choose_from_most_used' => __('Choose from the most used Cuisines', 'recipe-press'),
+               'name' => __('Cuisines', 'recipe-press-reloaded'),
+               'singular_name' => __('Cuisine', 'recipe-press-reloaded'),
+               'search_items' => __('Search Cuisines', 'recipe-press-reloaded'),
+               'popular_items' => __('Popular Cuisines', 'recipe-press-reloaded'),
+               'all_items' => __('All Cuisines', 'recipe-press-reloaded'),
+               'parent_item' => __('Parent Cuisine', 'recipe-press-reloaded'),
+               'edit_item' => __('Edit Cuisine', 'recipe-press-reloaded'),
+               'update_item' => __('Update Cuisine', 'recipe-press-reloaded'),
+               'add_new_item' => __('Add Cuisine', 'recipe-press-reloaded'),
+               'new_item_name' => __('New Cuisine', 'recipe-press-reloaded'),
+               'add_or_remove_items' => __('Add or remove Cuisines', 'recipe-press-reloaded'),
+               'choose_from_most_used' => __('Choose from the most used Cuisines', 'recipe-press-reloaded'),
           );
           $args = array(
                'hierarchical' => true,
-               'label' => __('Cuisines', 'recipe-press'),
+               'label' => __('Cuisines', 'recipe-press-reloaded'),
                'labels' => $labels,
                'public' => true,
                'show_ui' => true,
@@ -499,22 +499,22 @@ class RPR_Init extends RPR_Core {
 		$rewrite = array('slug' => 'recipe-categories', 'with_front' => true);
         
         $labels = array(
-               'name' => __('Categories', 'recipe-press'),
-               'singular_name' => __('Category', 'recipe-press'),
-               'search_items' => __('Search Categories', 'recipe-press'),
-               'popular_items' => __('Popular Category', 'recipe-press'),
-               'all_items' => __('All Categories', 'recipe-press'),
-               'parent_item' => __('Parent Category', 'recipe-press'),
-               'edit_item' => __('Edit Category', 'recipe-press'),
-               'update_item' => __('Update Category', 'recipe-press'),
-               'add_new_item' => __('Add Category', 'recipe-press'),
-               'new_item_name' => __('New Category', 'recipe-press'),
-               'add_or_remove_items' => __('Add or remove Categories', 'recipe-press'),
-               'choose_from_most_used' => __('Choose from the most used Categories', 'recipe-press'),
+               'name' => __('Categories', 'recipe-press-reloaded'),
+               'singular_name' => __('Category', 'recipe-press-reloaded'),
+               'search_items' => __('Search Categories', 'recipe-press-reloaded'),
+               'popular_items' => __('Popular Category', 'recipe-press-reloaded'),
+               'all_items' => __('All Categories', 'recipe-press-reloaded'),
+               'parent_item' => __('Parent Category', 'recipe-press-reloaded'),
+               'edit_item' => __('Edit Category', 'recipe-press-reloaded'),
+               'update_item' => __('Update Category', 'recipe-press-reloaded'),
+               'add_new_item' => __('Add Category', 'recipe-press-reloaded'),
+               'new_item_name' => __('New Category', 'recipe-press-reloaded'),
+               'add_or_remove_items' => __('Add or remove Categories', 'recipe-press-reloaded'),
+               'choose_from_most_used' => __('Choose from the most used Categories', 'recipe-press-reloaded'),
           );
           $args = array(
                'hierarchical' => true,
-               'label' => __('Categories', 'recipe-press'),
+               'label' => __('Categories', 'recipe-press-reloaded'),
                'labels' => $labels,
                'public' => true,
                'show_ui' => true,
@@ -534,22 +534,22 @@ class RPR_Init extends RPR_Core {
 		$rewrite = array('slug' => 'recipe-season', 'with_front' => true);
         
         $labels = array(
-               'name' => __('Seasons', 'recipe-press'),
-               'singular_name' => __('Season', 'recipe-press'),
-               'search_items' => __('Search Seasons', 'recipe-press'),
-               'popular_items' => __('Popular Seasons', 'recipe-press'),
-               'all_items' => __('All Seasons', 'recipe-press'),
-               'parent_item' => __('Parent Season', 'recipe-press'),
-               'edit_item' => __('Edit Season', 'recipe-press'),
-               'update_item' => __('Update Season', 'recipe-press'),
-               'add_new_item' => __('Add Season', 'recipe-press'),
-               'new_item_name' => __('New Seasons', 'recipe-press'),
-               'add_or_remove_items' => __('Add or remove Seasons', 'recipe-press'),
-               'choose_from_most_used' => __('Choose from the most used Seasons', 'recipe-press'),
+               'name' => __('Seasons', 'recipe-press-reloaded'),
+               'singular_name' => __('Season', 'recipe-press-reloaded'),
+               'search_items' => __('Search Seasons', 'recipe-press-reloaded'),
+               'popular_items' => __('Popular Seasons', 'recipe-press-reloaded'),
+               'all_items' => __('All Seasons', 'recipe-press-reloaded'),
+               'parent_item' => __('Parent Season', 'recipe-press-reloaded'),
+               'edit_item' => __('Edit Season', 'recipe-press-reloaded'),
+               'update_item' => __('Update Season', 'recipe-press-reloaded'),
+               'add_new_item' => __('Add Season', 'recipe-press-reloaded'),
+               'new_item_name' => __('New Seasons', 'recipe-press-reloaded'),
+               'add_or_remove_items' => __('Add or remove Seasons', 'recipe-press-reloaded'),
+               'choose_from_most_used' => __('Choose from the most used Seasons', 'recipe-press-reloaded'),
           );
           $args = array(
                'hierarchical' => false,
-               'label' => __('Seasons', 'recipe-press'),
+               'label' => __('Seasons', 'recipe-press-reloaded'),
                'labels' => $labels,
                'public' => true,
                'show_ui' => true,
@@ -569,23 +569,23 @@ class RPR_Init extends RPR_Core {
       */
      function setup_sizes() {
           $labels = array(
-               'name' => __('Sizes', 'recipe-press'),
-               'singular_name' => __('Size', 'recipe-press'),
-               'search_items' => __('Search Sizes', 'recipe-press'),
-               'popular_items' => __('Popular Sizes', 'recipe-press'),
-               'all_items' => __('All Sizes', 'recipe-press'),
-               'parent_item' => __('Parent Size', 'recipe-press'),
-               'edit_item' => __('Edit Size', 'recipe-press'),
-               'update_item' => __('Update Size', 'recipe-press'),
-               'add_new_item' => __('Add Size', 'recipe-press'),
-               'new_item_name' => __('New Size', 'recipe-press'),
-               'add_or_remove_items' => __('Add or remove Sizes', 'recipe-press'),
-               'choose_from_most_used' => __('Choose from the most used Sizes', 'recipe-press'),
+               'name' => __('Sizes', 'recipe-press-reloaded'),
+               'singular_name' => __('Size', 'recipe-press-reloaded'),
+               'search_items' => __('Search Sizes', 'recipe-press-reloaded'),
+               'popular_items' => __('Popular Sizes', 'recipe-press-reloaded'),
+               'all_items' => __('All Sizes', 'recipe-press-reloaded'),
+               'parent_item' => __('Parent Size', 'recipe-press-reloaded'),
+               'edit_item' => __('Edit Size', 'recipe-press-reloaded'),
+               'update_item' => __('Update Size', 'recipe-press-reloaded'),
+               'add_new_item' => __('Add Size', 'recipe-press-reloaded'),
+               'new_item_name' => __('New Size', 'recipe-press-reloaded'),
+               'add_or_remove_items' => __('Add or remove Sizes', 'recipe-press-reloaded'),
+               'choose_from_most_used' => __('Choose from the most used Sizes', 'recipe-press-reloaded'),
           );
 
           $args = array(
                'hierarchical' => false,
-               'label' => __('Sizes', 'recipe-press'),
+               'label' => __('Sizes', 'recipe-press-reloaded'),
                'labels' => $labels,
                'public' => true,
                'show_ui' => true,
@@ -603,23 +603,23 @@ class RPR_Init extends RPR_Core {
       */
      function setup_serving_sizes() {
           $labels = array(
-               'name' => __('Serving Sizes', 'recipe-press'),
-               'singular_name' => __('Serving Size', 'recipe-press'),
-               'search_items' => __('Search Serving Sizes', 'recipe-press'),
-               'popular_items' => __('Popular Serving Sizes', 'recipe-press'),
-               'all_items' => __('All Serving Sizes', 'recipe-press'),
-               'parent_item' => __('Parent Serving Size', 'recipe-press'),
-               'edit_item' => __('Edit Serving Size', 'recipe-press'),
-               'update_item' => __('Update Serving Size', 'recipe-press'),
-               'add_new_item' => __('Add Serving Size', 'recipe-press'),
-               'new_item_name' => __('New Serving Size', 'recipe-press'),
-               'add_or_remove_items' => __('Add or remove Serving Sizes', 'recipe-press'),
-               'choose_from_most_used' => __('Choose from the most used Serving Sizes', 'recipe-press'),
+               'name' => __('Serving Sizes', 'recipe-press-reloaded'),
+               'singular_name' => __('Serving Size', 'recipe-press-reloaded'),
+               'search_items' => __('Search Serving Sizes', 'recipe-press-reloaded'),
+               'popular_items' => __('Popular Serving Sizes', 'recipe-press-reloaded'),
+               'all_items' => __('All Serving Sizes', 'recipe-press-reloaded'),
+               'parent_item' => __('Parent Serving Size', 'recipe-press-reloaded'),
+               'edit_item' => __('Edit Serving Size', 'recipe-press-reloaded'),
+               'update_item' => __('Update Serving Size', 'recipe-press-reloaded'),
+               'add_new_item' => __('Add Serving Size', 'recipe-press-reloaded'),
+               'new_item_name' => __('New Serving Size', 'recipe-press-reloaded'),
+               'add_or_remove_items' => __('Add or remove Serving Sizes', 'recipe-press-reloaded'),
+               'choose_from_most_used' => __('Choose from the most used Serving Sizes', 'recipe-press-reloaded'),
           );
 
           $args = array(
                'hierarchical' => false,
-               'label' => __('Serving Sizes', 'recipe-press'),
+               'label' => __('Serving Sizes', 'recipe-press-reloaded'),
                'labels' => $labels,
                'public' => true,
                'show_ui' => true,
@@ -639,23 +639,23 @@ class RPR_Init extends RPR_Core {
       */
      function setup_ingredients() {
           $labels = array(
-               'name' => __('Ingredients', 'recipe-press'),
-               'singular_name' => __('Ingredient', 'recipe-press'),
-               'search_items' => __('Search Ingredients', 'recipe-press'),
-               'popular_items' => __('Popular Ingredients', 'recipe-press'),
-               'all_items' => __('All Ingredients', 'recipe-press'),
-               'parent_item' => __('Parent Ingredient', 'recipe-press'),
-               'edit_item' => __('Edit Ingredient', 'recipe-press'),
-               'update_item' => __('Update Ingredient', 'recipe-press'),
-               'add_new_item' => __('Add Ingredient', 'recipe-press'),
-               'new_item_name' => __('New Ingredient', 'recipe-press'),
-               'add_or_remove_items' => __('Add or remove Ingredients', 'recipe-press'),
-               'choose_from_most_used' => __('Choose from the most used Ingredients', 'recipe-press'),
+               'name' => __('Ingredients', 'recipe-press-reloaded'),
+               'singular_name' => __('Ingredient', 'recipe-press-reloaded'),
+               'search_items' => __('Search Ingredients', 'recipe-press-reloaded'),
+               'popular_items' => __('Popular Ingredients', 'recipe-press-reloaded'),
+               'all_items' => __('All Ingredients', 'recipe-press-reloaded'),
+               'parent_item' => __('Parent Ingredient', 'recipe-press-reloaded'),
+               'edit_item' => __('Edit Ingredient', 'recipe-press-reloaded'),
+               'update_item' => __('Update Ingredient', 'recipe-press-reloaded'),
+               'add_new_item' => __('Add Ingredient', 'recipe-press-reloaded'),
+               'new_item_name' => __('New Ingredient', 'recipe-press-reloaded'),
+               'add_or_remove_items' => __('Add or remove Ingredients', 'recipe-press-reloaded'),
+               'choose_from_most_used' => __('Choose from the most used Ingredients', 'recipe-press-reloaded'),
           );
 
           $args = array(
                'hierarchical' => false,
-               'label' => __('Ingredients', 'recipe-press'),
+               'label' => __('Ingredients', 'recipe-press-reloaded'),
                'labels' => $labels,
                'public' => true,
                'show_ui' => true,
@@ -681,8 +681,8 @@ class RPR_Init extends RPR_Core {
      	  remove_meta_box('tagsdiv-recipe-size', 'recipe', 'side');
      	  remove_meta_box('tagsdiv-recipe-serving', 'recipe', 'side');
      	  remove_meta_box('tagsdiv-recipe-ingredient', 'recipe', 'side');
-          add_meta_box('recipes_ingredients', __('Ingredients', 'recipe-press'), array(&$this, 'ingredients_box'), 'recipe', 'advanced', 'high');
-          add_meta_box('recipes_details', __('Details', 'recipe-press'), array(&$this, 'details_box'), 'recipe', 'side', 'high');
+          add_meta_box('recipes_ingredients', __('Ingredients', 'recipe-press-reloaded'), array(&$this, 'ingredients_box'), 'recipe', 'advanced', 'high');
+          add_meta_box('recipes_details', __('Details', 'recipe-press-reloaded'), array(&$this, 'details_box'), 'recipe', 'side', 'high');
      }
 
      /**

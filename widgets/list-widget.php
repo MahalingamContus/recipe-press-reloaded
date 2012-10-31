@@ -26,9 +26,9 @@ class RPR_Widget_List_Recipes extends WP_Widget {
           load_plugin_textdomain('recipe-press', false, dirname(dirname(plugin_basename(__FILE__))) . '/language');
 
           /* translators: The description of the Recpipe List widget on the Appearance->Widgets page. */
-          $widget_ops = array('description' => __('List recipes on your sidebar. By dasmaeh.', 'recipe-press'));
+          $widget_ops = array('description' => __('List recipes on your sidebar. By dasmaeh.', 'recipe-press-reloaded'));
           /* translators: The title for the Recipe List widget. */
-          $this->WP_Widget('recipe_press_list_widget', __('RPR :: List', 'recipe-press'), $widget_ops);
+          $this->WP_Widget('recipe_press_list_widget', __('RPR :: List', 'recipe-press-reloaded'), $widget_ops);
 
           $this->options = $RECIPEPRESSOBJ->loadSettings();
      }
@@ -128,30 +128,30 @@ class RPR_Widget_List_Recipes extends WP_Widget {
  
 			   $field_id = $this->get_field_id('title');
 			   $field_name = $this->get_field_name('title');
-		       echo "\r\n".'<p><label for="'.$field_id.'">'.__('Title (optional)', 'recipe-press').': </label><input type="text" class="widefat" id="'.$field_id.'" name="'.$field_name.'" value="'.esc_attr( $instance['title'] ).'" /></p>';
+		       echo "\r\n".'<p><label for="'.$field_id.'">'.__('Title (optional)', 'recipe-press-reloaded').': </label><input type="text" class="widefat" id="'.$field_id.'" name="'.$field_name.'" value="'.esc_attr( $instance['title'] ).'" /></p>';
         	   $field_id = $this->get_field_id('items');
         	   $field_name = $this->get_field_name('items');
-        	   echo "\r\n".'<p><label for="'.$field_id.'">'. __('How many items would you like to display?', 'recipe-press').': </label><input type="text" class="widefat" id="'.$field_id.'" name="'.$field_name.'" value="'.esc_attr( $instance['items'] ).'" style="width:50px;" /></p>';
+        	   echo "\r\n".'<p><label for="'.$field_id.'">'. __('How many items would you like to display?', 'recipe-press-reloaded').': </label><input type="text" class="widefat" id="'.$field_id.'" name="'.$field_name.'" value="'.esc_attr( $instance['items'] ).'" style="width:50px;" /></p>';
         	   $field_id = $this->get_field_id('type');
         	   $field_name = $this->get_field_name('type');
-        	   echo "\r\n <p><label for=\"$field_id\">". __('Display type:', 'recipe-press')." </label><select id=\"$field_id\" name=\"$field_name\" class=\"widefat\">";
-			   echo "<option value=\"newest\" ".selected( esc_attr( $instance['type'] ) , 'newest', false) .">". __('Newest Recipes', 'recipe-press') ."</option>";
-			   echo "<option value=\"random\" ".selected( esc_attr( $instance['type'] ) , 'random', false) .">". __('Random Recipes', 'recipe-press') ."</option>";
-			   echo "<option value=\"featured\" ".selected( esc_attr( $instance['type'] ) , 'featured', false) .">". __('Featured', 'recipe-press') ."</option>";
-			   echo "<option value=\"updated\" ".selected( esc_attr( $instance['type'] ) , 'updated', false) .">". __('Recently Updated', 'recipe-press') ."</option>";
+        	   echo "\r\n <p><label for=\"$field_id\">". __('Display type:', 'recipe-press-reloaded')." </label><select id=\"$field_id\" name=\"$field_name\" class=\"widefat\">";
+			   echo "<option value=\"newest\" ".selected( esc_attr( $instance['type'] ) , 'newest', false) .">". __('Newest Recipes', 'recipe-press-reloaded') ."</option>";
+			   echo "<option value=\"random\" ".selected( esc_attr( $instance['type'] ) , 'random', false) .">". __('Random Recipes', 'recipe-press-reloaded') ."</option>";
+			   echo "<option value=\"featured\" ".selected( esc_attr( $instance['type'] ) , 'featured', false) .">". __('Featured', 'recipe-press-reloaded') ."</option>";
+			   echo "<option value=\"updated\" ".selected( esc_attr( $instance['type'] ) , 'updated', false) .">". __('Recently Updated', 'recipe-press-reloaded') ."</option>";
           	   echo "</select></p>";
 			   $field_id = $this->get_field_id('sort_order');
         	   $field_name = $this->get_field_name('sort_order');
-        	   echo "\r\n <p><label for=\"$field_id\">". __('Sort order:', 'recipe-press')." </label><select id=\"$field_id\" name=\"$field_name\" class=\"widefat\">";
-        	   echo "<option value=\"asc\" ".selected( esc_attr( $instance['sort_order'] ) , 'asc', false) .">". __('Ascending', 'recipe-press') ."</option>";
-        	   echo "<option value=\"desc\" ".selected( esc_attr( $instance['sort_order'] ) , 'desc', false) .">". __('Descending', 'recipe-press') ."</option>";
+        	   echo "\r\n <p><label for=\"$field_id\">". __('Sort order:', 'recipe-press-reloaded')." </label><select id=\"$field_id\" name=\"$field_name\" class=\"widefat\">";
+        	   echo "<option value=\"asc\" ".selected( esc_attr( $instance['sort_order'] ) , 'asc', false) .">". __('Ascending', 'recipe-press-reloaded') ."</option>";
+        	   echo "<option value=\"desc\" ".selected( esc_attr( $instance['sort_order'] ) , 'desc', false) .">". __('Descending', 'recipe-press-reloaded') ."</option>";
         	   echo "</select></p>";
         	   $field_id = $this->get_field_id('show_icon');
         	   $field_name = $this->get_field_name('show_icon');
-        	   echo "\r\n".'<p><label for="'.$field_id.'">'. __('Show icon?', 'recipe-press').': </label><input type="checkbox" class="widefat" id="'.$field_id.'" name="'.$field_name.'" value="1" '.esc_attr(  checked($instance['show_icon'], true, false) ).'"  /></p>';
+        	   echo "\r\n".'<p><label for="'.$field_id.'">'. __('Show icon?', 'recipe-press-reloaded').': </label><input type="checkbox" class="widefat" id="'.$field_id.'" name="'.$field_name.'" value="1" '.esc_attr(  checked($instance['show_icon'], true, false) ).'"  /></p>';
         	   $field_id = $this->get_field_id('icon_size');
         	   $field_name = $this->get_field_name('icon_size');
-        	   echo "\r\n".'<p><label for="'.$field_id.'">'. __('Icon size (square)', 'recipe-press').': </label><input type="text" class="widefat" id="'.$field_id.'" name="'.$field_name.'" value="'.esc_attr( $instance['icon_size'] ).'" style="width:50px;" /></p>';
+        	   echo "\r\n".'<p><label for="'.$field_id.'">'. __('Icon size (square)', 'recipe-press-reloaded').': </label><input type="text" class="widefat" id="'.$field_id.'" name="'.$field_name.'" value="'.esc_attr( $instance['icon_size'] ).'" style="width:50px;" /></p>';
           }
           
           /** @see WP_Widget::update */

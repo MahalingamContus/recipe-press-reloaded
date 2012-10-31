@@ -31,19 +31,19 @@ global $RECIPEPRESSOBJ;
         <p class="recipe-notes"><?php the_recipe_introduction(array('length' => '5000')); ?></p>
             <?php if ( use_recipe_categories() ) :?>
                 <span class="recipe-category">
-                    <?php _e('Posted in: ', 'recipe-press');
+                    <?php _e('Posted in: ', 'recipe-press-reloaded');
                     the_terms(get_the_id(), 'recipe-category');?>
                 </span><br/>
             <?php endif; ?>
             <?php if ( use_recipe_cuisines() ): ?>
                 <span class="recipe-cuisine">
-                    <?php _e('from: ', 'recipe-press');
+                    <?php _e('from: ', 'recipe-press-reloaded');
                     the_terms(get_the_id(), 'recipe-cuisine');?>
                 </span><br/>
             <?php endif; ?>
             <?php if ( use_recipe_seasons() ): ?>
                 <span class="recipe-season">
-                    <?php _e('Season: ', 'recipe-press');
+                    <?php _e('Season: ', 'recipe-press-reloaded');
                     the_terms(get_the_id(), 'recipe-season');?>
                 </span><br/>
             <?php endif; ?>
@@ -54,7 +54,7 @@ global $RECIPEPRESSOBJ;
             <?php endif; ?>
             <?php if ( use_recipe_servings() ): ?>
                 <span class="recipe-servings">
-                    <?php _e("for", "recipe-press"); ?>
+                    <?php _e("for", "recipe-press-reloaded"); ?>
                     <?php the_recipe_servings(); ?>
                 </span>
             <?php endif; ?>
@@ -63,7 +63,7 @@ global $RECIPEPRESSOBJ;
 
 <?php endwhile; ?>
 <?php else : ?>
-   <?php  _e("Sorry, no recipes", "recipe-press");?>
+   <?php  _e("Sorry, no recipes", "recipe-press-reloaded");?>
 <?php endif; ?>
 
 <div id="nav-below" class="cleared navigation">

@@ -73,7 +73,7 @@ class RPR_Admin extends RPR_Core {
 
           $num_posts = wp_count_posts('recipe');
           $num = number_format_i18n($num_posts->publish);
-          $text = _n('Recipe', 'Recipes', intval($num_posts->publish), 'recipe-press');
+          $text = _n('Recipe', 'Recipes', intval($num_posts->publish), 'recipe-press-reloaded');
           if ( current_user_can('edit_posts') ) {
                $num = "<a href='edit.php?post_type=recipe'>$num</a>";
                $text = "<a href='edit.php?post_type=recipe'>$text</a>";
@@ -85,7 +85,7 @@ class RPR_Admin extends RPR_Core {
 
           if ( $num_posts->pending > 0 ) {
                $num = number_format_i18n($num_posts->pending);
-               $text = _n('Recipe Pending', 'Recipes Pending', intval($num_posts->pending), 'recipe-press');
+               $text = _n('Recipe Pending', 'Recipes Pending', intval($num_posts->pending), 'recipe-press-reloaded');
                if ( current_user_can('edit_posts') ) {
                     $num = "<a href='edit.php?post_status=pending&post_type=recipe'>$num</a>";
                     $text = "<a href='edit.php?post_status=pending&post_type=recipe'>$text</a>";
@@ -106,9 +106,9 @@ class RPR_Admin extends RPR_Core {
      function manage_recipe_edit_columns($columns) {
           $columns = array(
                'cb' => '<input type="checkbox" />',
-               'thumbnail' => __('Image', 'recipe-press'),
-               'title' => __('Recipe Title', 'recipe-press'),
-               'intro' => __('Introduction', 'recipe-press')
+               'thumbnail' => __('Image', 'recipe-press-reloaded'),
+               'title' => __('Recipe Title', 'recipe-press-reloaded'),
+               'intro' => __('Introduction', 'recipe-press-reloaded')
           );
 
           foreach ( $this->rpr_options['taxonomies'] as $tax => $settings ) {
@@ -118,19 +118,19 @@ class RPR_Admin extends RPR_Core {
                }
           }
 
-          $columns['ingredients'] = __('Ingredients', 'recipe-press');
+          $columns['ingredients'] = __('Ingredients', 'recipe-press-reloaded');
 
           if ( $this->rpr_options['use_featured'] ) {
-               $columns['featured'] = __('Featured', 'recipe-press');
+               $columns['featured'] = __('Featured', 'recipe-press-reloaded');
           }
 
-          $columns ['author'] = __('Author', 'recipe-press');
+          $columns ['author'] = __('Author', 'recipe-press-reloaded');
 
           if ( $this->rpr_options['use_comments'] ) {
                $columns['comments'] = '<img src="' . get_option('siteurl') . '/wp-admin/images/comment-grey-bubble.png" alt="Comments">';
           }
 
-          $columns['date'] = __('Date', 'recipe-press');
+          $columns['date'] = __('Date', 'recipe-press-reloaded');
 
           return $columns;
      }
@@ -160,9 +160,9 @@ class RPR_Admin extends RPR_Core {
                     break;
                case 'featured':
                     if ( get_post_meta($post->ID, '_recipe_featured_value', true) ) {
-                         _e('Yes', 'recipe-press');
+                         _e('Yes', 'recipe-press-reloaded');
                     } else {
-                         _e('No', 'recipe-press');
+                         _e('No', 'recipe-press-reloaded');
                     }
                     break;
                case 'ingredients':
@@ -182,11 +182,11 @@ class RPR_Admin extends RPR_Core {
      function admin_init() {
           register_setting( 'rpr_options', 'rpr_options', array(&$this, 'rpr_options_validate' ));
           //Settings Section general
-		  add_settings_section('rpr_general', __("General Settings", "recipe-press"), array(&$this, 'rpr_section_general_callback_function'), 'general');
+		  add_settings_section('rpr_general', __("General Settings", "recipe-press-reloaded"), array(&$this, 'rpr_section_general_callback_function'), 'general');
 		  //Add a settings section for each taxonomy
 		  $this->rpr_sections_taxonomies();
           //Settings section display
-          add_settings_section('rpr_display', __("Display Settings", "recipe-press"), array(&$this, 'rpr_section_display_callback_function'), 'display');
+          add_settings_section('rpr_display', __("Display Settings", "recipe-press-reloaded"), array(&$this, 'rpr_section_display_callback_function'), 'display');
           
           //Register Style and Scripts for the backend view
           wp_register_style('rpr_admin_CSS', RPR_URL . 'css/rpr-admin.css');
@@ -208,7 +208,7 @@ class RPR_Admin extends RPR_Core {
           $pages = array();
 
           // Set up the settings page 
-          $pages[] = add_submenu_page('edit.php?post_type=recipe', __('RecipePress Settings', 'recipe-press'), __('Settings', 'recipe-press'), 'edit_posts', $this->menuName, array(&$this, 'settings'));
+          $pages[] = add_submenu_page('edit.php?post_type=recipe', __('RecipePress Settings', 'recipe-press-reloaded'), __('Settings', 'recipe-press-reloaded'), 'edit_posts', $this->menuName, array(&$this, 'settings'));
 
 
           $tableName = $wpdb->prefix . 'rp_recipes';
@@ -266,7 +266,7 @@ class RPR_Admin extends RPR_Core {
           static $this_plugin;
 
           if ( !$this_plugin ) {
-               $this_plugin = plugin_basename(dirname(dirname(__FILE__))) . '/recipe-press.php';
+               $this_plugin = plugin_basename(dirname(dirname(__FILE__))) . '/recipe-press-reloaded.php';
           }
 
           if ( $file == $this_plugin ) {
@@ -279,44 +279,44 @@ class RPR_Admin extends RPR_Core {
      
     /*Section general*/
      function rpr_section_general_callback_function() {
-     	add_settings_field('rpr_index_slug', __("Index slug", "recipe-press"), array(&$this, 'rpr_options_input'), 'general', 'rpr_general', array('id' => 'index_slug', 'name' => '[index_slug]', 'value' => $this->rpr_options['index_slug'], 'desc' => __( 'This will be used as the slug (URL) for the recipe index pages.', 'recipe-press' ), 'link' => "<a href=\"".get_option('home')."/".$this->rpr_options['index_slug']."\">".__('View on Site', 'recipe-press')."</a>" ) );
-     	add_settings_field('rpr_use_plugin_permalinks', __("Use plugin permalinks?", "recipe-press"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_plugin_permalink', 'checked' => $this->rpr_options['use_plugin_permalinks'], 'desc' => __("Check this if xou want to use your own permalink structure defined below. If not checked the default wordpress permalink structure will be used", "recipe-press") ));
-     	add_settings_field('rpr_singular_name', __("Singular name", "recipe-press"), array(&$this, 'rpr_options_input'), 'general', 'rpr_general', array('id' => 'singular_name', 'name' => '[singular_name]', 'value' => $this->rpr_options['singular_name'], 'desc' => __("The name for a single recipe-post", "recipe-press" ) )  );
-     	add_settings_field('rpr_plural_name', __("Plural name", "recipe-press"), array(&$this, 'rpr_options_input'), 'general', 'rpr_general', array('id' => 'plural_name', 'name' => '[plural_name]', 'value' => $this->rpr_options['plural_name'], 'desc' => __("The name for multiple recipe-posts", "recipe-press" ) )  );
-     	add_settings_field('rpr_identifier', __("Identifier", "recipe-press"), array(&$this, 'rpr_options_input'), 'general', 'rpr_general', array('id' => 'identifier', 'name' => '[identifier]', 'value' => $this->rpr_options['identifier'], 'desc' => __("The <strong>%identifier%</strong> used in the permalink structure below", "recipe-press") )  );
-     	add_settings_field('rpr_permalink_structure', __("Permalink structure", "recipe-press"), array(&$this, 'rpr_options_input'), 'general', 'rpr_general', array('id' => 'permalink_structure', 'name' => '[permalink_structure]', 'value' => $this->rpr_options['permalink_structure'], 'desc' => __(" This permalink structure will be used to create the custom URL structure for your individual recipes. These follow WP's normal <a href=\"http://codex.wordpress.org/Using_Permalinks\" title=\"Wordpress Documentation on permalinks\">permalink tags</a>, but must also include the content type <strong>%identifier%</strong> and at least one of these unique tags: <strong>%postname%</strong> or <strong>%post_id%</strong>.<br/>Allowed tags: %year%, %monthnum%, %day%, %hour%, %minute%, %second%, %postname%, %post_id% ", "recipe-press") )  );
-     	add_settings_field('rpr_use_categories', __("Use categories?", "recipe-press"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_categories', 'checked' => $this->rpr_options['use_categories'], 'desc' => __("Check this if you want to use the recipe categories taxonomy", "recipe-press") ));
-     	add_settings_field('rpr_use_cuisines', __("Use cuisines?", "recipe-press"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_cuisines', 'checked' => $this->rpr_options['use_cuisines'], 'desc' => __("Check this if you want to use the recipe cuisines taxonomy", "recipe-press") ));
-     	add_settings_field('rpr_use_servings', __("Use servings?", "recipe-press"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_servings', 'checked' => $this->rpr_options['use_servings'], 'desc' => __("Check this if you want to use the servings taxonomy", "recipe-press") ));
-     	add_settings_field('rpr_use_times', __("Use times?", "recipe-press"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_times', 'checked' => $this->rpr_options['use_times'], 'desc' => __("Check this if you want to use the times taxonomy", "recipe-press") ));
-     	add_settings_field('rpr_use_courses', __("Use courses?", "recipe-press"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_courses', 'checked' => $this->rpr_options['use_courses'], 'desc' => __("Check this if you want to use the courses taxonomy", "recipe-press") ));
-     	add_settings_field('rpr_use_seasons', __("Use seasons?", "recipe-press"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_seasons', 'checked' => $this->rpr_options['use_seasons'], 'desc' => __("Check this if you want to use the seasons taxonomy", "recipe-press") ));
-     	add_settings_field('rpr_use_thumbnails', __("Use thumbnails?", "recipe-press"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_thumbnails', 'checked' => $this->rpr_options['use_thumbnails'], 'desc' => __("Check this if you want to use thumbnails", "recipe-press") ));
-     	add_settings_field('rpr_use_featured', __("Use featured?", "recipe-press"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_featured', 'checked' => $this->rpr_options['use_featured'], 'desc' => __("Check this if you want to use featured recipes", "recipe-press") ));
-     	add_settings_field('rpr_use_comments', __("Use comments?", "recipe-press"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_comments', 'checked' => $this->rpr_options['use_comments'], 'desc' => __("Check this if you want to use comments", "recipe-press") ));
-     	add_settings_field('rpr_use_trackbacks', __("Use trackbacks?", "recipe-press"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_trackbacks', 'checked' => $this->rpr_options['use_trackbacks'], 'desc' => __("Check this if you want to use trackbacks", "recipe-press") ));
-     	add_settings_field('rpr_use_custom_fields', __("Use custom fields?", "recipe-press"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_custom_fields', 'checked' => $this->rpr_options['use_custom_fields'], 'desc' => __("Check this if you want to use custom fields", "recipe-press") ));
-     	add_settings_field('rpr_use_revisions', __("Use revisions?", "recipe-press"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_revisions', 'checked' => $this->rpr_options['use_revisions'], 'desc' => __("Check this if you want to use revisions", "recipe-press") ));
-     	add_settings_field('rpr_use_post_categories', __("Use post categories?", "recipe-press"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_post_categories', 'checked' => $this->rpr_options['use_post_categories'], 'desc' => __("Check this if you want to use the post categories instead of the recipe categories", "recipe-press") ));
-     	add_settings_field('rpr_use_post_tags', __("Use post tags?", "recipe-press"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_post_tags', 'checked' => $this->rpr_options['use_post_tags'], 'desc' => __("Check this if you want to use the post tags", "recipe-press") ));
+     	add_settings_field('rpr_index_slug', __("Index slug", "recipe-press-reloaded"), array(&$this, 'rpr_options_input'), 'general', 'rpr_general', array('id' => 'index_slug', 'name' => '[index_slug]', 'value' => $this->rpr_options['index_slug'], 'desc' => __( 'This will be used as the slug (URL) for the recipe index pages.', 'recipe-press-reloaded' ), 'link' => "<a href=\"".get_option('home')."/".$this->rpr_options['index_slug']."\">".__('View on Site', 'recipe-press-reloaded')."</a>" ) );
+     	add_settings_field('rpr_use_plugin_permalinks', __("Use plugin permalinks?", "recipe-press-reloaded"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_plugin_permalink', 'checked' => $this->rpr_options['use_plugin_permalinks'], 'desc' => __("Check this if xou want to use your own permalink structure defined below. If not checked the default wordpress permalink structure will be used", "recipe-press-reloaded") ));
+     	add_settings_field('rpr_singular_name', __("Singular name", "recipe-press-reloaded"), array(&$this, 'rpr_options_input'), 'general', 'rpr_general', array('id' => 'singular_name', 'name' => '[singular_name]', 'value' => $this->rpr_options['singular_name'], 'desc' => __("The name for a single recipe-post", "recipe-press" ) )  );
+     	add_settings_field('rpr_plural_name', __("Plural name", "recipe-press-reloaded"), array(&$this, 'rpr_options_input'), 'general', 'rpr_general', array('id' => 'plural_name', 'name' => '[plural_name]', 'value' => $this->rpr_options['plural_name'], 'desc' => __("The name for multiple recipe-posts", "recipe-press" ) )  );
+     	add_settings_field('rpr_identifier', __("Identifier", "recipe-press-reloaded"), array(&$this, 'rpr_options_input'), 'general', 'rpr_general', array('id' => 'identifier', 'name' => '[identifier]', 'value' => $this->rpr_options['identifier'], 'desc' => __("The <strong>%identifier%</strong> used in the permalink structure below", "recipe-press-reloaded") )  );
+     	add_settings_field('rpr_permalink_structure', __("Permalink structure", "recipe-press-reloaded"), array(&$this, 'rpr_options_input'), 'general', 'rpr_general', array('id' => 'permalink_structure', 'name' => '[permalink_structure]', 'value' => $this->rpr_options['permalink_structure'], 'desc' => __(" This permalink structure will be used to create the custom URL structure for your individual recipes. These follow WP's normal <a href=\"http://codex.wordpress.org/Using_Permalinks\" title=\"Wordpress Documentation on permalinks\">permalink tags</a>, but must also include the content type <strong>%identifier%</strong> and at least one of these unique tags: <strong>%postname%</strong> or <strong>%post_id%</strong>.<br/>Allowed tags: %year%, %monthnum%, %day%, %hour%, %minute%, %second%, %postname%, %post_id% ", "recipe-press-reloaded") )  );
+     	add_settings_field('rpr_use_categories', __("Use categories?", "recipe-press-reloaded"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_categories', 'checked' => $this->rpr_options['use_categories'], 'desc' => __("Check this if you want to use the recipe categories taxonomy", "recipe-press-reloaded") ));
+     	add_settings_field('rpr_use_cuisines', __("Use cuisines?", "recipe-press-reloaded"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_cuisines', 'checked' => $this->rpr_options['use_cuisines'], 'desc' => __("Check this if you want to use the recipe cuisines taxonomy", "recipe-press-reloaded") ));
+     	add_settings_field('rpr_use_servings', __("Use servings?", "recipe-press-reloaded"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_servings', 'checked' => $this->rpr_options['use_servings'], 'desc' => __("Check this if you want to use the servings taxonomy", "recipe-press-reloaded") ));
+     	add_settings_field('rpr_use_times', __("Use times?", "recipe-press-reloaded"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_times', 'checked' => $this->rpr_options['use_times'], 'desc' => __("Check this if you want to use the times taxonomy", "recipe-press-reloaded") ));
+     	add_settings_field('rpr_use_courses', __("Use courses?", "recipe-press-reloaded"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_courses', 'checked' => $this->rpr_options['use_courses'], 'desc' => __("Check this if you want to use the courses taxonomy", "recipe-press-reloaded") ));
+     	add_settings_field('rpr_use_seasons', __("Use seasons?", "recipe-press-reloaded"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_seasons', 'checked' => $this->rpr_options['use_seasons'], 'desc' => __("Check this if you want to use the seasons taxonomy", "recipe-press-reloaded") ));
+     	add_settings_field('rpr_use_thumbnails', __("Use thumbnails?", "recipe-press-reloaded"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_thumbnails', 'checked' => $this->rpr_options['use_thumbnails'], 'desc' => __("Check this if you want to use thumbnails", "recipe-press-reloaded") ));
+     	add_settings_field('rpr_use_featured', __("Use featured?", "recipe-press-reloaded"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_featured', 'checked' => $this->rpr_options['use_featured'], 'desc' => __("Check this if you want to use featured recipes", "recipe-press-reloaded") ));
+     	add_settings_field('rpr_use_comments', __("Use comments?", "recipe-press-reloaded"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_comments', 'checked' => $this->rpr_options['use_comments'], 'desc' => __("Check this if you want to use comments", "recipe-press-reloaded") ));
+     	add_settings_field('rpr_use_trackbacks', __("Use trackbacks?", "recipe-press-reloaded"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_trackbacks', 'checked' => $this->rpr_options['use_trackbacks'], 'desc' => __("Check this if you want to use trackbacks", "recipe-press-reloaded") ));
+     	add_settings_field('rpr_use_custom_fields', __("Use custom fields?", "recipe-press-reloaded"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_custom_fields', 'checked' => $this->rpr_options['use_custom_fields'], 'desc' => __("Check this if you want to use custom fields", "recipe-press-reloaded") ));
+     	add_settings_field('rpr_use_revisions', __("Use revisions?", "recipe-press-reloaded"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_revisions', 'checked' => $this->rpr_options['use_revisions'], 'desc' => __("Check this if you want to use revisions", "recipe-press-reloaded") ));
+     	add_settings_field('rpr_use_post_categories', __("Use post categories?", "recipe-press-reloaded"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_post_categories', 'checked' => $this->rpr_options['use_post_categories'], 'desc' => __("Check this if you want to use the post categories instead of the recipe categories", "recipe-press-reloaded") ));
+     	add_settings_field('rpr_use_post_tags', __("Use post tags?", "recipe-press-reloaded"), array(&$this, 'rpr_options_checkbox'), 'general', 'rpr_general', array( 'id' => 'use_post_tags', 'checked' => $this->rpr_options['use_post_tags'], 'desc' => __("Check this if you want to use the post tags", "recipe-press-reloaded") ));
      }
       
     
      /*Section taxonomies*/
      function rpr_sections_taxonomies() {
      	foreach($this->rpr_options['taxonomies'] as $key=>$tax):
-          	add_settings_section('rpr_taxonomies_'.$key, sprintf(__("Taxonomy %s", "recipe-press"), $key), array(&$this, 'rpr_section_taxonomies_tax_callback_function'), 'taxonomies_'.$key, array('key'=>$key));
+          	add_settings_section('rpr_taxonomies_'.$key, sprintf(__("Taxonomy %s", "recipe-press-reloaded"), $key), array(&$this, 'rpr_section_taxonomies_tax_callback_function'), 'taxonomies_'.$key, array('key'=>$key));
           	
-          	add_settings_field('rpr_taxonomies_'.$key.'_slug', __("Taxonomy slug", "recipe-press"), array(&$this, 'rpr_options_input'), 'taxonomies_'.$key, 'rpr_taxonomies_'.$key, array( 'id'=>'rpr_options_taxonomies_'.$key.'_slug', 'name' => '[taxonomies][' . $key . '][slug]', 'value' => $this->rpr_options['taxonomies'][$key]['slug'],  'desc'=>__('The URL slug for listing all terms of this taxonomy.', 'recipe-press'), 'link'=>"&nbsp;<a href=\"".get_option('home')."/".$this->rpr_options['taxonomies'][$key]['slug']."\">".__('View on Site', 'recipe-press')."</a>"));
-          	add_settings_field('rpr_taxonomies_'.$key.'_singular_name', __("Singular name", "recipe-press"), array(&$this, 'rpr_options_input'), 'taxonomies_'.$key, 'rpr_taxonomies_'.$key, array( 'id'=>'taxonomies_'.$key.'_singular_name', 'name' => '[taxonomies][' . $key . '][singular_name]', 'value' => $this->rpr_options['taxonomies'][$key]['singular_name'],  'desc'=>__('The name for a single term.', 'recipe-press')));
-          	add_settings_field('rpr_taxonomies_'.$key.'_plural_name', __("Plural name", "recipe-press"), array(&$this, 'rpr_options_input'), 'taxonomies_'.$key, 'rpr_taxonomies_'.$key, array( 'id'=>'taxonomies_'.$key.'_plural_name', 'name' => '[taxonomies][' . $key . '][plural_name]', 'value' => $this->rpr_options['taxonomies'][$key]['plural_name'],  'desc'=>__('The name for multiple term.', 'recipe-press')));
-          	add_settings_field('rpr_taxonomies_'.$key.'_page', __("Display page", "recipe-press"), array(&$this, 'rpr_options_dropdown_pages'), 'taxonomies_'.$key, 'rpr_taxonomies_'.$key, array( 'key'=>$key, 'selected' => $this->rpr_options['taxonomies'][$key]['page'],  'desc'=>sprintf(__('The page where this taxonomy will be listed. You must place the short code <strong>[%1$s]</strong> on this page to display the recipes. This will be the page that users will be directed to if the template file "%2$s" does not exist in your theme.', 'recipe-press'), 'recipe-tax tax=' . $key, 'taxonomy-recipe.php')));
-          	add_settings_field('rpr_taxonomies_'.$key.'_per_page', __("Display how many per page", "recipe-press"), array(&$this, 'rpr_options_dropdown'), 'taxonomies_'.$key, 'rpr_taxonomies_'.$key, array( 'name' => 'rpr_options[taxonomies]['.$key.'][per_page]', 'id' => 'rpr_taxonomies_'.$key.'_per_page', 'selected' => $this->rpr_options['taxonomies'][$key]['per_page'], 'options' => range(1,25), 'desc'=>__('How many items shall be shown on one page?', 'recipe-press')));
+          	add_settings_field('rpr_taxonomies_'.$key.'_slug', __("Taxonomy slug", "recipe-press-reloaded"), array(&$this, 'rpr_options_input'), 'taxonomies_'.$key, 'rpr_taxonomies_'.$key, array( 'id'=>'rpr_options_taxonomies_'.$key.'_slug', 'name' => '[taxonomies][' . $key . '][slug]', 'value' => $this->rpr_options['taxonomies'][$key]['slug'],  'desc'=>__('The URL slug for listing all terms of this taxonomy.', 'recipe-press-reloaded'), 'link'=>"&nbsp;<a href=\"".get_option('home')."/".$this->rpr_options['taxonomies'][$key]['slug']."\">".__('View on Site', 'recipe-press-reloaded')."</a>"));
+          	add_settings_field('rpr_taxonomies_'.$key.'_singular_name', __("Singular name", "recipe-press-reloaded"), array(&$this, 'rpr_options_input'), 'taxonomies_'.$key, 'rpr_taxonomies_'.$key, array( 'id'=>'taxonomies_'.$key.'_singular_name', 'name' => '[taxonomies][' . $key . '][singular_name]', 'value' => $this->rpr_options['taxonomies'][$key]['singular_name'],  'desc'=>__('The name for a single term.', 'recipe-press-reloaded')));
+          	add_settings_field('rpr_taxonomies_'.$key.'_plural_name', __("Plural name", "recipe-press-reloaded"), array(&$this, 'rpr_options_input'), 'taxonomies_'.$key, 'rpr_taxonomies_'.$key, array( 'id'=>'taxonomies_'.$key.'_plural_name', 'name' => '[taxonomies][' . $key . '][plural_name]', 'value' => $this->rpr_options['taxonomies'][$key]['plural_name'],  'desc'=>__('The name for multiple term.', 'recipe-press-reloaded')));
+          	add_settings_field('rpr_taxonomies_'.$key.'_page', __("Display page", "recipe-press-reloaded"), array(&$this, 'rpr_options_dropdown_pages'), 'taxonomies_'.$key, 'rpr_taxonomies_'.$key, array( 'key'=>$key, 'selected' => $this->rpr_options['taxonomies'][$key]['page'],  'desc'=>sprintf(__('The page where this taxonomy will be listed. You must place the short code <strong>[%1$s]</strong> on this page to display the recipes. This will be the page that users will be directed to if the template file "%2$s" does not exist in your theme.', 'recipe-press-reloaded'), 'recipe-tax tax=' . $key, 'taxonomy-recipe.php')));
+          	add_settings_field('rpr_taxonomies_'.$key.'_per_page', __("Display how many per page", "recipe-press-reloaded"), array(&$this, 'rpr_options_dropdown'), 'taxonomies_'.$key, 'rpr_taxonomies_'.$key, array( 'name' => 'rpr_options[taxonomies]['.$key.'][per_page]', 'id' => 'rpr_taxonomies_'.$key.'_per_page', 'selected' => $this->rpr_options['taxonomies'][$key]['per_page'], 'options' => range(1,25), 'desc'=>__('How many items shall be shown on one page?', 'recipe-press-reloaded')));
           	if($key != "recipe-ingredient"):
-          		add_settings_field('rpr_taxonomies_'.$key.'_default', __("Default value", "recipe-press"), array(&$this, 'rpr_options_dropdown_categories'), 'taxonomies_'.$key, 'rpr_taxonomies_'.$key, array( 'key'=>$key, 'id' => 'default',  'selected' => $this->rpr_options['taxonomies'][$key]['default'], 'desc'=>__('Default value for this taxononomy.', 'recipe-press'))); 
-          		add_settings_field('rpr_taxonomies_'.$key.'_hierarchical', __("Hierarchical", "recipe-press"), array(&$this, 'rpr_options_checkbox'), 'taxonomies_'.$key, 'rpr_taxonomies_'.$key, array( 'id'=>'taxonomies_'.$key.'_hierarchical',  'name' => '[taxonomies][' . $key . '][hierarchical]', 'checked' => $this->rpr_options['taxonomies'][$key]['hierarchical'],  'desc'=>__('Check this if you want to enable nested terms for this the taxonomy', 'recipe-press')));
-          		add_settings_field('rpr_taxonomies_'.$key.'_allow_multiple', __("Allow multiple", "recipe-press"), array(&$this, 'rpr_options_checkbox'), 'taxonomies_'.$key, 'rpr_taxonomies_'.$key, array( 'id'=>'taxonomies_'.$key.'_allow_multiple',  'name' => '[taxonomies][' . $key . '][allow_multiple]', 'checked' => $this->rpr_options['taxonomies'][$key]['allow_multiple'],  'desc'=>__('Check this if you want to alloow more than one term assigned to recipe', 'recipe-press')));
-          		add_settings_field('rpr_taxonomies_'.$key.'_active', __("Active", "recipe-press"), array(&$this, 'rpr_options_checkbox'), 'taxonomies_'.$key, 'rpr_taxonomies_'.$key, array( 'id'=>'taxonomies_'.$key.'_active', 'name' => '[taxonomies][' . $key . '][active]', 'checked' => $this->rpr_options['taxonomies'][$key]['active'],  'desc'=>__('Check this if you want this taxonomy to be active', 'recipe-press')));
+          		add_settings_field('rpr_taxonomies_'.$key.'_default', __("Default value", "recipe-press-reloaded"), array(&$this, 'rpr_options_dropdown_categories'), 'taxonomies_'.$key, 'rpr_taxonomies_'.$key, array( 'key'=>$key, 'id' => 'default',  'selected' => $this->rpr_options['taxonomies'][$key]['default'], 'desc'=>__('Default value for this taxononomy.', 'recipe-press-reloaded'))); 
+          		add_settings_field('rpr_taxonomies_'.$key.'_hierarchical', __("Hierarchical", "recipe-press-reloaded"), array(&$this, 'rpr_options_checkbox'), 'taxonomies_'.$key, 'rpr_taxonomies_'.$key, array( 'id'=>'taxonomies_'.$key.'_hierarchical',  'name' => '[taxonomies][' . $key . '][hierarchical]', 'checked' => $this->rpr_options['taxonomies'][$key]['hierarchical'],  'desc'=>__('Check this if you want to enable nested terms for this the taxonomy', 'recipe-press-reloaded')));
+          		add_settings_field('rpr_taxonomies_'.$key.'_allow_multiple', __("Allow multiple", "recipe-press-reloaded"), array(&$this, 'rpr_options_checkbox'), 'taxonomies_'.$key, 'rpr_taxonomies_'.$key, array( 'id'=>'taxonomies_'.$key.'_allow_multiple',  'name' => '[taxonomies][' . $key . '][allow_multiple]', 'checked' => $this->rpr_options['taxonomies'][$key]['allow_multiple'],  'desc'=>__('Check this if you want to alloow more than one term assigned to recipe', 'recipe-press-reloaded')));
+          		add_settings_field('rpr_taxonomies_'.$key.'_active', __("Active", "recipe-press-reloaded"), array(&$this, 'rpr_options_checkbox'), 'taxonomies_'.$key, 'rpr_taxonomies_'.$key, array( 'id'=>'taxonomies_'.$key.'_active', 'name' => '[taxonomies][' . $key . '][active]', 'checked' => $this->rpr_options['taxonomies'][$key]['active'],  'desc'=>__('Check this if you want this taxonomy to be active', 'recipe-press-reloaded')));
           	endif;
 		endforeach;
      }
@@ -327,23 +327,23 @@ class RPR_Admin extends RPR_Core {
      
      /*Section display*/
      function rpr_section_display_callback_function() {
-     	add_settings_field('rpr_default_excerpt_length', __("Default excerpt length", "recipe-press"), array(&$this, 'rpr_options_input'), 'display', 'rpr_display', array('id' => 'default_excerpt_length', 'name' => '[default_excerpt_length]', 'value' => $this->rpr_options['default_excerpt_length'], 'desc' => __( 'Default length of introduction excerpt when displaying in lists.', 'recipe-press' ) ) );
-    	add_settings_field('rpr_add_to_author_list', __('Add to author list', 'recipe-press'), array(&$this, 'rpr_options_checkbox'), 'display', 'rpr_display', array( 'id' => 'add_to_author_list', 'checked' => $this->rpr_options['add_to_author_list'], 'desc' => __('Check this to include the recipes by each author in their respective post list.', 'recipe-press' ) ) );
-     	add_settings_field('rpr_recipe_count', __("Number of recipes to display per page", "recipe-press"), array(&$this, 'rpr_options_dropdown'), 'display', 'rpr_display', array( 'name' => 'rpr_options[recipe_count]', 'id' => 'rpr_recipe_count', 'selected' => $this->rpr_options['recipe_count'], 'options' => range(1,25), 'desc'=>__('How many recipes to display per page on the listing pages.', 'recipe-press')));
-     	add_settings_field('rpr_recipe_orderby', __("Order by", "recipe-press"), array(&$this, 'rpr_options_dropdown'), 'display', 'rpr_display', array( 'name' => 'rpr_options[recipe_orderby]', 'id' => 'rpr_recipe_orderby', 'selected' => $this->rpr_options['recipe_orderby'], 'options' => array( __('Date', 'recipe-press') => 'date', __('Title', 'recipe-press') => 'title', __('Random', 'recipe-press') => 'random', __('Comment count', 'recipe-press') => 'comment_count', __('Menu order', 'recipe-press') => 'menu_order' ) ) );
-     	add_settings_field('rpr_recipe_order', "", array(&$this, 'rpr_options_dropdown'), 'display', 'rpr_display', array( 'name' => 'rpr_options[recipe_order]', 'id' => 'rpr_recipe_order', 'selected' => $this->rpr_options['recipe_order'], 'options' => array( __('Ascending', 'recipe-press') => 'asc', __('Descending', 'recipe-press') => 'desc'), 'desc'=>__('The listing order of recipes on the index page.', 'recipe-press')));
+     	add_settings_field('rpr_default_excerpt_length', __("Default excerpt length", "recipe-press-reloaded"), array(&$this, 'rpr_options_input'), 'display', 'rpr_display', array('id' => 'default_excerpt_length', 'name' => '[default_excerpt_length]', 'value' => $this->rpr_options['default_excerpt_length'], 'desc' => __( 'Default length of introduction excerpt when displaying in lists.', 'recipe-press' ) ) );
+    	add_settings_field('rpr_add_to_author_list', __('Add to author list', 'recipe-press-reloaded'), array(&$this, 'rpr_options_checkbox'), 'display', 'rpr_display', array( 'id' => 'add_to_author_list', 'checked' => $this->rpr_options['add_to_author_list'], 'desc' => __('Check this to include the recipes by each author in their respective post list.', 'recipe-press' ) ) );
+     	add_settings_field('rpr_recipe_count', __("Number of recipes to display per page", "recipe-press-reloaded"), array(&$this, 'rpr_options_dropdown'), 'display', 'rpr_display', array( 'name' => 'rpr_options[recipe_count]', 'id' => 'rpr_recipe_count', 'selected' => $this->rpr_options['recipe_count'], 'options' => range(1,25), 'desc'=>__('How many recipes to display per page on the listing pages.', 'recipe-press-reloaded')));
+     	add_settings_field('rpr_recipe_orderby', __("Order by", "recipe-press-reloaded"), array(&$this, 'rpr_options_dropdown'), 'display', 'rpr_display', array( 'name' => 'rpr_options[recipe_orderby]', 'id' => 'rpr_recipe_orderby', 'selected' => $this->rpr_options['recipe_orderby'], 'options' => array( __('Date', 'recipe-press-reloaded') => 'date', __('Title', 'recipe-press-reloaded') => 'title', __('Random', 'recipe-press-reloaded') => 'random', __('Comment count', 'recipe-press-reloaded') => 'comment_count', __('Menu order', 'recipe-press-reloaded') => 'menu_order' ) ) );
+     	add_settings_field('rpr_recipe_order', "", array(&$this, 'rpr_options_dropdown'), 'display', 'rpr_display', array( 'name' => 'rpr_options[recipe_order]', 'id' => 'rpr_recipe_order', 'selected' => $this->rpr_options['recipe_order'], 'options' => array( __('Ascending', 'recipe-press-reloaded') => 'asc', __('Descending', 'recipe-press-reloaded') => 'desc'), 'desc'=>__('The listing order of recipes on the index page.', 'recipe-press-reloaded')));
      	
-     	add_settings_field('rpr_custom_css', __('Use plugin CSS', 'recipe-press'), array(&$this, 'rpr_options_checkbox'), 'display', 'rpr_display', array( 'id' => 'custom_css', 'checked' => $this->rpr_options['custom_css'], 'desc' => __('Check this to use the builtin css from the plugin.', 'recipe-press' ) ) );
-     	add_settings_field('rpr_disable_content_filter', __('Disable content filter', 'recipe-press'), array(&$this, 'rpr_options_checkbox'), 'display', 'rpr_display', array( 'id' => 'disable_content_filter', 'checked' => $this->rpr_options['disable_content_filter'], 'desc' => __('Check this this option to completely disable any content filtering. <strong>Warning!</strong> Only do this if you have created template files and are having an issue with template display.', 'recipe-press' ) ) );
+     	add_settings_field('rpr_custom_css', __('Use plugin CSS', 'recipe-press-reloaded'), array(&$this, 'rpr_options_checkbox'), 'display', 'rpr_display', array( 'id' => 'custom_css', 'checked' => $this->rpr_options['custom_css'], 'desc' => __('Check this to use the builtin css from the plugin.', 'recipe-press' ) ) );
+     	add_settings_field('rpr_disable_content_filter', __('Disable content filter', 'recipe-press-reloaded'), array(&$this, 'rpr_options_checkbox'), 'display', 'rpr_display', array( 'id' => 'disable_content_filter', 'checked' => $this->rpr_options['disable_content_filter'], 'desc' => __('Check this this option to completely disable any content filtering. <strong>Warning!</strong> Only do this if you have created template files and are having an issue with template display.', 'recipe-press' ) ) );
      	
-     	add_settings_field('rpr_link_ingredients', __('Link ingredients', 'recipe-press'), array(&$this, 'rpr_options_checkbox'), 'display', 'rpr_display', array( 'id' => 'link_ingredients', 'checked' => $this->rpr_options['link_ingredients'], 'desc' => __('Check this to link ingredients to the taxonomy listing or the page set in the taxonomies tab.', 'recipe-press' ) ) );
+     	add_settings_field('rpr_link_ingredients', __('Link ingredients', 'recipe-press-reloaded'), array(&$this, 'rpr_options_checkbox'), 'display', 'rpr_display', array( 'id' => 'link_ingredients', 'checked' => $this->rpr_options['link_ingredients'], 'desc' => __('Check this to link ingredients to the taxonomy listing or the page set in the taxonomies tab.', 'recipe-press' ) ) );
      	
-     	add_settings_field('rpr_time_display_type', __("Time display type", "recipe-press"), array(&$this, 'rpr_options_dropdown'), 'display', 'rpr_display', array( 'name' => 'rpr_options[time_display_type]', 'id' => 'time_display_type', 'selected' => $this->rpr_options['time_display_type'], 'options' => array(__("Two lines", "recipe-press")=>'double', __('One line', 'recipe-press') => 'single' ), 'desc' => 'Mode to display the time field. Double means time and unit in seperate lines' ) );
-     	add_settings_field('rpr_default_hour_text', __("Hours text", "recipe-press"), array(&$this, 'rpr_options_input'), 'display', 'rpr_display', array('id' => 'hour_text', 'name' => '[hour_text]', 'value' => $this->rpr_options['hour_text'], 'desc' => __( 'Text that will be displayed in front of times greater than 60 min. Use singular only.', 'recipe-press' ) ) );
-     	add_settings_field('rpr_default_minute_text', __("Minutes text", "recipe-press"), array(&$this, 'rpr_options_input'), 'display', 'rpr_display', array('id' => 'minute_text', 'name' => '[minute_text]', 'value' => $this->rpr_options['minute_text'], 'desc' => __( 'Text that will be displayed in front of times. Use singular only.', 'recipe-press' ) ) );
+     	add_settings_field('rpr_time_display_type', __("Time display type", "recipe-press-reloaded"), array(&$this, 'rpr_options_dropdown'), 'display', 'rpr_display', array( 'name' => 'rpr_options[time_display_type]', 'id' => 'time_display_type', 'selected' => $this->rpr_options['time_display_type'], 'options' => array(__("Two lines", "recipe-press-reloaded")=>'double', __('One line', 'recipe-press-reloaded') => 'single' ), 'desc' => 'Mode to display the time field. Double means time and unit in seperate lines' ) );
+     	add_settings_field('rpr_default_hour_text', __("Hours text", "recipe-press-reloaded"), array(&$this, 'rpr_options_input'), 'display', 'rpr_display', array('id' => 'hour_text', 'name' => '[hour_text]', 'value' => $this->rpr_options['hour_text'], 'desc' => __( 'Text that will be displayed in front of times greater than 60 min. Use singular only.', 'recipe-press' ) ) );
+     	add_settings_field('rpr_default_minute_text', __("Minutes text", "recipe-press-reloaded"), array(&$this, 'rpr_options_input'), 'display', 'rpr_display', array('id' => 'minute_text', 'name' => '[minute_text]', 'value' => $this->rpr_options['minute_text'], 'desc' => __( 'Text that will be displayed in front of times. Use singular only.', 'recipe-press' ) ) );
      	
-     	add_settings_field('rpr_image_size_image', __("Image size", "recipe-press"), array(&$this, 'rpr_options_image_size'), 'display', 'rpr_display', array('id' => 'image_sizes_image', 'name' => '[image_sizes][image]', 'width' => $this->rpr_options['image_sizes']['image']['width'], 'height' => $this->rpr_options['image_sizes']['image']['height'], 'crop' => $this->rpr_options['image_sizes']['image']['crop'], 'desc' => __( 'Image size that will be used to display images in the single view. Might be overriden by your theme.', 'recipe-press' ) ) );
-     	add_settings_field('rpr_image_size_thumb', __("Thumbnail size", "recipe-press"), array(&$this, 'rpr_options_image_size'), 'display', 'rpr_display', array('id' => 'image_sizes_thumb', 'name' => '[image_sizes][thumb]', 'width' => $this->rpr_options['image_sizes']['thumb']['width'], 'height' => $this->rpr_options['image_sizes']['thumb']['height'], 'crop' => $this->rpr_options['image_sizes']['thumb']['crop'], 'desc' => __( 'Image size that will be used to display images in the list view. Might be overriden by your theme.', 'recipe-press' ) ) );
+     	add_settings_field('rpr_image_size_image', __("Image size", "recipe-press-reloaded"), array(&$this, 'rpr_options_image_size'), 'display', 'rpr_display', array('id' => 'image_sizes_image', 'name' => '[image_sizes][image]', 'width' => $this->rpr_options['image_sizes']['image']['width'], 'height' => $this->rpr_options['image_sizes']['image']['height'], 'crop' => $this->rpr_options['image_sizes']['image']['crop'], 'desc' => __( 'Image size that will be used to display images in the single view. Might be overriden by your theme.', 'recipe-press' ) ) );
+     	add_settings_field('rpr_image_size_thumb', __("Thumbnail size", "recipe-press-reloaded"), array(&$this, 'rpr_options_image_size'), 'display', 'rpr_display', array('id' => 'image_sizes_thumb', 'name' => '[image_sizes][thumb]', 'width' => $this->rpr_options['image_sizes']['thumb']['width'], 'height' => $this->rpr_options['image_sizes']['thumb']['height'], 'crop' => $this->rpr_options['image_sizes']['thumb']['crop'], 'desc' => __( 'Image size that will be used to display images in the list view. Might be overriden by your theme.', 'recipe-press' ) ) );
      }
      
      /*Creates a checkbox field
@@ -368,7 +368,7 @@ class RPR_Admin extends RPR_Core {
      			$outp.="<p>" . $args['desc'] . "</p>";
      		endif;
      	else:
-     		$outp="<p class=\"error\">".sprintf( __('There was an error in %1$s in function %2$s. Please file a bug!', "recipe-press"), "rpr_administration.php", "rpr_options_checkbox()")."</p>";
+     		$outp="<p class=\"error\">".sprintf( __('There was an error in %1$s in function %2$s. Please file a bug!', "recipe-press-reloaded"), "rpr_administration.php", "rpr_options_checkbox()")."</p>";
      	endif;
      	echo $outp;
      }
@@ -399,7 +399,7 @@ class RPR_Admin extends RPR_Core {
      			$outp.="<p>" . $args['desc'] . "</p>";
      		endif;
 		else:
-			$outp="<p class=\"error\">".sprintf( __('There was an error in %1$s in function %2$s. Please file a bug!', "recipe-press"), "rpr_administration.php", "rpr_options_input()")."</p>";
+			$outp="<p class=\"error\">".sprintf( __('There was an error in %1$s in function %2$s. Please file a bug!', "recipe-press-reloaded"), "rpr_administration.php", "rpr_options_input()")."</p>";
 		endif;
 		echo $outp;
 	}
@@ -430,7 +430,7 @@ class RPR_Admin extends RPR_Core {
      			$outp .= "<p>" . $args['desc'] . "</p>";
      		endif;
 		else:
-			$outp="<p class=\"error\">".sprintf( __('There was an error in %1$s in function %2$s. Please file a bug!', "recipe-press"), "rpr_administration.php", "rpr_options_dropdown_pages()")."</p>";
+			$outp="<p class=\"error\">".sprintf( __('There was an error in %1$s in function %2$s. Please file a bug!', "recipe-press-reloaded"), "rpr_administration.php", "rpr_options_dropdown_pages()")."</p>";
 		endif;
 		echo $outp;
 	 }
@@ -445,7 +445,7 @@ class RPR_Admin extends RPR_Core {
 	 	if( isset( $args['key'] ) && $args['key'] != "" && isset( $args['selected'] ) ):
 	 	 	$outp = wp_dropdown_pages(array(
 											'name' =>  'rpr_options[taxonomies][' . $args['key'] . '][page]', 
-											'show_option_none' => __('None', 'recipe-press'), 
+											'show_option_none' => __('None', 'recipe-press-reloaded'), 
 											'selected' => $args['selected'], 
 											'echo' => false 
 											));
@@ -453,7 +453,7 @@ class RPR_Admin extends RPR_Core {
      			$outp.="<p>" . $args['desc'] . "</p>";
      		endif;
 		else:
-			$outp="<p class=\"error\">".sprintf( __('There was an error in %1$s in function %2$s. Please file a bug!', "recipe-press"), "rpr_administration.php", "rpr_options_dropdown_pages()")."</p>";
+			$outp="<p class=\"error\">".sprintf( __('There was an error in %1$s in function %2$s. Please file a bug!', "recipe-press-reloaded"), "rpr_administration.php", "rpr_options_dropdown_pages()")."</p>";
 		endif;
 		echo $outp;
 	 }
@@ -471,7 +471,7 @@ class RPR_Admin extends RPR_Core {
 												'id' => $args['key'], 
 	 	 										'hierarchical' => $this->rpr_options['taxonomies'][$args['key']]['hierarchical'], 
 												'taxonomy' => $args['key'], 
-												'show_option_none' => __('No Default', 'recipe-press'), 
+												'show_option_none' => __('No Default', 'recipe-press-reloaded'), 
 												'hide_empty' => false, 
 												'orderby' => 'name', 
 												'selected' => $args['selected'],
@@ -481,7 +481,7 @@ class RPR_Admin extends RPR_Core {
      			$outp.="<p>" . $args['desc'] . "</p>";
      		endif;
 		else:
-			$outp="<p class=\"error\">".sprintf( __('There was an error in %1$s in function %2$s. Please file a bug!', "recipe-press"), "rpr_administration.php", "rpr_options_dropdown_pages()")."</p>";
+			$outp="<p class=\"error\">".sprintf( __('There was an error in %1$s in function %2$s. Please file a bug!', "recipe-press-reloaded"), "rpr_administration.php", "rpr_options_dropdown_pages()")."</p>";
 		endif;
 		echo $outp;	
 	 }
@@ -499,15 +499,15 @@ class RPR_Admin extends RPR_Core {
 			$outp.="<input id=\"" . $args['id'] ."_height\" name=\"rpr_options" . $args['name'] . "[height]\" type=\"text\" size=\"10\" value=\"" . $args['height'] . " \" />";
 			
 			$outp.= "<select name=\"rpr_options" . $args['name'] . "[crop]\" id=\"". $args['id'] ."_crop \">\n";
-	 	 		$outp .= "<option value=\"1\" " .selected($args['crop'], '1', false) . ">" . __("crop", "recipe-press") . "</option>\n";
-	 	 		$outp .= "<option value=\"0\" " .selected($args['crop'], '0', false) . ">" . __("proportional", "recipe-press") . "</option>\n";
+	 	 		$outp .= "<option value=\"1\" " .selected($args['crop'], '1', false) . ">" . __("crop", "recipe-press-reloaded") . "</option>\n";
+	 	 		$outp .= "<option value=\"0\" " .selected($args['crop'], '0', false) . ">" . __("proportional", "recipe-press-reloaded") . "</option>\n";
 	 	 	$outp.= "</select>\n";
 			
 	 	 	if ( isset($args['desc']) && $args['desc'] != ""):
      			$outp.="<p>" . $args['desc'] . "</p>";
      		endif;
 		else:
-			$outp="<p class=\"error\">".sprintf( __('There was an error in %1$s in function %2$s. Please file a bug!', "recipe-press"), "rpr_administration.php", "rpr_options_dropdown_pages()")."</p>";
+			$outp="<p class=\"error\">".sprintf( __('There was an error in %1$s in function %2$s. Please file a bug!', "recipe-press-reloaded"), "rpr_administration.php", "rpr_options_dropdown_pages()")."</p>";
 		endif;
 		echo $outp;	
 	 }
@@ -852,7 +852,7 @@ class RPR_Admin extends RPR_Core {
                'before-count' => ' ( ',
                'after-count' => ' ) ',
                'show-view-all' => false,
-               'view-all-text' => '&darr;' . __('View All', 'recipe-press'),
+               'view-all-text' => '&darr;' . __('View All', 'recipe-press-reloaded'),
                'submit_link' => false,
                'list-class' => 'recipe-press-taxonomy-widget',
                'item-class' => 'recipe-press-taxonomy-item',

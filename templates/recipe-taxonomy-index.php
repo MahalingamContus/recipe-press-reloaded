@@ -37,7 +37,7 @@ endforeach;
 
 <!-- Alphebetical index for easy "jump to"-navigation-->
 <div id="nav-above" class="article_links">
-    <h1 class="assistive-text"><?php __('Alphabetcial index navigation', 'cbjck');?></h1>
+    <h1 class="assistive-text"><?php __('Alphabetcial index navigation', 'recipe-press-reloaded');?></h1>
     <ul class="alphabet">
 	    <?php foreach($alphabet as $letter): ?>
             <?php if(in_array($letter, $alph)):?>
@@ -86,7 +86,7 @@ endforeach;
         </div>
 <?php else:?>
     <div id="notfound">
-        <p><?php _e("Sorry, No Recipes;", "cbjck");?></p>
+        <p><?php _e("Sorry, No Recipes;", "recipe-press-reloaded");?></p>
     </div>
 <?php endif;?>
     
@@ -95,7 +95,7 @@ endforeach;
 
 <!-- Alphebetical index for easy "jump to"-navigation-->
 <div id="nav-below" class="cleared">
-    <h1 class="assistive-text"><?php __('Alphabetcial index navigation', 'cbjck');?></h1>
+    <h1 class="assistive-text"><?php __('Alphabetcial index navigation', 'recipe-press-reloaded');?></h1>
     <ul class="alphabet">
 	    <?php foreach($alphabet as $letter): ?>
             <?php if(in_array($letter, $alph)):?>

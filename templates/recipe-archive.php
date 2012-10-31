@@ -25,19 +25,19 @@ global $wp_query;
     <p class="recipe-notes"><?php the_recipe_introduction(array('length' => '5000')); ?></p>
         <?php if ( use_recipe_categories() ) :?>
             <div class="recipe-category">
-                <?php _e('Posted in: ', 'recipe-press');
+                <?php _e('Posted in: ', 'recipe-press-reloaded');
                 the_terms(get_the_id(), 'recipe-category');?>
             </div>
         <?php endif; ?>
         <?php if ( use_recipe_cuisines() ): ?>
             <div class="recipe-cuisine">
-                <?php _e('from: ', 'recipe-press');
+                <?php _e('from: ', 'recipe-press-reloaded');
                 the_terms(get_the_id(), 'recipe-cuisine');?>
             </div>
         <?php endif; ?>
         <?php if ( use_recipe_seasons() ): ?>
             <div class="recipe-season">
-                <?php _e('Season: ', 'recipe-press');
+                <?php _e('Season: ', 'recipe-press-reloaded');
                 the_terms(get_the_id(), 'recipe-season');?>
             </div>
         <?php endif; ?>
@@ -49,7 +49,7 @@ global $wp_query;
         <?php endif; ?>
         <?php if ( use_recipe_servings() ): ?>
             <span class="recipe-servings">
-                <?php _e("for", "recipe-press"); ?>
+                <?php _e("for", "recipe-press-reloaded"); ?>
                 <?php the_recipe_servings(); ?>
             </span>
         <?php endif; ?>

@@ -27,7 +27,7 @@ global $RECIPEPRESSOBJ;
 	endif; ?>
 	
 	<div class="icon32" id="icon-recipe-press"><br/></div>
-	<h2><?php echo $this->pluginName; ?> &raquo; <?php _e('Plugin Settings', 'recipe-press'); ?> </h2> 
+	<h2><?php echo $this->pluginName; ?> &raquo; <?php _e('Plugin Settings', 'recipe-press-reloaded'); ?> </h2> 
 	<!-- Tab Menu -->
 	<nav id="rpr-tab-menu">
 		<a class="nav-tab" id="general-tab" href="#top#general"><?php _e( 'General', 'recipe-press' );?></a>

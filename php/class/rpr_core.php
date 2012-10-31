@@ -34,7 +34,7 @@ class RPR_Core {
 
           /* Plugin Settings */
           /* translators: The name of the plugin, should be a translation of "RecipePress" only! */
-          $this->pluginName = __('RecipePress', 'recipe-press');
+          $this->pluginName = __('RecipePress', 'recipe-press-reloaded');
 
           /* Plugin Folders */
           //RPR_PATH = WP_PLUGIN_DIR . '/' . basename(dirname(dirname(dirname(__FILE__)))) . '/';
@@ -104,8 +104,8 @@ class RPR_Core {
 					),
 				'recipe-course' => array(
 					'slug' => 'recipe-course',
-					'singular_name' => __('Course', 'recipe-press'),
-					'plural_name' => __('Courses', 'recipe-press'),
+					'singular_name' => __('Course', 'recipe-press-reloaded'),
+					'plural_name' => __('Courses', 'recipe-press-reloaded'),
 					'hierarchical' => false,
 					'active' => true,
 					'default' => false,
@@ -116,8 +116,8 @@ class RPR_Core {
 					),
 				'recipe-season' => array(
 					'slug' => 'recipe-season',
-					'singular_name' => __('Season', 'recipe-press'),
-					'plural_name' => __('Seasons', 'recipe-press'),
+					'singular_name' => __('Season', 'recipe-press-reloaded'),
+					'plural_name' => __('Seasons', 'recipe-press-reloaded'),
 					'hierarchical' => false,
 					'active' => true,
 					'default' => false,
@@ -128,8 +128,8 @@ class RPR_Core {
 					),
 				'recipe-ingredient' => array(
 					'slug' => 'recipe-ingredient',
-					'singular_name' => __('Ingredient', 'recipe-press'),
-					'plural_name' => __('Ingredients', 'recipe-press'),
+					'singular_name' => __('Ingredient', 'recipe-press-reloaded'),
+					'plural_name' => __('Ingredients', 'recipe-press-reloaded'),
 					'hierarchical' => false,
 					'active' => true,
 					'default' => false,
@@ -148,8 +148,8 @@ class RPR_Core {
                	'add_to_author_list' => false,
                	'disable_content_filter' => false,
                	'custom_css' => true,
-               	'hour_text' => __(' hour', 'recipe-press'),
-               	'minute_text' => __(' min', 'recipe-press'),
+               	'hour_text' => __(' hour', 'recipe-press-reloaded'),
+               	'minute_text' => __(' min', 'recipe-press-reloaded'),
                	'time_display_type' => 'single',
                	'link_ingredients' => false,
                	//Image sizes (as a fallback if not provided by theme)
@@ -176,9 +176,9 @@ class RPR_Core {
                'index-slug' => 'recipes',
                'identifier' => 'recipe',
                'permalink' => (get_option('permalink_structure')) ? '%identifier%' . get_option('permalink_structure') : '%identifier%/%postname%',
-               'plural-name' => __('Recipes', 'recipe-press'),
-               'plural_name' => __('Recipes', 'recipe-press'),
-               'singular-name' => __('Recipe', 'recipe-press'),
+               'plural-name' => __('Recipes', 'recipe-press-reloaded'),
+               'plural_name' => __('Recipes', 'recipe-press-reloaded'),
+               'singular-name' => __('Recipe', 'recipe-press-reloaded'),
                
 'use-taxonomies' => true,//Deprecated
 			   'use-categories'=> '1',
@@ -202,7 +202,7 @@ class RPR_Core {
                //'taxonomies' => array(
                     
                     
-                 //   'recipe-course' => array('slug' => 'recipe-course', 'plural' => __('Courses', 'recipe-press'), 'singular' => __('Course', 'recipe-press'), 'hierarchical' => false, 'active' => true, 'default' => false, 'allow_multiple' => true, 'page' => false, 'builtin' => false, 'per-page' => 10)
+                 //   'recipe-course' => array('slug' => 'recipe-course', 'plural' => __('Courses', 'recipe-press-reloaded'), 'singular' => __('Course', 'recipe-press-reloaded'), 'hierarchical' => false, 'active' => true, 'default' => false, 'allow_multiple' => true, 'page' => false, 'builtin' => false, 'per-page' => 10)
                //),
                'ingredient-slug' => 'recipe-ingredients',
                'ingredients-per-page' => 10,
@@ -221,8 +221,8 @@ class RPR_Core {
                'add-to-author-list' => false,
                'disable-content-filter' => false,
                'custom-css' => (count($options) > 2) ? isset($options['custom-css']) : true,
-               'hour-text' => __(' hour', 'recipe-press'),
-               'minute-text' => __(' min', 'recipe-press'),
+               'hour-text' => __(' hour', 'recipe-press-reloaded'),
+               'minute-text' => __(' min', 'recipe-press-reloaded'),
                'time-display-type' => 'double',
                // Form Defaults 
 //FRONTPAGE form should be removed!!
@@ -260,9 +260,9 @@ class RPR_Core {
                'use-recipe-box' => true,
                'recipe-box-slug' => 'recipe-box',
                'recipe-box-page' => false,
-               'recipe-box-title' => __('My Recipe Box', 'recipe-press'),
-               'recipe-box-add-title' => __('Add To Box', 'recipe-press'),
-               'recipe-box-view-title' => __('View My Box', 'recipe-press'),
+               'recipe-box-title' => __('My Recipe Box', 'recipe-press-reloaded'),
+               'recipe-box-add-title' => __('Add To Box', 'recipe-press-reloaded'),
+               'recipe-box-view-title' => __('View My Box', 'recipe-press-reloaded'),
                
                // Non-Configurable Settings 
                'menu-icon' => RPR_URL . 'images/icons/small_logo.png',
@@ -311,28 +311,28 @@ class RPR_Core {
           }*/
 
 /*          $this->formFieldNames = array(
-               'title' => __('Recipe Name', 'recipe-press'),
-               'image' => __('Recipe Image', 'recipe-press'),
-               'notes' => __('Recipe Notes', 'recipe-press'),
+               'title' => __('Recipe Name', 'recipe-press-reloaded'),
+               'image' => __('Recipe Image', 'recipe-press-reloaded'),
+               'notes' => __('Recipe Notes', 'recipe-press-reloaded'),
                'recipe-category' => $this->options['taxonomies']['recipe-category']['singular'],
                'recipe-cuisine' => $this->options['taxonomies']['recipe-cuisine']['singular'],
-               'servings' => __('Servings', 'recipe-press'),
-               'prep_time' => __('Prep Time', 'recipe-press'),
-               'cook_time' => __('Cook Time', 'recipe-press'),
-               'measure_type' => __('Measurement', 'recipe-press'),
-               'ingredients' => __('Ingredients', 'recipe-press'),
-               'instructions' => __('Instructions', 'recipe-press'),
+               'servings' => __('Servings', 'recipe-press-reloaded'),
+               'prep_time' => __('Prep Time', 'recipe-press-reloaded'),
+               'cook_time' => __('Cook Time', 'recipe-press-reloaded'),
+               'measure_type' => __('Measurement', 'recipe-press-reloaded'),
+               'ingredients' => __('Ingredients', 'recipe-press-reloaded'),
+               'instructions' => __('Instructions', 'recipe-press-reloaded'),
                
-               'submitter' => __('Name', 'recipe-press'),
-               'submitter_email' => __('Email', 'recipe-press'),
+               'submitter' => __('Name', 'recipe-press-reloaded'),
+               'submitter_email' => __('Email', 'recipe-press-reloaded'),
           );
 */
           /* Eliminate individual taxonomies */
     /*      if ( $this->options['use-categories'] ) {
                $this->options['use-taxonomies'] = true;
                $this->options['taxonomies']['recipe-category'] = array(
-                    'plural' => __('Categories', 'recipe-press'),
-                    'singular' => __('Category', 'recipe-press'),
+                    'plural' => __('Categories', 'recipe-press-reloaded'),
+                    'singular' => __('Category', 'recipe-press-reloaded'),
                     'hierarchical' => true,
                     'active' => true,
                     'page' => $this->options['categories-page'],
@@ -343,8 +343,8 @@ class RPR_Core {
           if ( $this->options['use-cuisines'] ) {
                $this->options['use-taxonomies'] = true;
                $this->options['taxonomies']['recipe-cuisine'] = array(
-                    'plural' => __('Cuisines', 'recipe-press'),
-                    'singular' => __('Cuisine', 'recipe-press'),
+                    'plural' => __('Cuisines', 'recipe-press-reloaded'),
+                    'singular' => __('Cuisine', 'recipe-press-reloaded'),
                     'hierarchical' => false,
                     'active' => true,
                     'page' => $this->options['cuisines-page'],

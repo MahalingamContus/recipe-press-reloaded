@@ -47,9 +47,9 @@ if ( get_option('permalink_structure') ) {
 <body class="print-recipes">
 	<div id="print-controls">
 		<ul>
-			<li><a href="javascript:rpr_hide_image();"><?php _e("Hide image", "recipe-press"); ?></a></li>
-			<li><a href="javascript:print();"><?php _e("Print", "recipe-press"); ?></a></li>
-			<li><a href="<?php the_permalink()?>" title="<?php printf(__('Return to %1$s', 'recipe-press'), get_the_title()); ?>"><?php printf(__('Return to %1$s', 'recipe-press'), get_the_title()); ?></a></li>
+			<li><a href="javascript:rpr_hide_image();"><?php _e("Hide image", "recipe-press-reloaded"); ?></a></li>
+			<li><a href="javascript:print();"><?php _e("Print", "recipe-press-reloaded"); ?></a></li>
+			<li><a href="<?php the_permalink()?>" title="<?php printf(__('Return to %1$s', 'recipe-press-reloaded'), get_the_title()); ?>"><?php printf(__('Return to %1$s', 'recipe-press-reloaded'), get_the_title()); ?></a></li>
 		</ul>
 	</div>
 	<div id="post-<?php the_ID(); ?>" class="recipe-print">
@@ -71,7 +71,7 @@ if ( get_option('permalink_structure') ) {
         		<?php endif; ?>
     			<?php if ( use_recipe_servings() ): ?>
             		<span class="recipe-servings">
-                		<?php _e("for", "recipe-press"); ?>
+                		<?php _e("for", "recipe-press-reloaded"); ?>
                 		<?php the_recipe_servings(); ?>
             		</span>
         		<?php endif; ?>
@@ -88,29 +88,29 @@ if ( get_option('permalink_structure') ) {
     		<div class="recipe-meta-right">
     			<?php if ( use_recipe_categories() ) :?>
             		<span class="recipe-category">
-                		<?php _e('Posted in: ', 'recipe-press');
+                		<?php _e('Posted in: ', 'recipe-press-reloaded');
                 		the_terms(get_the_id(), 'recipe-category');?>
             		</span><br/>
         		<?php endif; ?>
         		<?php if ( use_recipe_cuisines() ): ?>
             		<span class="recipe-cuisine">
-                		<?php _e('from: ', 'recipe-press');
+                		<?php _e('from: ', 'recipe-press-reloaded');
                 		the_terms(get_the_id(), 'recipe-cuisine');?>
             		</span><br/>
         		<?php endif; ?>
         		<?php if ( use_recipe_seasons() ): ?>
             		<span class="recipe-season">
-                		<?php _e('Season: ', 'recipe-press');
+                		<?php _e('Season: ', 'recipe-press-reloaded');
                 		the_terms(get_the_id(), 'recipe-season');?>
             		</span><br/>
 	        	<?php endif; ?>
     		</div>
     	</div><!-- .recipe-header -->
     	<div class="recipe-content">
-        	<h2><?php _e('Ingredients', 'recipe-press'); ?> </h2>
+        	<h2><?php _e('Ingredients', 'recipe-press-reloaded'); ?> </h2>
         	<?php the_recipe_ingredients(); ?>
 
-        	<h2 ><?php _e('Directions', 'recipe-press'); ?></h2>
+        	<h2 ><?php _e('Directions', 'recipe-press-reloaded'); ?></h2>
         	<?php the_recipe_directions(); ?>
     	</div><!-- .entry-content -->
 

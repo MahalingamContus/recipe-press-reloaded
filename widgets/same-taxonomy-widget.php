@@ -23,7 +23,7 @@ class RPR_Same_Taxonomy_Widget extends WP_Widget {
 	// constructor
 	function RPR_Same_Taxonomy_Widget() {
 		// use parent constructor to re-write standard class properties
-		parent::WP_Widget('SameTaxonomy_Widget_base', __('RPR :: Same Taxonomy', 'recipe-press'), array('description' => __('Lists posts from the same taxonomy on single-post view. Will not display elsewhere', 'recipe-press'), 'class' => 'rpr-same-taxonomy-widget'));	
+		parent::WP_Widget('SameTaxonomy_Widget_base', __('RPR :: Same Taxonomy', 'recipe-press-reloaded'), array('description' => __('Lists posts from the same taxonomy on single-post view. Will not display elsewhere', 'recipe-press-reloaded'), 'class' => 'rpr-same-taxonomy-widget'));	
 	}
 
 /**
@@ -99,11 +99,11 @@ class RPR_Same_Taxonomy_Widget extends WP_Widget {
  
 		$field_id = $this->get_field_id('title');
 		$field_name = $this->get_field_name('title');
-		echo "\r\n".'<p><label for="'.$field_id.'">'.__('Title (optional)', 'recipe-press').': <input type="text" class="widefat" id="'.$field_id.'" name="'.$field_name.'" value="'.esc_attr( $instance['title'] ).'" /><label></p>';
+		echo "\r\n".'<p><label for="'.$field_id.'">'.__('Title (optional)', 'recipe-press-reloaded').': <input type="text" class="widefat" id="'.$field_id.'" name="'.$field_name.'" value="'.esc_attr( $instance['title'] ).'" /><label></p>';
         
         $field_id = $this->get_field_id('taxonomy');
 		$field_name = $this->get_field_name('taxonomy');
-        echo "\r\n <p><label for=\"$field_id\">". __('Taxonomy to display', 'recipe-press').": </label><select id=\"$field_id\" name=\"$field_name\" class=\"widefat\">";
+        echo "\r\n <p><label for=\"$field_id\">". __('Taxonomy to display', 'recipe-press-reloaded').": </label><select id=\"$field_id\" name=\"$field_name\" class=\"widefat\">";
 		foreach(get_taxonomies() as $tax):
 			$selected = ($instance['taxonomy'] == $tax) ? "selected=\"selected\"": "";
 			echo"<option value=\"".$tax."\" $selected>".$tax."</option>";
@@ -112,7 +112,7 @@ class RPR_Same_Taxonomy_Widget extends WP_Widget {
 		
 		$field_id = $this->get_field_id('limit');
 		$field_name = $this->get_field_name('limit');
-		echo "\r\n".'<p><label for="'.$field_id.'">'.__('Number of posts', 'recipe-press').': <input type="text" class="widefat" id="'.$field_id.'" name="'.$field_name.'" value="'.esc_attr( $instance['limit'] ).'" /><label></p>';
+		echo "\r\n".'<p><label for="'.$field_id.'">'.__('Number of posts', 'recipe-press-reloaded').': <input type="text" class="widefat" id="'.$field_id.'" name="'.$field_name.'" value="'.esc_attr( $instance['limit'] ).'" /><label></p>';
 	}
 }
 
