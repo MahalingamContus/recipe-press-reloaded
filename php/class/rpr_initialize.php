@@ -23,7 +23,9 @@ class RPR_Init extends RPR_Core {
 	function RPR_Init() {
 		global $wpdb;
         parent::RPR_Core();
-
+		
+		load_plugin_textdomain( 'recipe-press-reloaded', false, dirname( dirname( dirname( plugin_basename( __FILE__ ) ) ) ) . '/language/' );
+		
 		if ( $this->rpr_options['use_categories'] ) {
 			add_action('init', array($this, 'setup_categories'));
         }

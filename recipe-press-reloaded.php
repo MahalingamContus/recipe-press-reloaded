@@ -43,8 +43,8 @@ if ( !defined('RPR_BASENAME') )
 	define( 'RPR_BASENAME', plugin_basename( __FILE__ ) );
 
 /*Load textdomain*/
-load_plugin_textdomain( 'recipe-press-reloaded', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-
+//load_plugin_textdomain( 'recipe-press-reloaded', false, '/recipe-press-reloaded/language' );
+//var_dump(get_locale());
 /*Set plugin version*/
 define( 'RPR_VERSION', '0.2' );
 

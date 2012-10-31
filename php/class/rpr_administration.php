@@ -208,7 +208,7 @@ class RPR_Admin extends RPR_Core {
           $pages = array();
 
           // Set up the settings page 
-          $pages[] = add_submenu_page('edit.php?post_type=recipe', __('RecipePress Settings', 'recipe-press-reloaded'), __('Settings', 'recipe-press-reloaded'), 'edit_posts', $this->menuName, array(&$this, 'settings'));
+          $pages[] = add_submenu_page('edit.php?post_type=recipe', __('RecipePress reloaded Settings', 'recipe-press-reloaded'), __('Settings', 'recipe-press-reloaded'), 'edit_posts', $this->menuName, array(&$this, 'settings'));
 
 
           $tableName = $wpdb->prefix . 'rp_recipes';
