@@ -112,13 +112,13 @@ class RPR_Admin extends RPR_Core {
           );
 
           foreach ( $this->rpr_options['taxonomies'] as $tax => $settings ) {
-               $settings = $this->taxDefaults($settings);
+               //$settings = $this->taxDefaults($settings);
                if ( $settings['active'] and taxonomy_exists($tax) ) {
-                    $columns[$tax] = $settings['plural'];
+                    $columns[$tax] = $settings['plural_name'];
                }
           }
 
-          $columns['ingredients'] = __('Ingredients', 'recipe-press-reloaded');
+//          $columns['ingredients'] = __('Ingredients', 'recipe-press-reloaded');
 
           if ( $this->rpr_options['use_featured'] ) {
                $columns['featured'] = __('Featured', 'recipe-press-reloaded');

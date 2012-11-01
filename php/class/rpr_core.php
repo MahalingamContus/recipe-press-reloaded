@@ -80,8 +80,8 @@ class RPR_Core {
 			'taxonomies'=>array(
 				'recipe-category' => array(
 					'slug' => 'recipe-category',
-					'singular_name' => 'recipe category',
-					'plural_name' => 'recipe categories',
+					'singular_name' => __('Recipe Category', 'recipe-press-reloaded'),
+					'plural_name' => __('Recipe Categories', 'recipe-press-reloaded'),
 					'hierarchical' => true,
 					'active' => true,
 					'default' => false,
@@ -92,8 +92,8 @@ class RPR_Core {
 					),
 				'recipe-cuisine' => array(
 					'slug' => 'recipe-cuisine',
-					'singular_name' => 'recipe cuisine',
-					'plural_name' => 'recipe cuisines',
+					'singular_name' => __('Recipe Cuisine', 'recipe-press-reloaded'),
+					'plural_name' => __('Recipe Cuisines', 'recipe-press-reloaded'),
 					'hierarchical' => false,
 					'active' => true,
 					'default' => false,
