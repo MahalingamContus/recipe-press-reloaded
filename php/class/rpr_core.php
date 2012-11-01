@@ -34,7 +34,7 @@ class RPR_Core {
 
           /* Plugin Settings */
           /* translators: The name of the plugin, should be a translation of "RecipePress" only! */
-          $this->pluginName = __('RecipePress', 'recipe-press-reloaded');
+          $this->pluginName = __('RecipePress reloaded', 'recipe-press-reloaded');
 
           /* Plugin Folders */
           //RPR_PATH = WP_PLUGIN_DIR . '/' . basename(dirname(dirname(dirname(__FILE__)))) . '/';

@@ -63,7 +63,7 @@ global $RECIPEPRESSOBJ;
 
 <?php endwhile; ?>
 <?php else : ?>
-   <?php  _e("Sorry, no recipes", "recipe-press-reloaded");?>
+   <?php  _e("Sorry, no recipes found.", "recipe-press-reloaded");?>
 <?php endif; ?>
 
 <div id="nav-below" class="cleared navigation">

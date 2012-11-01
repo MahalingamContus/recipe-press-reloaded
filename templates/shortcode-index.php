@@ -34,7 +34,7 @@ if ( $recipes->have_posts() ) :
 
 <!-- Alphebetical index for easy "jump to"-navigation-->
     <div id="nav-above">
-		<h1 class="assistive-text"><?php __('Alphabetcial index navigation', 'recipe-press-reloaded');?></h1>
+		<h1 class="assistive-text"><?php __('Alphabetical index navigation', 'recipe-press-reloaded');?></h1>
         <ul class="alphabet">
 	    <?php foreach($alphabet as $letter): ?>
             <?php if(in_array($letter, $alph)):?>
@@ -87,7 +87,7 @@ if ( $recipes->have_posts() ) :
         </div>
     <?php else:?>
         <div id="notfound">
-            <p><?php _e("Sorry, No Recipes;", "recipe-press-reloaded");?></p>
+            <p><?php _e("Sorry, no recipes found.", "recipe-press-reloaded");?></p>
         </div>
     <?php endif;?>
     </div>
@@ -96,7 +96,7 @@ if ( $recipes->have_posts() ) :
 
     <!-- Alphebetical index for easy "jump to"-navigation-->
     <div id="nav-below" style="clear:both;">
-		<h1 class="assistive-text"><?php __('Alphabetcial index navigation', 'recipe-press-reloaded');?></h1>
+		<h1 class="assistive-text"><?php __('Alphabetical index navigation', 'recipe-press-reloaded');?></h1>
         <ul class="alphabet">
 	    <?php foreach($alphabet as $letter): ?>
             <?php if(in_array($letter, $alph)):?>

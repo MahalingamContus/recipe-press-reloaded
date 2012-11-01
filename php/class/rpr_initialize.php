@@ -166,25 +166,6 @@ class RPR_Init extends RPR_Core {
      public function index_template($template) {
           global $post, $wp_query, $taxonomy, $terms, $tax, $pagination, $recipeData, $current_user;
 
-			var_dump(get_query_var('recipe-box'));
-          /* Handle Recipe Box Page */
-          if ( $recipeBox = get_query_var('recipe-box') ) {
-               $page = get_query_var('box-page');
-
-               $replacement_template = get_query_template('recipe-box');
-               if ( file_exists($replacement_template) ) {
-                    add_filter('wp_title', array(&$this, 'recipe_box_title'));
-                    return $replacement_template;
-               } else {
-                    if ( $this->options['recipe-box-page'] and get_page($this->options['recipe-box-page']) ) {
-                         wp_redirect(get_permalink($this->options['recipe-box-page']));
-                         exit();
-                    } else {
-                         wp_die(__('Warning: The site administrator has not set a page to load the recipe box on.', 'recipe-press-reloaded'));
-                    }
-               }
-          }
-
           /* Handle Taxonomy Page */
           if ( $taxonomy = get_query_var('recipe-taxonomy') ) {
                $page = get_query_var('page');

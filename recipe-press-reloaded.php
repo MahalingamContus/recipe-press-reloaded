@@ -117,7 +117,7 @@ class RecipePressReloaded extends RPR_Core {
           //$qvars[] = 'box-page';
           return $qvars;
      }
-
+//SHOULD MOVE TO RPR_ADMINSTRATION.PHP
      /**
       * Checks if the Recipe Form was submitted and creates the recipe.
       */
@@ -139,7 +139,7 @@ class RecipePressReloaded extends RPR_Core {
                     exit();
                }
           } elseif ( isset($_POST['recipe-form-nonce']) ) {
-               wp_die(__('This form was submitted without a proper nonce. Please contact the site administrator.', 'recipe-press-reloaded'));
+               wp_die(__('This form was submitted without a proper <emph>nonce</emph> - a security means. Please contact the site administrator.', 'recipe-press-reloaded'));
           }
      }
 
