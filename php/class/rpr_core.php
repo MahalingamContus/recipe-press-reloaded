@@ -163,6 +163,7 @@ class RPR_Core {
                'ingredient_slug' => 'recipe-ingredients',
                'ingredients_per_page' => 10,
                'ingredient_page' => 0,
+               'ingredients_fields'=>5,
                'plural_times' => true,
 			);
 		  $this->rpr_options_defaults = $rpr_options_defaults;

@@ -75,7 +75,7 @@ class RecipePressReloaded extends RPR_Core {
           add_action('wp_print_scripts', array(&$this, 'wp_print_scripts'));
           add_filter('query_vars', array(&$this, 'query_vars'));
           add_action('template_redirect', array(&$this, 'template_redirect'));
-          add_action('parse_request', array(&$this, 'catch_recipe_form'));
+          
           add_action('pre_get_posts', array(&$this, 'pre_get_posts'));
           
 
@@ -117,31 +117,8 @@ class RecipePressReloaded extends RPR_Core {
           //$qvars[] = 'box-page';
           return $qvars;
      }
-//SHOULD MOVE TO RPR_ADMINSTRATION.PHP
-     /**
-      * Checks if the Recipe Form was submitted and creates the recipe.
-      */
-     function catch_recipe_form() {
-          // Check if form is submitted 
-          if ( isset($_POST['recipe-form-nonce']) and wp_verify_nonce($_POST['recipe-form-nonce'], 'recipe-form-submit') ) {
-               $errors = $this->create_recipe();
 
-               if ( count($errors) == 0 ) {
-                    //$page = get_page($this->rpr_options['form-redirect']);
-
-                    if ( $page->ID == $post->ID ) {
-                         $url = get_option('home');
-                    } else {
-                         $url = get_post_permalink($page->ID, true);
-                    }
-
-                    wp_redirect($url);
-                    exit();
-               }
-          } elseif ( isset($_POST['recipe-form-nonce']) ) {
-               wp_die(__('This form was submitted without a proper <emph>nonce</emph> - a security means. Please contact the site administrator.', 'recipe-press-reloaded'));
-          }
-     }
+     
 
      /**
       * Catch the submit form and other special requests.
@@ -210,6 +187,7 @@ class RecipePressReloaded extends RPR_Core {
       * Print the javascript needed for the form.
       */
      function wp_print_scripts() {
+     	 
           wp_enqueue_script('jquery');
           wp_enqueue_script('jquery-ui-sortable');
           wp_enqueue_script('suggest');

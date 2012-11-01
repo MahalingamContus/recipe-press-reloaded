@@ -29,6 +29,7 @@ class RPR_Admin extends RPR_Core {
           add_action('admin_init', array(&$this, 'admin_init'));
           add_action('admin_print_styles', array(&$this, 'admin_print_styles'));
           add_action('admin_print_scripts', array(&$this, 'admin_print_scripts'));
+          add_action('parse_request', array(&$this, 'catch_recipe_form'));
           add_action('save_post', array(&$this, 'save_recipe'));
 //          add_action('update_option_' . $this->optionsName, array(&$this, 'update_option'), 10, 2);
           add_action('right_now_content_table_end', array(&$this, 'right_now_content_table_end'));
@@ -241,6 +242,7 @@ class RPR_Admin extends RPR_Core {
           global $post;
 
           if ( is_object($post) and $post->post_type == 'recipe' ) {
+          	
                $this->admin_scripts();
           }
      }
@@ -250,6 +252,9 @@ class RPR_Admin extends RPR_Core {
      }
 
      function admin_scripts() {
+     	  wp_localize_script('rpr_admin_JS', 'RPAJAX', array(
+               'ajaxurl' => admin_url('admin-ajax.php'),
+          ));
           wp_enqueue_script('jquery.autocomplete');
           wp_enqueue_script('rpr_admin_JS');
      }
@@ -890,6 +895,31 @@ class RPR_Admin extends RPR_Core {
           die();
      }
      
+     /**
+      * Checks if the Recipe Form was submitted and creates the recipe.
+      */
+	function catch_recipe_form() {
+          // Check if form is submitted 
+          if ( isset($_POST['recipe-form-nonce']) and wp_verify_nonce($_POST['recipe-form-nonce'], 'recipe-form-submit') ) {
+               $errors = $this->create_recipe();
+
+               if ( count($errors) == 0 ) {
+                    //$page = get_page($this->rpr_options['form-redirect']);
+
+                    if ( $page->ID == $post->ID ) {
+                         $url = get_option('home');
+                    } else {
+                         $url = get_post_permalink($page->ID, true);
+                    }
+
+                    wp_redirect($url);
+                    exit();
+               }
+          } elseif ( isset($_POST['recipe-form-nonce']) ) {
+               wp_die(__('This form was submitted without a proper <emph>nonce</emph> - a security means. Please contact the site administrator.', 'recipe-press-reloaded'));
+          }
+     }
+     
       /**
       * Save the meta boxes for a recipe.
       *
@@ -904,7 +934,7 @@ class RPR_Admin extends RPR_Core {
                return;
           }
 
-          do_action('rp_before_save');
+          //do_action('rpr_before_save');
 
           /* Save details */
           if ( isset($_POST['recipe_details']) and isset($_POST['details_noncename']) and wp_verify_nonce($_POST['details_noncename'], 'recipe_press_details') ) {
@@ -940,7 +970,7 @@ class RPR_Admin extends RPR_Core {
                $this->save_ingredients($post_id, $_POST['ingredients']);
           }
 
-          do_action('rp_after_save');
+          //do_action('rpr_after_save');
 
           return $post_id;
      }
