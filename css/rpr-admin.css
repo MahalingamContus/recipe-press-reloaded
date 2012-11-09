@@ -5,7 +5,11 @@
  * This file can not be moved to your theme folder - it is used only for the
  * administration screens.
 */
-
+/*Logo*/
+#icon-edit { 
+	background:transparent url('../images/icons/large_logo.png') no-repeat; 
+}     
+    
 table.editrecipe {
      border-color: #dadada;
 }

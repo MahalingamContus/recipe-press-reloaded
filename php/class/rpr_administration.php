@@ -469,7 +469,6 @@ class RPR_Admin extends RPR_Core {
 	  * - desc (optional, descriptive text)
 	  */
 	 function rpr_options_dropdown_categories($args){
-	 	var_dump( $this->rpr_options['taxonomies'][$args['key']] );
 	 	if( isset( $args['key'] ) && $args['key'] != "" && isset($args['selected']) ):
 	 	 	$outp =  wp_dropdown_categories(array(
 	 	 										'name' => 'rpr_options[taxonomies][' . $args['key'] . '][default]', 
