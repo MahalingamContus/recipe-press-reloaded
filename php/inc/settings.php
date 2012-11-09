@@ -26,7 +26,7 @@ global $RECIPEPRESSOBJ;
 		echo '<div id="message" style="width:94%;" class="message updated"><p><strong>' . $msg . '.</strong></p></div>';
 	endif; ?>
 	
-	<div class="icon32" id="icon-recipe-press"><br/></div>
+	<div class="icon32" id="icon-edit"><br/></div>
 	<h2><?php echo $this->pluginName; ?> &raquo; <?php _e('Plugin Settings', 'recipe-press-reloaded'); ?> </h2> 
 	<!-- Tab Menu -->
 	<nav id="rpr-tab-menu">

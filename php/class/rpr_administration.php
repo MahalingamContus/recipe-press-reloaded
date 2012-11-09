@@ -177,6 +177,8 @@ class RPR_Admin extends RPR_Core {
           }
      }
 
+
+	
      /**
       * Admin Init Action
       */
@@ -209,8 +211,8 @@ class RPR_Admin extends RPR_Core {
           $pages = array();
 
           // Set up the settings page 
-          $pages[] = add_submenu_page('edit.php?post_type=recipe', __('RecipePress reloaded Settings', 'recipe-press-reloaded'), __('Settings', 'recipe-press-reloaded'), 'edit_posts', $this->menuName, array(&$this, 'settings'));
-
+          $pages[] = add_submenu_page('edit.php?post_type=recipe', __('RecipePress reloaded Settings', 'recipe-press-reloaded'), __('Settings', 'recipe-press-reloaded'), 'edit_posts', 'recipe-press-reloaded_settings', array(&$this, 'settings'));
+		  $pages[] = add_submenu_page('edit.php?post_type=recipe', __('RecipePress reloaded Acknowledgements', 'recipe-press-reloaded'), __('Acknowledgements', 'recipe-press-reloaded'), 'edit_posts', 'recipe-press-reloaded_acknowledgements', array(&$this, 'acknowledgements'));
 
           $tableName = $wpdb->prefix . 'rp_recipes';
           if ( $wpdb->get_var("SHOW TABLES LIKE '{$tableName}'") == $tableName ) {
@@ -228,6 +230,13 @@ class RPR_Admin extends RPR_Core {
       */
      function settings() {
           include(RPR_PATH . 'php/inc/settings.php');
+     }
+     
+      /*
+       * Settings management panel.
+      */
+     function acknowledgements() {
+          include(RPR_PATH . 'php/inc/acknowledgements.php');
      }
 
      function admin_print_styles() {
