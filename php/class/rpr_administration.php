@@ -41,7 +41,8 @@ class RPR_Admin extends RPR_Core {
 
 
           add_action('right_now_content_table_end', array(&$this, 'right_now_content_table_end'));
-          add_action('manage_pages_custom_column', array(&$this, 'manage_pages_custom_column'));
+          add_action('manage_posts_custom_column', array(&$this, 'manage_posts_custom_column'));
+          add_filter('manage_edit-recipe_columns', array(&$this, 'manage_recipe_edit_columns'));
           add_action('wp_ajax_ingredient_lookup', array(&$this, 'ingredient_lookup'));
 //          add_action('wp_ajax_nopriv_ingredient_lookup', array(&$this, 'ingredient_lookup'));
           add_action('wp_ajax_recipe_press_view_all_tax', array(&$this, 'view_all_taxonomy'));
@@ -49,7 +50,7 @@ class RPR_Admin extends RPR_Core {
 
           /* Administration Filters */
           add_filter('plugin_action_links', array(&$this, 'plugin_action_links'), 10, 2);
-          add_filter('manage_edit-recipe_columns', array(&$this, 'manage_recipe_edit_columns'));
+          
           if ( function_exists('register_uninstall_hook') ) register_uninstall_hook(__FILE__, 'example_deinstall');
      }
 
@@ -151,7 +152,7 @@ class RPR_Admin extends RPR_Core {
       * @param string $column      Name of the column
       * @return string
       */
-     function manage_pages_custom_column($column) {
+     function manage_posts_custom_column($column) {
           global $post;
 
           if ( $post->post_type != 'recipe' ) {
@@ -180,7 +181,7 @@ class RPR_Admin extends RPR_Core {
           }
 
           /* Display taxonomies if taxonomy is active */
-          if ( isset($this->rpr_ptions['taxonomies'][$column]) and taxonomy_exists($column) ) {
+          if ( isset($this->rpr_options['taxonomies'][$column]) and taxonomy_exists($column) ) {
                echo get_the_term_list($post->ID, $column, '', ', ', '');
           }
      }
