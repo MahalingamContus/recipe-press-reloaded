@@ -34,12 +34,12 @@ class RPR_Admin extends RPR_Core {
           add_action('admin_init', array(&$this, 'admin_init'));
           
           /*Save a recipe*/
-//          add_action('parse_request', array(&$this, 'catch_recipe_form'));
           add_action('save_post', array(&$this, 'save_recipe'));
           
           /* Notices for the admin, ie error on save */
           add_action( 'admin_notices', array( &$this, 'rpr_admin_notice_handler' ) );
-//          add_action('update_option_' . $this->optionsName, array(&$this, 'update_option'), 10, 2);
+
+
           add_action('right_now_content_table_end', array(&$this, 'right_now_content_table_end'));
           add_action('manage_pages_custom_column', array(&$this, 'manage_pages_custom_column'));
           add_action('wp_ajax_ingredient_lookup', array(&$this, 'ingredient_lookup'));
