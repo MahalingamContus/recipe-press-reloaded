@@ -1,8 +1,10 @@
+var active_sub_tab = '';
+
 jQuery(document).ready(function(){	
     var active_tab = window.location.hash.replace('#top#','');
 	if ( active_tab == '' )
 		active_tab = 'general';
-    var active_sub_tab = window.location.hash.replace('#top#taxonomies#','');
+    active_sub_tab = window.location.hash.replace('#top#taxonomies#','');
 	if (  active_sub_tab == "" || active_sub_tab == '#top#taxonomies' ) 
 		active_sub_tab = 'recipe-category';
 
@@ -28,10 +30,29 @@ jQuery(document).ready(function(){
 		jQuery('.rpr-sub-tab').removeClass('active');
 	
 		var id = jQuery(this).attr('id').replace('-sub-tab','');
+		var id_short = jQuery(this).attr('id').replace('-sub-tab','').replace('rpr-taxonomies-', '');
+		active_sub_tab=id_short;
+		
 		jQuery('#'+id).addClass('active');
 		jQuery(this).addClass('nav-tab-active');
 	});
+
 });
+//autosubmit options form on delete
+jQuery(document).click(function(){
+	jQuery('#rpr_options_taxonomies_'+active_sub_tab+'_delete').click(function(){
+		var confirmResult = confirm(confirmText);
+		if( confirmResult == true ){
+			jQuery('#rpr_options_rpr_taxonomies_'+active_sub_tab+'_delete').prop('checked', true);
+			//document.getElementById('rpr_options_rpr_taxonomies_'+sub_tab+'_delete').value=true;
+			//alert(jQuery('#rpr_options_rpr_taxonomies_'+sub_tab+'_delete').value);
+			jQuery('#rpr-conf').submit();
+		}else{
+			jQuery('#rpr_options_rpr_taxonomies_'+active_sub_tab+'_delete').prop('checked', false);
+		}
+	});
+});
+
 
 /*Handling of the recipe form*/
 // JavaScript methods for the Recipe Form for RecipePress.

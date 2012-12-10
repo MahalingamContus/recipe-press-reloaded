@@ -31,6 +31,9 @@ table.editrecipe {
 }
 
 /*Settings tabs*/
+#rpr-tab-menu{
+	margin-top:5px;
+}
 .rpr-tab,
 .rpr-sub-tab{
     display:none;
@@ -41,6 +44,14 @@ table.editrecipe {
 .rpr-tab.active,
 .rpr-sub-tab.active{
     display:block;
+}
+
+p.notice{
+	margin: 5px 0 15px;
+	border-color: #CC0000;
+	padding: 0.6em;
+	background:white;
+	width:94%;
 }
 
 /* Additional Styles */

@@ -39,9 +39,9 @@ class RPR_Core {
           $this->loadSettings();
 
           /* Add custom images sizes for RecipePress */
-          foreach ( $this->rpr_options['image_sizes'] as $image => $size ) {
+          /*foreach ( $this->rpr_options['image_sizes'] as $image => $size ) {
                add_image_size('rpr-' . $image, $size['width'], $size['height'],true);
-          }
+          }*/
      }
 
      /**

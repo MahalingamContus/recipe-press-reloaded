@@ -2,6 +2,8 @@
 if ( preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']) ) {
      die('You are not allowed to call this page directly.');
 }
+
+ini_set('error_reporting', 'E_WARNING');
 /**
  * settings.php - View for the Settings page.
  *
@@ -13,13 +15,17 @@ if ( preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']) ) {
  * @since 1.0
  */
 /* Flush the rewrite rules */
-global $wp_rewrite;
-$wp_rewrite->flush_rules();
+//global $wp_rewrite;
+//$wp_rewrite->flush_rules();
 
-global $RECIPEPRESSOBJ;
+//global $RECIPEPRESSOBJ;
 //var_dump($RECIPEPRESSOBJ);
 
 ?>
+<!-- move this to somewhere else -->
+<script type="text/javascript">
+var confirmText="<?php _e('Are you sure you want to  delete this taxonomy?', 'recipe-press-reloaded'); ?>";
+</script>
 <div class="wrap">
 	<?php if ( ( isset( $_GET[ 'updated' ] ) && $_GET[ 'updated' ] == 'true' ) || ( isset( $_GET[ 'settings-updated' ] ) && $_GET[ 'settings-updated' ] == 'true' ) ):
 		$msg = __( 'Settings updated', 'recipe-press' );
@@ -45,16 +51,21 @@ global $RECIPEPRESSOBJ;
 		
 		<div id="taxonomies" class="rpr-tab">
 			<nav id="rpr-sub-tab-menu">
-			<?php foreach($RECIPEPRESSOBJ->rpr_options['taxonomies'] as $key => $tax ): ?>
+			<?php foreach($this->options['taxonomies'] as $key => $tax ): ?>
 				<a class="nav-tab" id="rpr-taxonomies-<?php echo $key; ?>-sub-tab" href="#top#taxonomies#<?php echo $key; ?>"><?php echo $tax['singular_name']; ?></a>
 			<?php endforeach; ?>
+				<a class="nav-tab new" id="rpr-taxonomies-new-sub-tab" href="#top#taxonomies#new">+</a>
 			</nav>
 			
-			<?php foreach($RECIPEPRESSOBJ->rpr_options['taxonomies'] as $key => $tax ): ?>
+			<?php foreach($this->options['taxonomies'] as $key => $tax ): ?>
 				<div id="rpr-taxonomies-<?php echo $key; ?>" class="rpr-sub-tab">
 					<?php do_settings_sections('taxonomies_'.$key); ?>
 				</div>
 			<?php endforeach; ?>
+			<div id="rpr-taxonomies-new" class="rpr-sub-tab">
+				<p class="notice widefat"><?php _e("<b>IMPORTANT:</b> To create a new taxonomy you must set 'slug', 'singular name' and 'plural name'!", "recipe-press-reloaded");?></p>
+				<?php do_settings_sections('taxonomies_new'); ?>
+			</div>
 			
 		</div>
 		
@@ -65,8 +76,8 @@ global $RECIPEPRESSOBJ;
 		<div id="admin-display" class="rpr-tab">
 			<?php do_settings_sections('admin_post_list'); ?>
 		</div>
-		
-		<?php submit_button(); ?>
+
+		<?php submit_button(__('Save Changes'), 'primary', 'rpr_submit'); ?>
 	</form>
 </div>
 
